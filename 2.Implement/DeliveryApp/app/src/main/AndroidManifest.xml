@@ -14,34 +14,34 @@
         android:theme="@style/Theme.DeliveryApp"
         tools:targetApi="31">
         <activity
-            android:name=".MyReviewActivity"
+            android:name=".activity.MyReviewActivity"
             android:exported="false" />
         <activity
-            android:name=".ShowOrdersActivity"
+            android:name=".activity.ShowOrdersActivity"
             android:exported="false" />
         <activity
-            android:name=".MyPageActivity"
+            android:name=".activity.MyPageActivity"
             android:exported="false" />
         <activity
-            android:name=".CartActivity"
+            android:name=".activity.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".PaymentActivity"
+            android:name=".activity.PaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".MarketScoreActivity"
+            android:name=".activity.MarketScoreActivity"
             android:exported="false" />
         <activity
-            android:name=".ShoppingActivity"
+            android:name=".activity.ShoppingActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.SignInActivity"
+            android:name=".activity.MainActivity"
             android:exported="false" />
         <activity
             android:name=".activity.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

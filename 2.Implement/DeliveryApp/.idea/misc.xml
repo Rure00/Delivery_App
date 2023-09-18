@@ -3,12 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/font/pretendart.xml" value="0.23055555555555557" />
+        <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_cart.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_market_score.xml" value="0.2" />
+        <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_my_page.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_my_review.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_payment.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_shopping.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_sign_in.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_shopping.xml" value="0.2" />
+        <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_show_orders.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_sign_in.xml" value="0.2" />
+        <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/activity_sign_up.xml" value="0.2" />
         <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/market_summary.xml" value="0.2" />
         <entry key="..\:/Users/USER/Desktop/SungSengmo/Delivery_App/2.Implement/DeliveryApp/app/src/main/res/layout/toolbar.xml" value="0.2526041666666667" />
       </map>
