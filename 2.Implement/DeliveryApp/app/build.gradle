@@ -1,19 +1,23 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin' version '2.4.2' apply false
+
+    //apply plugin: 'kotlin-kapt'
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.project.deliveryapp"
         minSdk 29
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     viewBinding {
@@ -36,11 +40,25 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    //data store
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    //annotation
+    implementation("androidx.annotation:annotation:1.7.0")
+    
+    //annotation module by 강남언니 (https://blog.gangnamunni.com/post/kotlin-annotation-codegeneration/)
+    implementation project(':datavalidation-annotation')
+    //kapt project(':datavalidation-processor')
+
+    //Reflection
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.10"
+
 }

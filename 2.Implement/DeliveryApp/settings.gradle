@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DeliveryApp"
 include ':app'
+include ':datavalidation-annotation'
+include ':datavalidation-processor'
