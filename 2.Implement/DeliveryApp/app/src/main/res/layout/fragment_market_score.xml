@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.MarketScoreFragment">
+
+    <ImageView
+        android:id="@+id/marketImage"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
+
+        android:background="@color/sky"
+        />
+
+    <TextView
+        android:id="@+id/marketNameText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/marketImage"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:text="Market Name"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+        android:gravity="center"
+        android:padding="5dp"
+
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="40dp"
+
+        android:background="@color/sky"
+        />
+
+    <TextView
+        android:id="@+id/addressText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toBottomOf="@id/marketImage"
+        app:layout_constraintStart_toEndOf="@id/marketImage"
+        app:layout_constraintTop_toBottomOf="@id/marketNameText"
+        app:layout_constraintEnd_toEndOf="parent"
+
+
+        android:text="market address in the seoul"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="30dp"
+        />
+
+    <TextView
+        android:id="@+id/scoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/marketImage"
+
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="15dp"
+
+        android:text="3.5/5"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+        android:background="@color/yellow"
+        android:padding="10dp"
+        />
+
+    <Button
+        android:id="@+id/filterBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/scoreText"
+
+        android:layout_marginHorizontal="40dp"
+
+        android:text="필터"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/reviewScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scoreText"
+        app:layout_constraintBottom_toTopOf="@id/reviewBtn"
+
+        android:layout_marginVertical="15dp"
+        android:layout_marginHorizontal="40dp"
+
+        android:background="@color/sky"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                tools:listitem="@layout/review_item"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/reviewBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginBottom="10dp"
+
+        android:text="리뷰 작성"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+        android:background="@color/sky"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

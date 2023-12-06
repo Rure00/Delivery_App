@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">우리 동네 마트</string>
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="base_url">http://124.59.46.235:8080</string>
+    <string name="score_expression">%.1f / 5</string>
+    <string name="review_dialog_title">리뷰를 작성합니다.</string>
+    <string name="review_dialog_body">리뷰 작성을 완료하고 저장합니다. 충분히 검토하셨나요?</string>
+    <string name="review_dialog_confirm">완료</string>
+    <string name="review_dialog_cancel">취소</string>
 </resources>

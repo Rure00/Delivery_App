@@ -10,9 +10,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://naver.jfrog.io/artifactory/maven/'
+        }
     }
 }
 rootProject.name = "DeliveryApp"
 include ':app'
-include ':datavalidation-annotation'
-include ':datavalidation-processor'

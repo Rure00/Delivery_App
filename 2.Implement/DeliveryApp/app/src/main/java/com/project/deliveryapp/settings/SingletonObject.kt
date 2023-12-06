@@ -1,17 +1,57 @@
 package com.project.deliveryapp.settings
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
+import android.util.Log
 import com.project.deliveryapp.data.UserData
-
-// At the top level of your kotlin file:
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+import com.project.deliveryapp.room.RoomDataBase
+import com.project.deliveryapp.room.data.MarketDataForRoom
+import com.project.deliveryapp.room.data.UserDataForRoom
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlin.IllegalStateException
 
 
 object SingletonObject {
+
     private var userData: UserData? = null
 
-    public fun getUserData(): UserData? = userData
+    fun getUserId()= userData!!.id
+    fun getUserNickname() = userData!!.nickname
+
+    fun setUserData(userData: UserData) {
+        if(this.userData != null) {
+            throw IllegalStateException("UserData is set twice...")
+        }
+        this.userData = userData
+    }
+    suspend fun getSavedUserData(context: Context): UserDataForRoom? {
+        val dao = RoomDataBase.getInstance(context).roomDao
+
+        return dao.getUserData()
+    }
+    suspend fun saveUserDataInRoom(context: Context): Boolean {
+        val dao = RoomDataBase.getInstance(context).roomDao
+        val ud = this.userData!!
+        val userDataForRoom = UserDataForRoom(
+            ud.logInId,
+            ud.loginPwd
+        )
+        dao.insertUserData(userDataForRoom)
+
+        return true
+    }
+    suspend fun saveRecentMarket(context: Context, recentMarket: MarketDataForRoom): Boolean {
+        val dao = RoomDataBase.getInstance(context).roomDao
+
+        dao.insertRecentMarket(recentMarket)
+
+        return true
+    }
+    suspend fun deleteRecentMarket(context: Context, recentMarket: MarketDataForRoom): Boolean {
+        val dao = RoomDataBase.getInstance(context).roomDao
+
+        dao.deleteRecentMarket(recentMarket)
+
+        return true
+    }
 }

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.homeFragment.FindMarketFragment"
+    android:padding="30dp">
+
+    <FrameLayout
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <TextView
+        android:id="@+id/curAddressText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/mapView"
+        android:gravity="center"
+
+        android:text="서울특별시 중구 을지로 65"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+        android:layout_marginTop="5dp"
+        android:padding="3dp"
+
+
+        />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintTop_toBottomOf="@id/curAddressText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:layout_marginTop="10dp"
+        >
+
+    </androidx.fragment.app.FragmentContainerView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/noRecentMarketPanel"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/curAddressText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        >
+
+        <TextView
+            android:id="@+id/recentText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            android:gravity="center"
+
+            android:text="최근 이용"
+            android:textSize="18sp"
+            android:textColor="@color/tulip_noir"
+
+            android:background="@color/sky"
+
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recentText"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:layout_marginTop="10dp"
+
+            android:background="@color/sky"
+            android:padding="10dp"
+
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="최근 이용 기록이 없습니다."
+                android:textSize="18sp"
+                />
+
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

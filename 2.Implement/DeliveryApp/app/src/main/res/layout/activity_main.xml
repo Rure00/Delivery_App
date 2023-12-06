@@ -7,174 +7,34 @@
     tools:context=".activity.MainActivity"
     >
 
-    <ImageView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="340dp"
-
-        app:layout_constraintTop_toTopOf="parent"
-
-        android:layout_marginTop="40dp"
-
-        android:background="@color/sky"
-
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        />
-
-    <TextView
-        android:id="@+id/curAddressText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toBottomOf="@id/mapView"
-        android:gravity="center"
-
-        android:text="서울특별시 중구 을지로 65"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-
-        android:layout_marginTop="5dp"
-        android:padding="3dp"
-
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        />
-
-    <Button
-        android:id="@+id/recentBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-
-        app:layout_constraintTop_toBottomOf="@id/curAddressText"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center"
-
-        android:text="최근 이용"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-
-        android:layout_marginTop="5dp"
-
-        android:background="@color/sky"
-
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        />
-
-    <HorizontalScrollView
-        android:id="@+id/recentMarketInfo"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:defaultNavHost="true"
 
-        app:layout_constraintTop_toBottomOf="@id/recentBtn"
-        app:layout_constraintBottom_toTopOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/toolbar"
-
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginVertical="10dp"
-
-        android:visibility="invisible"
-        >
-
-
-    </HorizontalScrollView>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/marketSummary"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bn_menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recentBtn"
-        app:layout_constraintBottom_toTopOf="@id/toolbar"
-
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginVertical="10dp"
-
-        android:visibility="visible"
-        >
-
-        <TextView
-            android:id="@+id/marketNameText"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
-            android:gravity="center"
-            android:text="삼성 마트"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-
-            android:background="@color/sky"
-
-            android:padding="5dp"
-            />
-
-        <TextView
-            android:id="@+id/marketScoreText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            android:text="3.5/5"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-
-            android:background="@color/yellow"
-
-            android:padding="5dp"
-            />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/marketNameText"
-            app:layout_constraintBottom_toTopOf="@id/orderButton"
-
-            android:layout_marginVertical="10dp"
-
-            android:background="@color/sky"
-            />
-
-        <Button
-            android:id="@+id/orderButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            android:text="주문하기"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-
-            android:background="@color/sky"
-            />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_resource" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bn_menu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        android:background="@color/white"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"
+
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_bottom"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

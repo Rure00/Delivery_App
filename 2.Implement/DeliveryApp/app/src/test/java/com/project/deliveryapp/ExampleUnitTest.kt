@@ -1,17 +1,47 @@
 package com.project.deliveryapp
 
+import com.project.deliveryapp.data.UserData
+import com.project.deliveryapp.data.enum.Gender
+import com.project.deliveryapp.retrofit.RetrofitClient
+import com.project.deliveryapp.retrofit.RetrofitService
+import com.project.deliveryapp.retrofit.dto.LoginDto
 import org.junit.Test
 
-import org.junit.Assert.*
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 class ExampleUnitTest {
+
+    //private val context: Context = ApplicationProvider.getApplicationContext<Context>()
+
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        val greeting: (String, Int)-> String =  { name, age ->
+            val result = "Hello I'm $name, $age age year old "
+            println(result)
+
+            result
+        }
+
+        val result: String =greeting("Sung", 25)
     }
+
+    @Test
+    fun testForUserDataLoad() {
+        val ud: UserData = UserData(
+            0,
+            "Sung", "Rure",
+            "asnjkd", "6344",
+            "0102213414", Gender.Male, "sadang"
+        )
+
+        val service: RetrofitService = RetrofitClient.getInstance().create(RetrofitService::class.java)
+
+
+        val loginDto = LoginDto(
+            "asnjkd", "6344"
+        )
+
+        service.tryLogin(loginDto)
+
+    }
+
 }

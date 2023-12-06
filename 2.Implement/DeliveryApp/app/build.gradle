@@ -1,13 +1,16 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'androidx.navigation.safeargs.kotlin' version '2.4.2' apply false
-
-    //apply plugin: 'kotlin-kapt'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
     compileSdk 33
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.2"
+    }
 
     defaultConfig {
         applicationId "com.project.deliveryapp"
@@ -16,8 +19,12 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
 
+
+
+    testOptions {
+        unitTests.includeAndroidResources = true
     }
 
     viewBinding {
@@ -28,15 +35,19 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget =  JavaVersion.VERSION_1_8.toString()
     }
 }
+
+
 
 dependencies {
 
@@ -44,21 +55,47 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    //data store
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    //Jetpack Room <-Data Store
+    implementation("androidx.room:room-runtime:2.5.2")
+    kapt 'androidx.room:room-compiler:2.5.2'
 
     //annotation
     implementation("androidx.annotation:annotation:1.7.0")
-    
-    //annotation module by 강남언니 (https://blog.gangnamunni.com/post/kotlin-annotation-codegeneration/)
-    implementation project(':datavalidation-annotation')
-    //kapt project(':datavalidation-processor')
 
     //Reflection
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.10"
 
+    //CoRoutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
+
+    //Jetpack Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
+
+    //view model
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+    //live Data
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
+
+    //Retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+
+
+    //Robolectric
+    testImplementation 'androidx.test:core:1.5.0'
+
+    //JUnit
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'com.google.truth:truth:1.1.2'
+
+    //Naver Map
+    implementation 'com.naver.maps:map-sdk:3.17.0'
+    //지자기, 가속도 센서를 활용해 최적의 위치를 반환하는 구현체
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+
 }
+
