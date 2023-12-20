@@ -2,6 +2,7 @@ package com.project.deliveryapp.fragment.homeFragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +13,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.project.deliveryapp.R
+import com.project.deliveryapp.activity.MainActivity
+import com.project.deliveryapp.activity.TabTag
 import com.project.deliveryapp.data.MarketData
 import com.project.deliveryapp.databinding.FragmentSelectMarketBinding
+import com.project.deliveryapp.fragment.MarketScoreFragment
+import com.project.deliveryapp.fragment.ShoppingFragment
 import com.project.deliveryapp.view_model.MainViewModel
 import java.lang.Math.round
 
 class SelectMarketFragment : Fragment() {
     private var _binding: FragmentSelectMarketBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var mainActivity: MainActivity
     private lateinit var context: Context
     private lateinit var viewModel: MainViewModel
     private lateinit var curMarket: MarketData
@@ -31,7 +38,10 @@ class SelectMarketFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         curMarket = viewModel.getCurMarket()
 
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
+        mainActivity = requireActivity() as MainActivity
+
+        mainActivity.onBackPressedDispatcher.addCallback(this) {
+            Log.d("on Back Button Pressed", "It's SelectMarketFragment")
             requireParentFragment().childFragmentManager.beginTransaction().replace(R.id.container,RecentMarketFragment()).commit()
         }
     }
@@ -53,20 +63,17 @@ class SelectMarketFragment : Fragment() {
             marketScoreBtn.text = String.format(getString(R.string.score_expression), curMarket.score)
 
             marketScoreBtn.setOnClickListener {
-
-                parentFragment.findNavController().navigate(R.id.action_findMarketFragment_to_marketScoreFragment)
-                parentFragment.childFragmentManager.beginTransaction().remove(this@SelectMarketFragment).commit()
+                mainActivity.pushFragments(TabTag.TAB_FIND, MarketScoreFragment(), true)
             }
             orderButton.setOnClickListener {
-                viewModel.saveCurMarket(curMarket)
-
-                parentFragment.findNavController().navigate(R.id.action_findMarketFragment_to_shoppingFragment)
-                parentFragment.childFragmentManager.beginTransaction().remove(this@SelectMarketFragment).commit()
+                mainActivity.pushFragments(TabTag.TAB_FIND, ShoppingFragment(), true)
             }
             backBtn.setOnClickListener {
                 parentFragment.childFragmentManager.beginTransaction().replace(R.id.container,RecentMarketFragment()).commit()
             }
         }
+
+
 
 
     }

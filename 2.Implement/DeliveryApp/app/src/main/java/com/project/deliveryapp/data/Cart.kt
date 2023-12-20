@@ -1,5 +1,7 @@
 package com.project.deliveryapp.data
 
+import android.util.Log
+
 data class Cart(
     private val marketData: MarketData
 ) {
@@ -18,7 +20,17 @@ data class Cart(
     val marketId = marketData.id
 
     fun add(item: ItemOnBuy) {
-        itemsOnCart.add(item)
+        var isDuplicated = false
+        for(index in itemsOnCart.indices) {
+            if(itemsOnCart[index].stock == item.stock) {
+                isDuplicated = true
+                itemsOnCart[index].count += item.count
+            }
+        }
+
+        Log.d("Shopping", "itemsOnCart.contains(item): $isDuplicated")
+        if(!isDuplicated) itemsOnCart.add(item)
+
     }
     fun delete(item: Stock): Boolean {
         var index = -1

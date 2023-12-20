@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.project.deliveryapp.R
+import com.project.deliveryapp.activity.TabTag
 import com.project.deliveryapp.databinding.FragmentCartBinding
 import com.project.deliveryapp.databinding.FragmentCartDetailBinding
 import com.project.deliveryapp.view_model.MainViewModel

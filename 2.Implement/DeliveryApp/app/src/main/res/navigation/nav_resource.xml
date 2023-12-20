@@ -5,6 +5,7 @@
     android:id="@+id/nav_resource"
     app:startDestination="@id/findMarketFragment">
 
+
     <activity
         android:id="@+id/signInActivity"
         android:name="com.project.deliveryapp.activity.SignInActivity"
@@ -17,32 +18,66 @@
         tools:layout="@layout/fragment_sign_up" />
 
 
+
+
+
+
+
     <activity
         android:id="@+id/mainActivity"
         android:name="com.project.deliveryapp.activity.MainActivity"
         android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/activity_main"
+        />
+
+
+
+
+
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.project.deliveryapp.fragment.MyPageFragment"
         android:label="fragment_my_page"
         tools:layout="@layout/fragment_my_page" >
+
         <action
             android:id="@+id/action_myPageFragment_to_myOrderFragment"
-            app:destination="@id/myOrderFragment" />
+            app:destination="@id/myOrderFragment"
+            />
         <action
             android:id="@+id/action_myPageFragment_to_myReviewFragment"
             app:destination="@id/myReviewFragment" />
     </fragment>
+
+
+
+
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.project.deliveryapp.fragment.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" >
+
         <action
             android:id="@+id/action_cartFragment_to_cartDetailFragment"
-            app:destination="@id/cartDetailFragment" />
+            app:destination="@id/cartDetailFragment"
+            />
     </fragment>
+    <fragment
+        android:id="@+id/cartDetailFragment"
+        android:name="com.project.deliveryapp.fragment.CartDetailFragment"
+        android:label="fragment_cart_detail"
+        tools:layout="@layout/fragment_cart_detail" >
+        <action
+            android:id="@+id/action_cartDetailFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+
+
+
+
+
+
     <fragment
         android:id="@+id/findMarketFragment"
         android:name="com.project.deliveryapp.fragment.homeFragment.FindMarketFragment"
@@ -55,6 +90,7 @@
             android:id="@+id/action_findMarketFragment_to_shoppingFragment"
             app:destination="@id/shoppingFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/marketScoreFragment"
         android:name="com.project.deliveryapp.fragment.MarketScoreFragment"
@@ -84,15 +120,7 @@
         android:name="com.project.deliveryapp.fragment.ReviewFragment"
         android:label="fragment_review"
         tools:layout="@layout/fragment_review" />
-    <fragment
-        android:id="@+id/cartDetailFragment"
-        android:name="com.project.deliveryapp.fragment.CartDetailFragment"
-        android:label="fragment_cart_detail"
-        tools:layout="@layout/fragment_cart_detail" >
-        <action
-            android:id="@+id/action_cartDetailFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/myOrderFragment"
         android:name="com.project.deliveryapp.fragment.MyOrderFragment"

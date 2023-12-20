@@ -2,6 +2,7 @@ package com.project.deliveryapp.fragment.homeFragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.Overlay.OnClickListener
 import com.naver.maps.map.util.FusedLocationSource
 import com.project.deliveryapp.R
+import com.project.deliveryapp.activity.TabTag
 import com.project.deliveryapp.data.MarketData
 import com.project.deliveryapp.databinding.FragmentFindMarketBinding
 import com.project.deliveryapp.naver.NaverMapManager
@@ -38,6 +40,7 @@ class FindMarketFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentFindMarketBinding? = null
     private val binding get() = _binding!!
 
+
     private lateinit var context: Context
     private lateinit var viewModel: MainViewModel
 
@@ -45,7 +48,6 @@ class FindMarketFragment : Fragment(), OnMapReadyCallback {
     private lateinit var locationSource: LocationSource
 
     private var waitTime = 0L
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,9 +134,6 @@ class FindMarketFragment : Fragment(), OnMapReadyCallback {
             }
 
             //TODO:-------------------------------------------------------------
-
-
-
 
             nearMarkets?.forEach {marketData ->
                 val marker = Marker(marketData.location)
