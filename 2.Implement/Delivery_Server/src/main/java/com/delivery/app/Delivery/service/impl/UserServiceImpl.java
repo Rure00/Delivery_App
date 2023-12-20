@@ -3,7 +3,7 @@ package com.delivery.app.Delivery.service.impl;
 import com.delivery.app.Delivery.dao.UserDAO;
 import com.delivery.app.Delivery.data.dto.LoginDto;
 import com.delivery.app.Delivery.data.dto.SignUpDto;
-import com.delivery.app.Delivery.data.dto.UserResponseDto;
+import com.delivery.app.Delivery.data.dto.response.UserResponseDto;
 import com.delivery.app.Delivery.data.entity.User;
 import com.delivery.app.Delivery.data.my_enum.SignUpCode;
 import com.delivery.app.Delivery.service.UserService;

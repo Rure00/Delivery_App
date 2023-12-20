@@ -26,6 +26,9 @@ public class Market {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
+    @Column(nullable = false)
+    private String address;
+
 
     @OneToMany
     private Collection<Stock> stocks;

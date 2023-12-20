@@ -2,11 +2,10 @@ package com.delivery.app.Delivery.controller;
 
 import com.delivery.app.Delivery.data.dto.LoginDto;
 import com.delivery.app.Delivery.data.dto.SignUpDto;
-import com.delivery.app.Delivery.data.dto.SignUpResponseDto;
-import com.delivery.app.Delivery.data.dto.UserResponseDto;
+import com.delivery.app.Delivery.data.dto.response.SignUpResponseDto;
+import com.delivery.app.Delivery.data.dto.response.UserResponseDto;
 import com.delivery.app.Delivery.data.my_enum.SignUpCode;
 import com.delivery.app.Delivery.service.UserService;
-import com.sun.net.httpserver.HttpsServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,9 +35,9 @@ public class UserController {
         SignUpCode result = service.trySignUp(signUpDto);
 
         SignUpResponseDto response = switch (result) {
-            case SUCCESS -> new SignUpResponseDto(true, "회원 가입 성공");
-            case DUPLICATE_ID -> new SignUpResponseDto(false, "동일한 ID가 존재합니다.");
-            case FAIL -> new SignUpResponseDto(false, "회원 가입 실패");
+            case SUCCESS -> new SignUpResponseDto("회원 가입 성공");
+            case DUPLICATE_ID -> new SignUpResponseDto("동일한 ID가 존재합니다.");
+            case FAIL -> new SignUpResponseDto("회원 가입 실패");
         };
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
