@@ -6,12 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naver.maps.geometry.LatLng
 import com.project.deliveryapp.R
+import com.project.deliveryapp.activity.MainActivity
+import com.project.deliveryapp.activity.TabTag
 import com.project.deliveryapp.data.MarketData
 import com.project.deliveryapp.data.Review
 import com.project.deliveryapp.databinding.FragmentMarketScoreBinding
@@ -28,6 +31,8 @@ class MarketScoreFragment : Fragment() {
     private var _binding: FragmentMarketScoreBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var mainActivity: MainActivity
+
     private lateinit var context: Context
     private lateinit var viewModel: MainViewModel
 
@@ -37,8 +42,13 @@ class MarketScoreFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        mainActivity = requireActivity() as MainActivity
         context = requireContext()
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+
+        requireActivity().onBackPressedDispatcher.addCallback(this@MarketScoreFragment) {
+            mainActivity.popFragments()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -84,7 +94,7 @@ class MarketScoreFragment : Fragment() {
             //TODO: add filter algorithm
         }
         binding.reviewBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_marketScoreFragment_to_reviewFragment)
+            mainActivity.pushFragments(TabTag.TAB_FIND, ReviewFragment(), true)
         }
 
 

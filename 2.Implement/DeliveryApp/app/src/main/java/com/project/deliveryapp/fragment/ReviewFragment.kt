@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.project.deliveryapp.R
+import com.project.deliveryapp.activity.MainActivity
 import com.project.deliveryapp.data.Review
 import com.project.deliveryapp.databinding.FragmentReviewBinding
 import com.project.deliveryapp.dialog.SimpleDialog
@@ -22,23 +24,20 @@ class ReviewFragment : Fragment() {
     private var _binding: FragmentReviewBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var mainActivity: MainActivity
     private lateinit var context: Context
     private lateinit var viewModel: MainViewModel
-
-    private lateinit var confirmDialog: SimpleDialog
-    private lateinit var backPressedDialog: SimpleDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        mainActivity = requireActivity() as MainActivity
         context = requireContext()
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
-        confirmDialog = getConfirmDialog()
-        backPressedDialog = getBackPressedDialog()
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            backPressedDialog.show(parentFragmentManager, "BackPressedDialog: SimpleDialog")
+            getBackPressedDialog().show(parentFragmentManager, "BackPressedDialog: SimpleDialog")
         }
     }
 
@@ -57,11 +56,10 @@ class ReviewFragment : Fragment() {
                 Toast.makeText(context, "내용을 입력해주세요!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            confirmDialog.show(parentFragmentManager, "ConfirmDialog: SimpleDialog")
+            getConfirmDialog().show(parentFragmentManager, "ConfirmDialog: SimpleDialog")
         }
         binding.cancel.setOnClickListener {
-            backPressedDialog.show(parentFragmentManager, "BackPressedDialog: SimpleDialog")
+            getBackPressedDialog().show(parentFragmentManager, "BackPressedDialog: SimpleDialog")
         }
     }
 
@@ -80,12 +78,10 @@ class ReviewFragment : Fragment() {
             title, body, confirmText, cancelText
         );
 
-
-
         backPressedDialog.setButtonClickListener(object: SimpleDialog.OnButtonClickListener{
             override fun onConfirmButtonClicked() {
                 backPressedDialog.dismiss()
-                findNavController().popBackStack()
+                mainActivity.popFragments()
             }
             override fun onCancelButtonClicked() {
                 backPressedDialog.dismiss()
@@ -101,7 +97,7 @@ class ReviewFragment : Fragment() {
         val confirmText = resources.getString(R.string.review_dialog_confirm)
         val cancelText = resources.getString(R.string.review_dialog_cancel)
 
-        confirmDialog = SimpleDialog(
+        val confirmDialog = SimpleDialog(
             title, body, confirmText, cancelText
         )
 
@@ -119,7 +115,7 @@ class ReviewFragment : Fragment() {
                 viewModel.saveReview(review)
 
                 confirmDialog.dismiss()
-                findNavController().popBackStack()
+                mainActivity.popFragments()
             }
             override fun onCancelButtonClicked() {
                 confirmDialog.dismiss()

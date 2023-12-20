@@ -2,13 +2,15 @@ package com.project.deliveryapp.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.deliveryapp.activity.MainActivity
+import com.project.deliveryapp.activity.TabTag
 import com.project.deliveryapp.data.Cart
 import com.project.deliveryapp.databinding.FragmentCartBinding
 import com.project.deliveryapp.dialog.SimpleDialog
@@ -22,6 +24,7 @@ class CartFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var mainActivity: MainActivity
     private lateinit var context: Context
     private lateinit var viewModel: MainViewModel
 
@@ -30,8 +33,14 @@ class CartFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        mainActivity = requireActivity() as MainActivity
         context = requireContext()
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+
+        requireActivity().onBackPressedDispatcher.addCallback(this@CartFragment){
+            mainActivity.toFindTab()
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -58,7 +67,7 @@ class CartFragment : Fragment() {
                 adapter.setOnClickListener(object : CartRvAdapter.OnItemClickListener {
                     override fun onCheckButtonClick(position: Int) {
                         //TODO: navigate to CartDetailFragment
-
+                        mainActivity.pushFragments(TabTag.TAB_CART, CartDetailFragment(), true)
                     }
                     override fun onRemoveButtonClick(position: Int) {
                         val removeCartDialog = getRemoveCartDialog()
@@ -67,7 +76,6 @@ class CartFragment : Fragment() {
                             override fun onConfirmButtonClicked() {
                                 viewModel.removeCart(cartList[position])
                                 cartList.removeAt(position)
-
 
                                 adapter.notifyItemRemoved(position)
 

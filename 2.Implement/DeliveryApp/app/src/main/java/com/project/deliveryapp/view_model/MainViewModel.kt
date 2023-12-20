@@ -21,6 +21,7 @@ class MainViewModel: ViewModel() {
     //private var service: RetrofitService = RetrofitClient.getInstance().create(RetrofitService::class.java)
     private var curMarket: MarketData? = null
 
+
     suspend fun getRecentMarketInfo(context: Context): List<MarketDataForRoom>? {
         val dao = RoomDataBase.getInstance(context).roomDao
         return withContext(Dispatchers.IO) {
