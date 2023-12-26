@@ -19,6 +19,8 @@ import com.project.deliveryapp.databinding.FragmentReviewBinding
 import com.project.deliveryapp.dialog.SimpleDialog
 import com.project.deliveryapp.settings.SingletonObject
 import com.project.deliveryapp.view_model.MainViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ReviewFragment : Fragment() {
     private var _binding: FragmentReviewBinding? = null
@@ -105,12 +107,14 @@ class ReviewFragment : Fragment() {
             override fun onConfirmButtonClicked() {
                 val userId = SingletonObject.getUserId()
                 val marketId = viewModel.getCurMarket().id
-                val comment = binding.content.text.toString()
                 val userNickname = SingletonObject.getUserNickname()
+                val marketName = viewModel.getCurMarket().name
+                val comment = binding.content.text.toString()
                 val score = binding.scoreRating.rating
+                val date = LocalDateTime.now()
 
                 val review = Review(
-                    0, userId, marketId, userNickname, comment, score, null
+                    0, userId, marketId, userNickname, marketName, comment, score, date
                 )
                 viewModel.saveReview(review)
 

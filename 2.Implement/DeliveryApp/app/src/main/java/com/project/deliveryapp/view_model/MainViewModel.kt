@@ -6,6 +6,7 @@ import com.naver.maps.geometry.LatLng
 import com.project.deliveryapp.data.Cart
 import com.project.deliveryapp.data.ItemOnBuy
 import com.project.deliveryapp.data.MarketData
+import com.project.deliveryapp.data.Order
 import com.project.deliveryapp.data.Review
 import com.project.deliveryapp.data.Stock
 import com.project.deliveryapp.retrofit.dto.ReviewResponseDto
@@ -20,7 +21,8 @@ import java.time.LocalDateTime
 class MainViewModel: ViewModel() {
     //private var service: RetrofitService = RetrofitClient.getInstance().create(RetrofitService::class.java)
     private var curMarket: MarketData? = null
-
+    private var curCart: Cart? = null
+    private var curOrder: Order? = null
 
     suspend fun getRecentMarketInfo(context: Context): List<MarketDataForRoom>? {
         val dao = RoomDataBase.getInstance(context).roomDao
@@ -33,6 +35,25 @@ class MainViewModel: ViewModel() {
         curMarket = market
     }
     fun getCurMarket(): MarketData = curMarket!!
+
+    fun saveCurCart(cart: Cart) {
+        curCart = cart
+    }
+    fun getCurCart(): Cart = curCart!!
+
+    fun saveCurOrder(order: Order) {
+        curOrder = order
+    }
+    fun getCurOrder(): Order = curOrder!!
+
+
+
+
+
+
+
+
+
 
     suspend fun getMarketData(): MarketData {
         //return service.getMarketData()
@@ -93,10 +114,20 @@ class MainViewModel: ViewModel() {
 
         return result
     }
-
     fun removeCart(cart: Cart) {
         CoroutineScope(Dispatchers.IO).launch {
 
         }
+    }
+    suspend fun getMyOrder(): ArrayList<Order> {
+        return ArrayList()
+    }
+
+    fun getMyReviews(): ArrayList<Review> {
+        return ArrayList()
+    }
+
+    fun removeReview(review: Review) {
+
     }
 }

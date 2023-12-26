@@ -137,8 +137,6 @@ class ShoppingFragment : Fragment() {
             title, body, confirmText, cancelText
         );
 
-
-
         backPressedDialog.setButtonClickListener(object: SimpleDialog.OnButtonClickListener{
             override fun onConfirmButtonClicked() {
                 backPressedDialog.dismiss()

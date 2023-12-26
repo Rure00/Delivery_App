@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.project.deliveryapp.R
 import com.project.deliveryapp.activity.MainActivity
 import com.project.deliveryapp.activity.TabTag
 import com.project.deliveryapp.databinding.FragmentMyPageBinding

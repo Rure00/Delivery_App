@@ -28,7 +28,9 @@ class CartFragment : Fragment() {
     private lateinit var context: Context
     private lateinit var viewModel: MainViewModel
 
+    private lateinit var adapter: CartRvAdapter
     private lateinit var cartList: ArrayList<Cart>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +58,7 @@ class CartFragment : Fragment() {
             cartList = viewModel.getCarts()
 
             if(cartList.isNotEmpty()) {
-                val adapter = CartRvAdapter(cartList)
+                adapter = CartRvAdapter(cartList)
                 adapter.notifyItemRangeInserted(0, cartList.size)
 
                 val recyclerView = binding.recyclerView
@@ -66,25 +68,11 @@ class CartFragment : Fragment() {
 
                 adapter.setOnClickListener(object : CartRvAdapter.OnItemClickListener {
                     override fun onCheckButtonClick(position: Int) {
-                        //TODO: navigate to CartDetailFragment
+                        viewModel.saveCurCart(cartList[position])
                         mainActivity.pushFragments(TabTag.TAB_CART, CartDetailFragment(), true)
                     }
                     override fun onRemoveButtonClick(position: Int) {
-                        val removeCartDialog = getRemoveCartDialog()
-                        removeCartDialog.show(parentFragmentManager, "RemoveCartDialog: SimpleDialog")
-                        removeCartDialog.setButtonClickListener(object : SimpleDialog.OnButtonClickListener{
-                            override fun onConfirmButtonClicked() {
-                                viewModel.removeCart(cartList[position])
-                                cartList.removeAt(position)
-
-                                adapter.notifyItemRemoved(position)
-
-                                removeCartDialog.dismiss()
-                            }
-                            override fun onCancelButtonClicked() {
-                                removeCartDialog.dismiss()
-                            }
-                        })
+                        showRemoveCartDialog(cartList[position], position)
                     }
                 })
             }
@@ -99,17 +87,32 @@ class CartFragment : Fragment() {
         _binding = null
     }
 
-    fun getRemoveCartDialog(): SimpleDialog {
+    fun showRemoveCartDialog(cart: Cart, position: Int) {
         val title = "해당 장바구니를 지울까요?"
         val body = "다시 되돌릴 수 없어요."
         val confirmText = "지울게요!"
         val cancelText = "잠시만요!"
 
-        return SimpleDialog(
+        val removeCartDialog = SimpleDialog(
             title = title,
             body = body,
             confirmButtonText = confirmText,
             cancelButtonText = cancelText
         )
+
+        removeCartDialog.show(parentFragmentManager, "RemoveCartDialog: SimpleDialog")
+        removeCartDialog.setButtonClickListener(object : SimpleDialog.OnButtonClickListener{
+            override fun onConfirmButtonClicked() {
+                viewModel.removeCart(cart)
+                cartList.removeAt(position)
+
+                adapter.notifyItemRemoved(position)
+
+                removeCartDialog.dismiss()
+            }
+            override fun onCancelButtonClicked() {
+                removeCartDialog.dismiss()
+            }
+        })
     }
 }

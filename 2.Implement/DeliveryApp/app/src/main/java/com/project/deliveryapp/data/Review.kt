@@ -1,6 +1,7 @@
 package com.project.deliveryapp.data
 
 import android.media.Image
+import java.time.LocalDateTime
 
 
 data class Review(
@@ -9,8 +10,8 @@ data class Review(
     private val marketId: Int,
 
     val userNickname: String,
+    val marketName: String,
     val comment: String,
     val score: Float,
-
-    val pictures: ArrayList<Image>?
+    val date: LocalDateTime,
 )

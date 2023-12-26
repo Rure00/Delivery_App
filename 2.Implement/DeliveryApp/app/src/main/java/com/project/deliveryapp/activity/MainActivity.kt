@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     override fun onCancelButtonClicked() {
                         dialog.dismiss()
+                        mCurrentTab = TabTag.TAB_FIND
                     }
 
                 })
