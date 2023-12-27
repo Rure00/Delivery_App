@@ -48,6 +48,4 @@ public class UserController {
         return "Hello it's a test!";
     }
 
-
-
 }

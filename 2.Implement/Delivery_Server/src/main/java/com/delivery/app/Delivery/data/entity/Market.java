@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.locationtech.jts.geom.Point;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity @Table(name="markets")
@@ -29,11 +31,17 @@ public class Market {
     @Column(nullable = false)
     private String address;
 
+    @Column(nullable = false)
+    private Point location;
 
     @OneToMany
     private Collection<Stock> stocks;
 
-    @Column(nullable = false)
-    private Point location;
+    @Column()
+    private String description;
+
+    @CreatedDate
+    @Column(name="create_at")
+    private LocalDateTime createAt;
 
 }

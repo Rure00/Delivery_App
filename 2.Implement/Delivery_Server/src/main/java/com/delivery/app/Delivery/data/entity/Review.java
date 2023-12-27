@@ -24,6 +24,9 @@ public class Review {
     @Column(name="user_nickname", nullable = false)
     private String userNickname;
 
+    @Column(name="market_name", nullable = false)
+    private String marketName;
+
     @Column(nullable = false)
     private String comment;
 
@@ -33,7 +36,4 @@ public class Review {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    //@Column(name="image")
-    //private String imageUrl;
 }
