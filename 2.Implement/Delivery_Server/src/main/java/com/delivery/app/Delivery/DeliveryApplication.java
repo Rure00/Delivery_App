@@ -17,6 +17,8 @@ public class DeliveryApplication {
 		SpringApplication.run(DeliveryApplication.class, args);
 	}
 
+
+	/*
 	@Bean
 	public ServletWebServerFactory servletContainer() {
 		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
@@ -37,6 +39,8 @@ public class DeliveryApplication {
 		return tomcat;
 	}
 
+
+
 	private Connector httpToHttpsRedirectConnector() {
 		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
 		connector.setScheme("http");
@@ -46,22 +50,6 @@ public class DeliveryApplication {
 		return connector;
 	}
 
-	/*
-		1. 로그인
-		2. 회원가입
-
-		3. 마켓 가져오기
-		4. 가까운 마켓 찾기
-
-		5. 장바구니 저장
-		6. 장바구니 삭제
-		8. 장바구니 가져오기
-
-		9. 리뷰 저장
-		10. 리뷰 가져오기
-		11. 리뷰 삭제
-
-		12. 재고 가져오기
 	 */
 
 }

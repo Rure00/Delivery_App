@@ -2,6 +2,7 @@ package com.delivery.app.Delivery.controller;
 
 import com.delivery.app.Delivery.data.dto.LoginDto;
 import com.delivery.app.Delivery.data.dto.SignUpDto;
+import com.delivery.app.Delivery.data.dto.TestDto;
 import com.delivery.app.Delivery.data.dto.response.SignUpResponseDto;
 import com.delivery.app.Delivery.data.dto.response.UserResponseDto;
 import com.delivery.app.Delivery.data.my_enum.SignUpCode;
@@ -43,9 +44,19 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/test")
-    public String testFunction() {
-        return "Hello it's a test!";
+    @PostMapping("/test")
+    public ResponseEntity<TestDto> testFunction(@RequestBody TestDto testDto) {
+
+        System.out.println("Test is Called...");
+        ResponseEntity<TestDto> entity = new ResponseEntity<>(HttpStatus.OK);
+
+        return ResponseEntity.status(HttpStatus.OK).body(testDto);
+    }
+
+    @PostMapping("/test2")
+    public String test2Function() {
+        System.out.println("Test2 is Called...");
+        return "Hello World!";
     }
 
 }
