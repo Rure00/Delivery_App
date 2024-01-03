@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserResponseDto {
+public class UserResponseDto implements BaseResponseDto {
     private Long id;
     private String name;
     private String nickname;
@@ -14,4 +14,5 @@ public class UserResponseDto {
     private String phoneNumber;
     private String gender;
     private String address;
+    private String createAt;
 }

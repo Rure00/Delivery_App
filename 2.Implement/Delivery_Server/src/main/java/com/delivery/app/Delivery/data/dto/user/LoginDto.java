@@ -1,4 +1,4 @@
-package com.delivery.app.Delivery.data.dto;
+package com.delivery.app.Delivery.data.dto.user;
 
 import lombok.Getter;
 

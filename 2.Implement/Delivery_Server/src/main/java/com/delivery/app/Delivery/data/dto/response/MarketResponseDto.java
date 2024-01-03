@@ -1,12 +1,15 @@
 package com.delivery.app.Delivery.data.dto.response;
 
 
-public class MarketResponseDto {
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class MarketResponseDto implements BaseResponseDto {
     private Long id;
     private String name;
     private String phoneNumber;
     private String address;
-    private Long latitude;
-    private Long longitude;
+    private Double latitude;
+    private Double longitude;
     private String description;
 }

@@ -37,7 +37,6 @@ dependencies {
 
 
 	implementation 'mysql:mysql-connector-java:8.0.33'
-
 	implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.6.9.Final'
 
 

@@ -5,9 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
-public class SignUpResponseDto implements BaseResponseDto {
-    private String description;
+public class ResponseResult {
+    boolean isSuccess;
+    BaseResponseDto responseDto;
 }

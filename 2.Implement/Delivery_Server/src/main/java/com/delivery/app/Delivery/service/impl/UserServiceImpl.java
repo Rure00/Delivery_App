@@ -1,8 +1,8 @@
 package com.delivery.app.Delivery.service.impl;
 
 import com.delivery.app.Delivery.dao.UserDAO;
-import com.delivery.app.Delivery.data.dto.LoginDto;
-import com.delivery.app.Delivery.data.dto.SignUpDto;
+import com.delivery.app.Delivery.data.dto.user.LoginDto;
+import com.delivery.app.Delivery.data.dto.user.SignUpDto;
 import com.delivery.app.Delivery.data.dto.response.UserResponseDto;
 import com.delivery.app.Delivery.data.entity.User;
 import com.delivery.app.Delivery.data.my_enum.SignUpCode;
@@ -32,7 +32,8 @@ public class UserServiceImpl implements UserService {
                 user.getLoginPwd(),
                 user.getPhoneNumber(),
                 user.getGender(),
-                user.getAddress()
+                user.getAddress(),
+                user.getCreatedAt().toString()
         );
     }
 

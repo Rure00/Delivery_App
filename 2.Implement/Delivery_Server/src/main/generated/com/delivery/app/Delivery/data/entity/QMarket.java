@@ -28,11 +28,13 @@ public class QMarket extends EntityPathBase<Market> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final ComparablePath<org.locationtech.jts.geom.Point> location = createComparable("location", org.locationtech.jts.geom.Point.class);
+    public final NumberPath<Double> latitude = createNumber("latitude", Double.class);
 
     public final StringPath loginId = createString("loginId");
 
     public final StringPath loginPwd = createString("loginPwd");
+
+    public final NumberPath<Double> longitude = createNumber("longitude", Double.class);
 
     public final StringPath name = createString("name");
 

@@ -13,6 +13,7 @@ public class UserRepositoryCustomImpl extends QuerydslRepositorySupport implemen
         QUser user = QUser.user;
 
         User userData = from(user)
+
                 .where(user.loginID.eq(id).and(user.loginPwd.eq(pwd)))
                 .fetchOne();
 

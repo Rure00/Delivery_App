@@ -1,8 +1,8 @@
 package com.delivery.app.Delivery.dao.impl;
 
 import com.delivery.app.Delivery.dao.UserDAO;
-import com.delivery.app.Delivery.data.dto.LoginDto;
-import com.delivery.app.Delivery.data.dto.SignUpDto;
+import com.delivery.app.Delivery.data.dto.user.LoginDto;
+import com.delivery.app.Delivery.data.dto.user.SignUpDto;
 import com.delivery.app.Delivery.data.entity.User;
 import com.delivery.app.Delivery.data.my_enum.SignUpCode;
 import com.delivery.app.Delivery.repository.user.UserRepository;
@@ -30,10 +30,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public SignUpCode insertUser(SignUpDto signUpDto) {
+
         String id = signUpDto.getLoginId();
-
-        System.out.println(signUpDto.getLoginId());
-
         Boolean isDuplicated = userRepository.isDuplicated(id);
 
         if(!isDuplicated) {
@@ -53,7 +51,7 @@ public class UserDAOImpl implements UserDAO {
 
             return SignUpCode.SUCCESS;
         } else
-            return SignUpCode.DUPLICATE_ID;
+            return SignUpCode.DUPLICATED_ID;
 
     }
 }

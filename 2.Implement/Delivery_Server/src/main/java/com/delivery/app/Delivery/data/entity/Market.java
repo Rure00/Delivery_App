@@ -1,8 +1,10 @@
 package com.delivery.app.Delivery.data.entity;
 
+import com.delivery.app.Delivery.data.dto.response.MarketResponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -32,9 +34,12 @@ public class Market {
     private String address;
 
     @Column(nullable = false)
-    private Point location;
+    private Double latitude;
 
-    @OneToMany
+    @Column(nullable = false)
+    private Double longitude;
+
+    @OneToMany(fetch = FetchType.LAZY)
     private Collection<Stock> stocks;
 
     @Column()
@@ -43,5 +48,17 @@ public class Market {
     @CreatedDate
     @Column(name="create_at")
     private LocalDateTime createAt;
+
+    public MarketResponseDto toMarketResponseDto() {
+        return new MarketResponseDto(
+                getId(),
+                getName(),
+                getPhoneNumber(),
+                getAddress(),
+                getLatitude(),
+                getLongitude(),
+                getDescription()
+        );
+    }
 
 }
