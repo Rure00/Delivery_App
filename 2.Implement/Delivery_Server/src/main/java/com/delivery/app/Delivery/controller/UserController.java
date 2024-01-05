@@ -1,10 +1,10 @@
 package com.delivery.app.Delivery.controller;
 
-import com.delivery.app.Delivery.data.dto.user.LoginDto;
-import com.delivery.app.Delivery.data.dto.user.SignUpDto;
+import com.delivery.app.Delivery.data.dto.request.user.LoginDto;
+import com.delivery.app.Delivery.data.dto.request.user.SignUpDto;
 import com.delivery.app.Delivery.data.dto.response.ResponseResult;
-import com.delivery.app.Delivery.data.dto.response.SignUpResponseDto;
-import com.delivery.app.Delivery.data.dto.response.UserResponseDto;
+import com.delivery.app.Delivery.data.dto.response.user.SignUpResponseDto;
+import com.delivery.app.Delivery.data.dto.response.user.UserResponseDto;
 import com.delivery.app.Delivery.data.my_enum.SignUpCode;
 import com.delivery.app.Delivery.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

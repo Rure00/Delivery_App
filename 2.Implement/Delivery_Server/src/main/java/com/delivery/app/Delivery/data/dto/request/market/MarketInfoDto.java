@@ -1,4 +1,4 @@
-package com.delivery.app.Delivery.data.dto.market;
+package com.delivery.app.Delivery.data.dto.request.market;
 
 import lombok.Getter;
 

@@ -1,9 +1,9 @@
 package com.delivery.app.Delivery.dao.impl;
 
 import com.delivery.app.Delivery.dao.MarketDAO;
-import com.delivery.app.Delivery.data.dto.response.MarketItemsResponseDto;
-import com.delivery.app.Delivery.data.dto.response.MarketResponseDto;
-import com.delivery.app.Delivery.data.dto.response.NearMarketsResponseDto;
+import com.delivery.app.Delivery.data.dto.response.market.MarketItemsResponseDto;
+import com.delivery.app.Delivery.data.dto.response.market.MarketResponseDto;
+import com.delivery.app.Delivery.data.dto.response.market.NearMarketsResponseDto;
 import com.delivery.app.Delivery.data.entity.Market;
 import com.delivery.app.Delivery.data.entity.Stock;
 import com.delivery.app.Delivery.repository.marekt.MarketRepository;

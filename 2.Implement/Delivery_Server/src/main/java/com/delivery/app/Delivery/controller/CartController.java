@@ -1,9 +1,17 @@
 package com.delivery.app.Delivery.controller;
 
+import com.delivery.app.Delivery.data.dto.request.CartIdDto;
+import com.delivery.app.Delivery.data.dto.request.UserIdDto;
+import com.delivery.app.Delivery.data.dto.request.cart.SaveCartDto;
+import com.delivery.app.Delivery.data.dto.response.ResponseResult;
+import com.delivery.app.Delivery.data.dto.response.cart.CartDetailResponseDto;
+import com.delivery.app.Delivery.data.dto.response.cart.GetCartsResponseDto;
 import com.delivery.app.Delivery.service.CartService;
-import com.delivery.app.Delivery.service.MarketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,17 +24,66 @@ public class CartController {
     public CartController(CartService service) {this.service = service;}
 
     @PostMapping("/save")
-    public void saveCart() {
+    public ResponseEntity<ResponseResult> saveCart(@RequestBody SaveCartDto saveCartDto) {
 
+        ResponseResult result = new ResponseResult();
+        try {
+            service.saveCart(saveCartDto);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @PostMapping("/get")
-    public void getCarts() {
+    public ResponseEntity<ResponseResult> getCarts(@RequestBody UserIdDto userIdDto) {
+        ResponseResult result = new ResponseResult();
+        GetCartsResponseDto getCartsResponseDto = service.getUserCarts(userIdDto);
 
+        try {
+            result.setResponseDto(getCartsResponseDto);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @PostMapping("/detail")
-    public void getCartDetail() {
+    public ResponseEntity<ResponseResult> getCartDetail(@RequestBody CartIdDto cartIdDto) {
 
+        ResponseResult result = new ResponseResult();
+        CartDetailResponseDto cartDetailResponseDto = service.getCartDetail(cartIdDto);
+
+        result.setResponseDto(cartDetailResponseDto);
+
+        if(cartDetailResponseDto != null) {
+            result.setSuccess(true);
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        } else {
+            result.setSuccess(false);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+        }
+
+    }
+
+    @PostMapping("/remove")
+    public ResponseEntity<ResponseResult> removeCart(@RequestBody CartIdDto cartIdDto) {
+        ResponseResult result = new ResponseResult();
+
+        try {
+            service.removeCart(cartIdDto);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

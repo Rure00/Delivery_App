@@ -1,6 +1,6 @@
 package com.delivery.app.Delivery.data.dto;
 
-import com.delivery.app.Delivery.data.dto.user.LoginDto;
+import com.delivery.app.Delivery.data.dto.request.user.LoginDto;
 import lombok.Getter;
 
 import java.util.List;

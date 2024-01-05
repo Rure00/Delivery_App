@@ -7,19 +7,36 @@ import lombok.NoArgsConstructor;
 
 @Entity @Table(name="carts")
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Cart {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private User user;
+    @Column(name="user_id")
+    private Long userId;
 
-    @OneToOne
-    @JoinColumn(name="market_id", referencedColumnName = "id")
-    private Market marketId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="market_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Market market;
+    @Column(name="market_id")
+    private Long marketId;
 
+    @Column(name="market_name")
+    private String marketName;
+
+    @Column()
+    private Integer cost;
+
+
+    public Cart(Long userId, Long marketId, String marketName, Integer cost) {
+        //ID만 이용해서 매핑하기) https://gksdudrb922.tistory.com/231
+        this.userId = userId;
+        this.marketId = marketId;
+        this.marketName = marketName;
+        this.cost = cost;
+    }
 
 }

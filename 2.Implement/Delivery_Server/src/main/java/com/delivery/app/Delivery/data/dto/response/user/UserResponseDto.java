@@ -1,12 +1,13 @@
-package com.delivery.app.Delivery.data.dto.user;
+package com.delivery.app.Delivery.data.dto.response.user;
 
-import jakarta.persistence.Column;
+import com.delivery.app.Delivery.data.dto.response.BaseResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SignUpDto {
+public class UserResponseDto implements BaseResponseDto {
+    private Long id;
     private String name;
     private String nickname;
     private String loginId;
@@ -14,4 +15,5 @@ public class SignUpDto {
     private String phoneNumber;
     private String gender;
     private String address;
+    private String createAt;
 }

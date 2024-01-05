@@ -1,8 +1,8 @@
 package com.delivery.app.Delivery.dao.impl;
 
 import com.delivery.app.Delivery.dao.UserDAO;
-import com.delivery.app.Delivery.data.dto.user.LoginDto;
-import com.delivery.app.Delivery.data.dto.user.SignUpDto;
+import com.delivery.app.Delivery.data.dto.request.user.LoginDto;
+import com.delivery.app.Delivery.data.dto.request.user.SignUpDto;
 import com.delivery.app.Delivery.data.entity.User;
 import com.delivery.app.Delivery.data.my_enum.SignUpCode;
 import com.delivery.app.Delivery.repository.user.UserRepository;

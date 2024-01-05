@@ -1,5 +1,6 @@
-package com.delivery.app.Delivery.data.dto.response;
+package com.delivery.app.Delivery.data.dto.response.user;
 
+import com.delivery.app.Delivery.data.dto.response.BaseResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

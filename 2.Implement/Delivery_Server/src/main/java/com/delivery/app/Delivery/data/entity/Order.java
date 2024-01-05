@@ -4,6 +4,7 @@ import com.delivery.app.Delivery.data.entity.enum_string.DeliveryState;
 import com.delivery.app.Delivery.data.entity.pk.OrderPk;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.lang.reflect.Array;
@@ -13,36 +14,33 @@ import java.util.Objects;
 
 @Entity @Table(name="orders")
 @Getter
-@IdClass(OrderPk.class)
+@NoArgsConstructor
 public class Order {
 
     @Id @OneToOne
-    @JoinColumn(name="user_id")
-    private User userId;
+    @JoinColumn(name="id")
+    private Long id;
 
-    @Id @OneToOne
-    @JoinColumn(name="cart_id")
-    private Cart cartId;
+    @OneToOne(fetch = FetchType.EAGER)
+    @MapsId //@MapsId 는 @id로 지정한 컬럼에 @OneToOne 이나 @ManyToOne 관계를 매핑시키는 역할
+    @JoinColumn(name = "id")
+    private Cart cart;
 
+    @Column(name="user_id")
+    private Long userId;
     private String state;
-
     @CreatedDate
     @Column(name="order_date")
     private LocalDateTime orderDate;
 
-    public Order(User userId, Cart cartId, String state) throws Exception {
+    public Order(Long userId, Cart cart, DeliveryState state) {
         this.userId = userId;
-        this.cartId = cartId;
+        this.cart = cart;
 
-        ArrayList<String> stateArray = new ArrayList<>(3);
-        stateArray.add(DeliveryState.OnReception.toString());
-        stateArray.add(DeliveryState.OnDelivery.toString());
-        stateArray.add(DeliveryState.Delivered.toString());
-
-        if(!stateArray.contains(state)) {
-            throw new Exception("Wrong Argument on Order.state");
-        } else {
-            this.state = state;
+        try{
+            this.state = state.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

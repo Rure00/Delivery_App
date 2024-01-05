@@ -1,5 +1,6 @@
-package com.delivery.app.Delivery.data.dto.response;
+package com.delivery.app.Delivery.data.dto.response.market;
 
+import com.delivery.app.Delivery.data.dto.response.BaseResponseDto;
 import lombok.Getter;
 
 import java.util.ArrayList;
