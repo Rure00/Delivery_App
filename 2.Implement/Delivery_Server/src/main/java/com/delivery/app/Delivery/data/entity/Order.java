@@ -17,7 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Order {
 
-    @Id @OneToOne
+    @Id
     @JoinColumn(name="id")
     private Long id;
 

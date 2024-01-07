@@ -22,11 +22,13 @@ public class QCartStock extends EntityPathBase<CartStock> {
 
     public static final QCartStock cartStock = new QCartStock("cartStock");
 
-    public final QCart cartId;
+    public final QCart cart;
 
     public final NumberPath<Integer> count = createNumber("count", Integer.class);
 
-    public final QStock stockId;
+    public final QStock stock;
+
+    public final NumberPath<Long> stockId = createNumber("stockId", Long.class);
 
     public QCartStock(String variable) {
         this(CartStock.class, forVariable(variable), INITS);
@@ -46,8 +48,8 @@ public class QCartStock extends EntityPathBase<CartStock> {
 
     public QCartStock(Class<? extends CartStock> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.cartId = inits.isInitialized("cartId") ? new QCart(forProperty("cartId"), inits.get("cartId")) : null;
-        this.stockId = inits.isInitialized("stockId") ? new QStock(forProperty("stockId")) : null;
+        this.cart = inits.isInitialized("cart") ? new QCart(forProperty("cart"), inits.get("cart")) : null;
+        this.stock = inits.isInitialized("stock") ? new QStock(forProperty("stock")) : null;
     }
 
 }

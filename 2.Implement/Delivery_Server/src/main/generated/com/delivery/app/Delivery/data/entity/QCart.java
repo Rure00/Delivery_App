@@ -22,11 +22,19 @@ public class QCart extends EntityPathBase<Cart> {
 
     public static final QCart cart = new QCart("cart");
 
+    public final NumberPath<Integer> cost = createNumber("cost", Integer.class);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final QMarket marketId;
+    public final QMarket market;
+
+    public final NumberPath<Long> marketId = createNumber("marketId", Long.class);
+
+    public final StringPath marketName = createString("marketName");
 
     public final QUser user;
+
+    public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
     public QCart(String variable) {
         this(Cart.class, forVariable(variable), INITS);
@@ -46,7 +54,7 @@ public class QCart extends EntityPathBase<Cart> {
 
     public QCart(Class<? extends Cart> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.marketId = inits.isInitialized("marketId") ? new QMarket(forProperty("marketId")) : null;
+        this.market = inits.isInitialized("market") ? new QMarket(forProperty("market")) : null;
         this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 

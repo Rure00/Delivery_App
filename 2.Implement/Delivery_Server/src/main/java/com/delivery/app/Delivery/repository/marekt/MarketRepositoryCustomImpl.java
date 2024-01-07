@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MarketRepositoryCustomImpl extends QuerydslRepositorySupport implements MarketRepositoryCustom {
 
-    public MarketRepositoryCustomImpl(Class<?> domainClass) { super(domainClass); }
+    public MarketRepositoryCustomImpl() { super(Market.class); }
 
     @Override
     public Market getMarketDetail(Long marketId, String marketName) {

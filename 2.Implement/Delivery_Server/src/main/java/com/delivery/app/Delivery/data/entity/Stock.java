@@ -19,11 +19,14 @@ public class Stock {
     private String name;
 
     @Column(nullable = false)
+    private Integer price;
+
+    @Column(nullable = false)
     private LocalDateTime releasedDate;
 
     @Column(nullable = false)
     private String manufacturer;
 
     @Column(nullable = false)
-    private int weight;
+    private Integer weight;
 }

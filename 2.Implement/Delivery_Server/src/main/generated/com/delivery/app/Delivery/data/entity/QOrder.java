@@ -22,13 +22,15 @@ public class QOrder extends EntityPathBase<Order> {
 
     public static final QOrder order = new QOrder("order1");
 
-    public final QCart cartId;
+    public final QCart cart;
+
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final DateTimePath<java.time.LocalDateTime> orderDate = createDateTime("orderDate", java.time.LocalDateTime.class);
 
     public final StringPath state = createString("state");
 
-    public final QUser userId;
+    public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
     public QOrder(String variable) {
         this(Order.class, forVariable(variable), INITS);
@@ -48,8 +50,7 @@ public class QOrder extends EntityPathBase<Order> {
 
     public QOrder(Class<? extends Order> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.cartId = inits.isInitialized("cartId") ? new QCart(forProperty("cartId"), inits.get("cartId")) : null;
-        this.userId = inits.isInitialized("userId") ? new QUser(forProperty("userId")) : null;
+        this.cart = inits.isInitialized("cart") ? new QCart(forProperty("cart"), inits.get("cart")) : null;
     }
 
 }

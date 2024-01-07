@@ -1,4 +1,4 @@
-package com.delivery.app.Delivery.service;
+package com.delivery.app.Delivery.dao;
 
 import com.delivery.app.Delivery.data.dto.request.MarketIdDto;
 import com.delivery.app.Delivery.data.dto.request.ReviewIdDto;
@@ -7,7 +7,7 @@ import com.delivery.app.Delivery.data.dto.request.review.SaveReviewDto;
 import com.delivery.app.Delivery.data.dto.response.review.GetMarketReviewsResponseDto;
 import com.delivery.app.Delivery.data.dto.response.review.GetMyReviewsResponseDto;
 
-public interface ReviewService {
+public interface ReviewDAO {
     Boolean saveReview(SaveReviewDto saveReviewDto);
 
     GetMyReviewsResponseDto getMyReviews(UserIdDto userIdDto);
