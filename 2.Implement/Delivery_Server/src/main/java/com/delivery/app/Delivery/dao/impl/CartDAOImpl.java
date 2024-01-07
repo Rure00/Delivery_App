@@ -8,12 +8,14 @@ import com.delivery.app.Delivery.data.dto.response.cart.CartDetailResponseDto;
 import com.delivery.app.Delivery.data.dto.response.cart.GetCartsResponseDto;
 import com.delivery.app.Delivery.data.entity.Cart;
 import com.delivery.app.Delivery.data.entity.CartStock;
+import com.delivery.app.Delivery.data.entity.Order;
 import com.delivery.app.Delivery.data.entity.Stock;
 import com.delivery.app.Delivery.repository.cart.CartRepository;
 import com.delivery.app.Delivery.repository.cart_stock.CartStockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -93,5 +95,23 @@ public class CartDAOImpl implements CartDAO {
         }
 
 
+    }
+
+    @Override
+    public Cart getCart(Long orderId) {
+        Optional<Cart> selected = cartRepository.findById(orderId);
+
+        if(selected.isPresent()) {
+            return selected.get();
+        } else {
+            Exception e = new Exception("Id is not found");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<CartStock> getItemsInCart(Long id) {
+        return cartStockRepository.findByCartId(id);
     }
 }

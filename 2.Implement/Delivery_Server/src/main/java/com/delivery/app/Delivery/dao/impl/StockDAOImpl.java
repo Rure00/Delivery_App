@@ -39,4 +39,16 @@ public class StockDAOImpl implements StockDAO {
 
         return result;
     }
+
+    @Override
+    public Stock getStock(Long stockId) {
+        Optional<Stock> selected = stockRepository.findById(stockId);
+        if(selected.isPresent()) {
+            return selected.get();
+        } else {
+            Exception e = new Exception("Not Found");
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
