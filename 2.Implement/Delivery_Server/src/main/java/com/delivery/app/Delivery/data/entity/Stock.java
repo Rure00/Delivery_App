@@ -1,5 +1,6 @@
 package com.delivery.app.Delivery.data.entity;
 
+import com.sun.istack.NotNull;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Stock {
-    @Id
+    @Id @NotNull
     private Long id;
 
     @Column(nullable = false)

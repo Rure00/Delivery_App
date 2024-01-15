@@ -36,7 +36,7 @@ public class MarketRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         Expressions.stringTemplate("POINT({0}, {1})", longitude, latitude),
                         Expressions.stringTemplate("POINT({0}, {1})", market.longitude, market.latitude))
                         .loe(radius.toString())
-                ).fetchAll().fetch();
+                ).fetch();
 
         ArrayList<Market> result = new ArrayList<>(marketsList);
 

@@ -15,13 +15,13 @@ public class Review {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private User user;
     @Column(name="user_id")
     private Long userId;
 
     @OneToOne
-    @JoinColumn(name="market_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name="market_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Market market;
     @Column(name="market_id")
     private Long marketId;

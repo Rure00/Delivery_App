@@ -3,8 +3,10 @@ package com.delivery.app.Delivery.data.dto.response.market;
 
 import com.delivery.app.Delivery.data.dto.response.BaseResponseDto;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public class MarketResponseDto implements BaseResponseDto {
     private Long id;
     private String name;

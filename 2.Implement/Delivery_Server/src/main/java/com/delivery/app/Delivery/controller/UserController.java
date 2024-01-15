@@ -41,30 +41,35 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<ResponseResult> trySignUp(@RequestBody SignUpDto signUpDto) {
 
-        SignUpCode result = service.trySignUp(signUpDto);
         SignUpResponseDto signUpResponseDto = new SignUpResponseDto();
+        ResponseResult result = new ResponseResult();
+        result.setResponseDto(signUpResponseDto);
 
-        ResponseResult responseResult = new ResponseResult();
-        responseResult.setResponseDto(signUpResponseDto);
-
-        switch (result) {
-            case SUCCESS: {
-                signUpResponseDto.setDescription("회원 가입 성공");
-                responseResult.setSuccess(true);
-            }
-            case DUPLICATED_ID : {
-                signUpResponseDto.setDescription("ID 중복");
-                responseResult.setSuccess(false);
-            }
-            case FAIL : {
-                signUpResponseDto.setDescription("회원 가입 실패");
-                responseResult.setSuccess(false);
-            }
+        if(signUpDto.hasNull()) {
+            signUpResponseDto.setDescription("잘못된 요청");
+            result.setSuccess(false);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
 
+        SignUpCode code = service.trySignUp(signUpDto);
 
-
-        return null;
+        switch (code) {
+            case SUCCESS -> {
+                signUpResponseDto.setDescription("회원 가입 성공");
+                result.setSuccess(true);
+                return ResponseEntity.status(HttpStatus.CREATED).body(result);
+            }
+            case DUPLICATED_ID -> {
+                signUpResponseDto.setDescription("ID 중복");
+                result.setSuccess(false);
+                return ResponseEntity.status(HttpStatus.IM_USED).body(result);
+            }
+            default -> {
+                signUpResponseDto.setDescription("회원 가입 실패");
+                result.setSuccess(false);
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(result);
+            }
+        }
     }
 
 

@@ -2,6 +2,7 @@ package com.delivery.app.Delivery.service.impl;
 
 import com.delivery.app.Delivery.dao.StockDAO;
 import com.delivery.app.Delivery.data.dto.request.StockIdDto;
+import com.delivery.app.Delivery.data.dto.request.stock.StockDto;
 import com.delivery.app.Delivery.data.dto.response.review.GetMarketReviewsResponseDto;
 import com.delivery.app.Delivery.data.dto.response.stock.StockDetailResponseDto;
 import com.delivery.app.Delivery.service.StockService;
@@ -22,5 +23,10 @@ public class StockServiceImpl implements StockService {
     @Override
     public StockDetailResponseDto getStockDetail(StockIdDto stockIdDto) {
         return stockDAO.getDetail(stockIdDto);
+    }
+
+    @Override
+    public boolean addNewStock(StockDto stockDto) {
+        return stockDAO.add(stockDto);
     }
 }

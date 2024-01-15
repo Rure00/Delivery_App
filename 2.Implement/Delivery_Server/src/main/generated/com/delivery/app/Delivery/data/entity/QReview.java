@@ -28,13 +28,17 @@ public class QReview extends EntityPathBase<Review> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final QMarket marketId;
+    public final QMarket market;
+
+    public final NumberPath<Long> marketId = createNumber("marketId", Long.class);
 
     public final StringPath marketName = createString("marketName");
 
-    public final NumberPath<Integer> score = createNumber("score", Integer.class);
+    public final NumberPath<Float> score = createNumber("score", Float.class);
 
-    public final QUser userId;
+    public final QUser user;
+
+    public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
     public final StringPath userNickname = createString("userNickname");
 
@@ -56,8 +60,8 @@ public class QReview extends EntityPathBase<Review> {
 
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.marketId = inits.isInitialized("marketId") ? new QMarket(forProperty("marketId")) : null;
-        this.userId = inits.isInitialized("userId") ? new QUser(forProperty("userId")) : null;
+        this.market = inits.isInitialized("market") ? new QMarket(forProperty("market")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
 }

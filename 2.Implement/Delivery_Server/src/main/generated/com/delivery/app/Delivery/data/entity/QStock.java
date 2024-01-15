@@ -25,6 +25,8 @@ public class QStock extends EntityPathBase<Stock> {
 
     public final StringPath name = createString("name");
 
+    public final NumberPath<Integer> price = createNumber("price", Integer.class);
+
     public final DateTimePath<java.time.LocalDateTime> releasedDate = createDateTime("releasedDate", java.time.LocalDateTime.class);
 
     public final NumberPath<Integer> weight = createNumber("weight", Integer.class);

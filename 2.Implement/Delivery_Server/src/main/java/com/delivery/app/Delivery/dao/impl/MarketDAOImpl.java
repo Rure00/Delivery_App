@@ -1,15 +1,20 @@
 package com.delivery.app.Delivery.dao.impl;
 
 import com.delivery.app.Delivery.dao.MarketDAO;
+import com.delivery.app.Delivery.data.dto.request.market.MarketSignUpDto;
 import com.delivery.app.Delivery.data.dto.response.market.MarketItemsResponseDto;
 import com.delivery.app.Delivery.data.dto.response.market.MarketResponseDto;
 import com.delivery.app.Delivery.data.dto.response.market.NearMarketsResponseDto;
 import com.delivery.app.Delivery.data.entity.Market;
 import com.delivery.app.Delivery.data.entity.Stock;
+import com.delivery.app.Delivery.data.entity.User;
+import com.delivery.app.Delivery.data.my_enum.SignUpCode;
 import com.delivery.app.Delivery.repository.marekt.MarketRepository;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Component
 public class MarketDAOImpl implements MarketDAO {
@@ -66,5 +71,30 @@ public class MarketDAOImpl implements MarketDAO {
             return null;
 
 
+    }
+
+    @Override
+    public SignUpCode signUp(MarketSignUpDto marketSignUpDto) {
+
+        String id = marketSignUpDto.getLoginId();
+        Optional<Market> isDuplicated = marketRepository.findByLoginId(id);
+
+        if(isDuplicated.isEmpty()) {
+            Market newMarket = new Market(
+                    marketSignUpDto.getName(),
+                    marketSignUpDto.getLoginId(),
+                    marketSignUpDto.getLoginPwd(),
+                    marketSignUpDto.getPhoneNumber(),
+                    marketSignUpDto.getAddress(),
+                    marketSignUpDto.getLatitude(),
+                    marketSignUpDto.getLongitude(),
+                    marketSignUpDto.getDescription()
+            );
+
+            marketRepository.save(newMarket);
+
+            return SignUpCode.SUCCESS;
+        } else
+            return SignUpCode.DUPLICATED_ID;
     }
 }

@@ -1,6 +1,7 @@
 package com.delivery.app.Delivery.controller;
 
 import com.delivery.app.Delivery.data.dto.request.StockIdDto;
+import com.delivery.app.Delivery.data.dto.request.stock.StockDto;
 import com.delivery.app.Delivery.data.dto.response.ResponseResult;
 import com.delivery.app.Delivery.data.dto.response.review.GetMarketReviewsResponseDto;
 import com.delivery.app.Delivery.data.dto.response.stock.StockDetailResponseDto;
@@ -20,6 +21,20 @@ public class StockController {
 
     @Autowired
     public StockController(StockService service) { this.service = service; }
+
+    @PostMapping("/add")
+    public ResponseEntity<ResponseResult> addStock(@RequestBody StockDto stockDto) {
+        boolean isSuccess = service.addNewStock(stockDto);
+        ResponseResult result = new ResponseResult();
+
+        if(isSuccess) {
+            result.setSuccess(true);
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        } else {
+            result.setSuccess(false);
+            return ResponseEntity.status(HttpStatus.IM_USED).body(result);
+        }
+    }
 
     @PostMapping("get")
     public ResponseEntity<ResponseResult> getStockDetail(@RequestBody StockIdDto stockIdDto) {
