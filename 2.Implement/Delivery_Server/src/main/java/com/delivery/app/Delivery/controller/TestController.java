@@ -3,10 +3,7 @@ package com.delivery.app.Delivery.controller;
 import com.delivery.app.Delivery.data.dto.TestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/test")
@@ -22,9 +19,15 @@ public class TestController {
         return ResponseEntity.status(HttpStatus.OK).body(testDto);
     }
 
-    @PostMapping("/print-string")
+    @GetMapping("/print-string")
     public String test2Function() {
         System.out.println("Test2 is Called...");
         return "Hello World!";
+    }
+
+    @PostMapping("/post")
+    public String test3Function(@RequestBody String str) {
+        System.out.println("print: " + str);
+        return "!";
     }
 }

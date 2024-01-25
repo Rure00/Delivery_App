@@ -33,7 +33,7 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
-    public void save(SaveCartDto saveCartDto) {
+    public Long save(SaveCartDto saveCartDto) {
         Cart cartInstance = cartRepository.save(
                 new Cart(
                         saveCartDto.getUserId(), saveCartDto.getMarketId(),
@@ -53,6 +53,8 @@ public class CartDAOImpl implements CartDAO {
 
             cartStockRepository.save(stockInCart);
         }
+
+        return cartInstance.getId();
     }
 
     @Override

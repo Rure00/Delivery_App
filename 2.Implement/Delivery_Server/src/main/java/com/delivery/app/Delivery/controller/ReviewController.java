@@ -32,10 +32,10 @@ public class ReviewController {
         ResponseResult result = new ResponseResult();
 
         if(isSuccess) {
-            result.setSuccess(true);
+            result.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } else {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(result);
         }
     }
@@ -46,10 +46,10 @@ public class ReviewController {
         ResponseResult result = new ResponseResult();
 
         if(responseDto.isEmpty()) {
-            result.setSuccess(true);
+            result.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } else {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(result);
         }
     }
@@ -61,10 +61,10 @@ public class ReviewController {
 
         if(!reviews.isEmpty()) {
             result.setResponseDto(reviews);
-            result.setSuccess(true);
+            result.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } else {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
 
@@ -76,10 +76,10 @@ public class ReviewController {
         ResponseResult result = new ResponseResult();
 
         if(isSuccess) {
-            result.setSuccess(true);
+            result.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } else {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
     }

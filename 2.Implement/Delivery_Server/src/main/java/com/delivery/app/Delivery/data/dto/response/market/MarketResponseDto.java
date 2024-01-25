@@ -10,6 +10,7 @@ import lombok.Getter;
 public class MarketResponseDto implements BaseResponseDto {
     private Long id;
     private String name;
+    private Float score;
     private String phoneNumber;
     private String address;
     private Double latitude;

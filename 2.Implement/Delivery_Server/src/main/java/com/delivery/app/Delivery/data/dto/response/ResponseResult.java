@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseResult {
-    boolean isSuccess;
+    boolean flag;
     BaseResponseDto responseDto;
 }

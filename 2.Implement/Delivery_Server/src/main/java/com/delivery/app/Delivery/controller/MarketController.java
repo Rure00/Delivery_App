@@ -32,7 +32,7 @@ public class MarketController {
 
         if(marketSignUpDto.hasNull()) {
             responseDto.setDescription("잘못된 요청");
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
 
@@ -41,17 +41,17 @@ public class MarketController {
         switch (code) {
             case SUCCESS -> {
                 responseDto.setDescription("회원 가입 성공");
-                result.setSuccess(true);
+                result.setFlag(true);
                 return ResponseEntity.status(HttpStatus.CREATED).body(result);
             }
             case DUPLICATED_ID -> {
                 responseDto.setDescription("ID 중복");
-                result.setSuccess(false);
+                result.setFlag(false);
                 return ResponseEntity.status(HttpStatus.IM_USED).body(result);
             }
             default -> {
                 responseDto.setDescription("회원 가입 실패");
-                result.setSuccess(false);
+                result.setFlag(false);
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(result);
             }
         }
@@ -66,10 +66,10 @@ public class MarketController {
 
         if(marketResponseDto != null) {
             responseResult.setResponseDto(marketResponseDto);
-            responseResult.setSuccess(true);
+            responseResult.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(responseResult);
         } else {
-            responseResult.setSuccess(false);
+            responseResult.setFlag(false);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseResult);
         }
     }
@@ -82,10 +82,10 @@ public class MarketController {
         responseResult.setResponseDto(list);
 
         if(!list.getNearMarketsList().isEmpty()) {
-            responseResult.setSuccess(true);
+            responseResult.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(responseResult);
         } else {
-            responseResult.setSuccess(true);
+            responseResult.setFlag(true);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(responseResult);
         }
 
@@ -99,10 +99,10 @@ public class MarketController {
         responseResult.setResponseDto(list);
 
         if(!list.getStockList().isEmpty()) {
-            responseResult.setSuccess(true);
+            responseResult.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(responseResult);
         } else {
-            responseResult.setSuccess(true);
+            responseResult.setFlag(true);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(responseResult);
         }
 
