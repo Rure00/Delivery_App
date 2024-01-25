@@ -1,10 +1,10 @@
 package com.project.deliveryapp
 
-import com.project.deliveryapp.data.UserData
+import com.project.deliveryapp.data.User
 import com.project.deliveryapp.data.enum.Gender
 import com.project.deliveryapp.retrofit.RetrofitClient
 import com.project.deliveryapp.retrofit.RetrofitService
-import com.project.deliveryapp.retrofit.dto.LoginDto
+import com.project.deliveryapp.retrofit.dto.request.user.LoginDto
 import org.junit.Test
 
 
@@ -26,7 +26,7 @@ class ExampleUnitTest {
 
     @Test
     fun testForUserDataLoad() {
-        val ud: UserData = UserData(
+        val ud: User = User(
             0,
             "Sung", "Rure",
             "asnjkd", "6344",

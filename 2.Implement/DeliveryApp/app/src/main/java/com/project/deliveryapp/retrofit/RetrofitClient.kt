@@ -17,24 +17,12 @@ object RetrofitClient {
     private var instance: Retrofit? = null
     private val gson = GsonBuilder().setLenient().create()
 
-    private const val BASE_URL = R.string.base_url.toString()
+    private const val BASE_URL = "http://124.59.46.235:8080/"
     private const val CONNECT_TIMEOUT_SEC = 20000L
 
     fun getInstance() : Retrofit {
 
         if(instance == null) {
-
-            /*
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-
-            val client = OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .connectTimeout(CONNECT_TIMEOUT_SEC, TimeUnit.SECONDS)
-                .build()
-            */
-
-
             instance = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())

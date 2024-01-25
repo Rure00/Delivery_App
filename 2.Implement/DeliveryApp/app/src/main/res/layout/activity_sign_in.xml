@@ -7,13 +7,26 @@
     tools:context=".activity.SignInActivity"
     android:padding="40dp">
 
-
-
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/signUpFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:translationZ="6dp"
         />
+
+    <FrameLayout
+        android:id="@+id/loadingContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </FrameLayout>
+
+
 
     <TextView
         android:id="@+id/appName"
@@ -30,11 +43,13 @@
         android:id="@+id/idText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         app:layout_constraintTop_toBottomOf="@+id/appName"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="50dp"
 
         android:hint="ID"
+        android:digits="0123456789_qwertzuiopasdfghjklyxcvbnm"
         android:gravity="center"
 
         android:textSize="20sp"
@@ -50,6 +65,7 @@
         android:layout_marginTop="20dp"
 
         android:hint="PW"
+        android:digits="0123456789_qwertzuiopasdfghjklyxcvbnm"
         android:inputType="textPassword"
         android:gravity="center"
 
@@ -107,7 +123,7 @@
         android:layout_gravity="end"
         />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/signUpBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -127,16 +143,8 @@
         android:layout_gravity="end"
         />
 
-    <FrameLayout
-        android:id="@+id/loadingContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
 
-    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

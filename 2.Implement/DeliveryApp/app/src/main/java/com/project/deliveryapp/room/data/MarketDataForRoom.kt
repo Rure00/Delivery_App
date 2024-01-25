@@ -8,7 +8,7 @@ import com.project.deliveryapp.data.MarketData
 @Entity
 data class MarketDataForRoom(
     @PrimaryKey
-    val id: Int,
+    val id: Long,
     val name: String,
     val score: Float,
     val phoneNumber: String,

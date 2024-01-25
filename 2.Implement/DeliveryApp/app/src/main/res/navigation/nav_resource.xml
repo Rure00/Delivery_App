@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/myPageFragment"
-        android:name="com.project.deliveryapp.fragment.MyPageFragment"
+        android:name="com.project.deliveryapp.fragment.my_page.MyPageFragment"
         android:label="fragment_my_page"
         tools:layout="@layout/fragment_my_page" >
 
@@ -54,7 +54,7 @@
 
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.project.deliveryapp.fragment.CartFragment"
+        android:name="com.project.deliveryapp.fragment.cart.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" >
 
@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/cartDetailFragment"
-        android:name="com.project.deliveryapp.fragment.CartDetailFragment"
+        android:name="com.project.deliveryapp.fragment.cart.CartDetailFragment"
         android:label="fragment_cart_detail"
         tools:layout="@layout/fragment_cart_detail" >
         <action
@@ -80,7 +80,7 @@
 
     <fragment
         android:id="@+id/findMarketFragment"
-        android:name="com.project.deliveryapp.fragment.homeFragment.FindMarketFragment"
+        android:name="com.project.deliveryapp.fragment.home.FindMarketFragment"
         android:label="fragment_find_market"
         tools:layout="@layout/fragment_find_market" >
         <action
@@ -93,7 +93,7 @@
 
     <fragment
         android:id="@+id/marketScoreFragment"
-        android:name="com.project.deliveryapp.fragment.MarketScoreFragment"
+        android:name="com.project.deliveryapp.fragment.home.MarketScoreFragment"
         android:label="MarketScoreFragment" >
         <action
             android:id="@+id/action_marketScoreFragment_to_reviewFragment"
@@ -101,7 +101,7 @@
     </fragment>
     <fragment
         android:id="@+id/shoppingFragment"
-        android:name="com.project.deliveryapp.fragment.ShoppingFragment"
+        android:name="com.project.deliveryapp.fragment.home.ShoppingFragment"
         android:label="ShoppingFragment" >
         <action
             android:id="@+id/action_shoppingFragment_to_paymentFragment"
@@ -117,13 +117,13 @@
         tools:layout="@layout/fragment_payment" />
     <fragment
         android:id="@+id/reviewFragment"
-        android:name="com.project.deliveryapp.fragment.ReviewFragment"
+        android:name="com.project.deliveryapp.fragment.home.ReviewFragment"
         android:label="fragment_review"
         tools:layout="@layout/fragment_review" />
 
     <fragment
         android:id="@+id/myOrderFragment"
-        android:name="com.project.deliveryapp.fragment.MyOrderFragment"
+        android:name="com.project.deliveryapp.fragment.my_page.MyOrderFragment"
         android:label="fragment_my_order"
         tools:layout="@layout/fragment_my_order" >
         <action
@@ -132,7 +132,7 @@
     </fragment>
     <fragment
         android:id="@+id/myReviewFragment"
-        android:name="com.project.deliveryapp.fragment.MyReviewFragment"
+        android:name="com.project.deliveryapp.fragment.my_page.MyReviewFragment"
         android:label="fragment_my_review"
         tools:layout="@layout/fragment_my_review" />
 </navigation>

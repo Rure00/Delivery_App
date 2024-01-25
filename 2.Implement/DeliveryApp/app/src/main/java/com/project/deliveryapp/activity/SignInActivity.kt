@@ -1,6 +1,5 @@
 package com.project.deliveryapp.activity
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,28 +7,20 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
-import com.project.deliveryapp.R
-import com.project.deliveryapp.data.UserData
+import com.project.deliveryapp.data.User
 import com.project.deliveryapp.data.enum.Gender
 import com.project.deliveryapp.databinding.ActivitySignInBinding
-import com.project.deliveryapp.fragment.SignUpFragment
-import com.project.deliveryapp.fragment.loading.CircleLoadingFragment
+import com.project.deliveryapp.dialog.loading.LoadingDialog
 import com.project.deliveryapp.fragment.loading.LoadingFragmentManager
-import com.project.deliveryapp.retrofit.RetrofitClient
-import com.project.deliveryapp.retrofit.RetrofitService
 import com.project.deliveryapp.retrofit.ServerCommunicator
-import com.project.deliveryapp.retrofit.dto.LoginDto
-import com.project.deliveryapp.retrofit.dto.UserDataDto
-import com.project.deliveryapp.room.data.MarketDataForRoom
-import com.project.deliveryapp.room.data.UserDataForRoom
+import com.project.deliveryapp.retrofit.dto.request.user.LoginDto
+import com.project.deliveryapp.retrofit.dto.response.ErrorResponseDto
+import com.project.deliveryapp.retrofit.dto.response.user.LoginResponseDto
 import com.project.deliveryapp.settings.SingletonObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class SignInActivity : AppCompatActivity() {
@@ -49,10 +40,8 @@ class SignInActivity : AppCompatActivity() {
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //TODO: server communicator
-        //communicator = ServerCommunicator()
+        communicator = ServerCommunicator()
 
-        //allocation UI
         idText = binding.idText
         pwText = binding.pwText
         signInBtn = binding.signInBtn
@@ -62,76 +51,57 @@ class SignInActivity : AppCompatActivity() {
         //------------------------------------------------------------------------------------------------
 
         signInBtn.setOnClickListener {
-            val loadingFragmentManager = LoadingFragmentManager()
             val loginId = idText.text.toString()
             val loginPwd = pwText.text.toString()
             val loginDto = LoginDto(loginId, loginPwd)
 
-            val ud = UserData(
-                0,
-                "sung",
-                "rure",
-                "asn",
-                "1234",
-                "0101231412414",
-                Gender.Male,
-                "sadang"
-            )
-
-            val md = MarketDataForRoom(
-                1, "삼성마트", 3.5f, "275773", "none", 3, "address",
-                37.47655, 126.98163
-            )
-
-            SingletonObject.setUserData(ud)
+            LoadingDialog.show(this@SignInActivity)
             CoroutineScope(Dispatchers.IO).launch {
-                SingletonObject.deleteRecentMarket(this@SignInActivity, md)
-                SingletonObject.saveRecentMarket(this@SignInActivity, md)
+                val response = runCatching{ communicator.tryLogin(loginDto) }
+                    .onFailure {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(this@SignInActivity, "나중에 다시 이용해주세요.", Toast.LENGTH_SHORT).show()
+                            LoadingDialog.dismiss()
+                        }
+                        return@launch
+                    }.getOrNull()!!
 
-                //TODO: Code for test) after finishing a project, it should be deleted
-                val intent = Intent(this@SignInActivity, MainActivity::class.java)
-                startActivity(intent)
-                this@SignInActivity.finish()
-            }
 
+                if(response.result) {
+                    val obj = response.response as LoginResponseDto
+                    val user = User(
+                        obj.id,
+                        obj.name,
+                        obj.nickname,
+                        obj.loginId,
+                        obj.loginPwd,
+                        obj.phoneNumber,
+                        if(obj.gender=="Male") Gender.Male else Gender.Female,
+                        obj.address
+                    )
+                    SingletonObject.setUserData(user)
+                    if(checkSignIn.isChecked) SingletonObject.saveUserDataInRoom(applicationContext)
 
-
-            /* TODO: server service
-            CoroutineScope(Dispatchers.IO).launch {
-                val flag = communicator.tryLogin(loginDto)
-                if(flag) {
-                    if(checkSignIn.isChecked) {
-                        val isSuccess = SingletonObject.saveUserDataInRoom(applicationContext)
-                        val intent = Intent(applicationContext, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
+                    val intent = Intent(this@SignInActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 } else {
-                    Toast.makeText(applicationContext, "아이디나 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
-                    loadingFragmentManager.cancelLoading(supportFragmentManager, binding.loadingContainer.id)
+                    val error = response.response as ErrorResponseDto
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@SignInActivity, error.comment, Toast.LENGTH_SHORT).show()
+                    }
                 }
 
+                LoadingDialog.dismiss()
             }
-
-
-            loadingFragmentManager.circleLoading(supportFragmentManager, R.id.loadingContainer)
-
-             */
-
-
-
-
-
         }
         signUpBtn.setOnClickListener {
-            val signUpFragment = SignUpFragment()
-            val transaction = supportFragmentManager.beginTransaction()
-
-            transaction.add(R.id.signUpFragment, signUpFragment)
-            transaction.commit()
+            val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
+            startActivity(intent)
         }
 
     }
+
 
 
 

@@ -4,7 +4,7 @@ import android.location.Location
 import com.naver.maps.geometry.LatLng
 
 data class MarketData(
-    val id: Int,
+    val id: Long,
     val name: String,
     val score: Float,
     //val signInId: String,

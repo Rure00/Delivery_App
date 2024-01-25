@@ -12,6 +12,6 @@ data class Stock(
     val name: String,
     val releaseDate: LocalDateTime,
     val manufacturer: String,
-    val weight: Float,
-    val price: Long
+    val weight: Int,
+    val price: Int
 )

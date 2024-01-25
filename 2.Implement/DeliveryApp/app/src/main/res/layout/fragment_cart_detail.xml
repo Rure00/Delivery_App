@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.CartDetailFragment"
+    tools:context=".fragment.cart.CartDetailFragment"
     android:paddingBottom="30dp"
     >
 
@@ -95,7 +95,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/expenseText"
 
-        android:text="바로 주문"
+        android:text="주문하기"
         android:textSize="18sp"
 
         android:background="@color/sky"
@@ -103,14 +103,14 @@
         />
 
     <Button
-        android:id="@+id/toCartBtn"
+        android:id="@+id/backBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         app:layout_constraintEnd_toStartOf="@id/orderBtn"
         app:layout_constraintBottom_toBottomOf="@id/expenseText"
 
-        android:text="장바구니로"
+        android:text="뒤로 가기"
         android:textSize="18sp"
 
         android:background="@color/sky"

@@ -1,34 +1,27 @@
 package com.project.deliveryapp.activity
 
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.project.deliveryapp.R
-import com.project.deliveryapp.data.Cart
 import com.project.deliveryapp.databinding.ActivityMainBinding
+import com.project.deliveryapp.dialog.BlockTabDialog
 import com.project.deliveryapp.dialog.SimpleDialog
-import com.project.deliveryapp.fragment.CartFragment
-import com.project.deliveryapp.fragment.MyPageFragment
-import com.project.deliveryapp.fragment.ShoppingFragment
-import com.project.deliveryapp.fragment.homeFragment.FindMarketFragment
+import com.project.deliveryapp.fragment.cart.CartFragment
+import com.project.deliveryapp.fragment.my_page.MyPageFragment
+import com.project.deliveryapp.fragment.PaymentFragment
+import com.project.deliveryapp.fragment.home.ShoppingFragment
+import com.project.deliveryapp.fragment.home.FindMarketFragment
 import com.project.deliveryapp.view_model.MainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.Stack
-import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity() {
@@ -80,15 +73,15 @@ class MainActivity : AppCompatActivity() {
             val curFragment = supportFragmentManager.fragments[0]
             val nextFragment = fragmentStack[mCurrentTab]!!.lastElement()
 
+
             //ShoppingFragment 에서 tab 클릭시 Dialog 출력 및 처리
-            if(curFragment is ShoppingFragment && callBlockDialog) {
+            if((curFragment is ShoppingFragment || curFragment is PaymentFragment) && callBlockDialog) {
                 if(mCurrentTab == TabTag.TAB_FIND) {
                     Log.d("Block", "HomeButton is not supported")
                     return@setOnItemSelectedListener false
                 }
 
-                val shoppingFragment = curFragment as ShoppingFragment
-                val dialog = shoppingFragment.getTabPressedDialog()
+                val dialog = BlockTabDialog().getDialog()
 
                 dialog.setButtonClickListener(object: SimpleDialog.OnButtonClickListener{
                     override fun onConfirmButtonClicked() {
@@ -154,6 +147,21 @@ class MainActivity : AppCompatActivity() {
     }
     fun toMyPageTab() {
         binding.bnMenu.selectedItemId = R.id.navigation_my_page
+    }
+    private fun popAll() {
+        fragmentStack.forEach {
+            it.value.clear()
+        }
+        setStacks()
+        toFindTab()
+    }
+
+    fun startPaymentActivity(cartId: Long) {
+        val intent = Intent(this@MainActivity, PaymentActivity::class.java)
+        intent.putExtra("cartId", cartId)
+        this@MainActivity.startActivity(intent)
+
+        popAll()
     }
 
 }

@@ -3,11 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project.deliveryapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
 
     <application
         android:allowBackup="false"
@@ -18,15 +16,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DeliveryApp"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.PaymentActivity"
+            android:exported="false"
+            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="b69lxhyt8v" />
-
-        <service
-            android:name="MyNavigationService"
-            android:foregroundServiceType="location">
-        </service>
 
         <activity
             android:name=".practice.view_model.PracticeActivity"
@@ -40,14 +42,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.MainActivity"
             android:exported="false" />
         <activity
             android:name=".activity.SignInActivity"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
-
 
 </manifest>

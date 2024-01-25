@@ -6,9 +6,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.deliveryapp.data.Cart
+import com.project.deliveryapp.data.dto.SimpleCartDto
 import com.project.deliveryapp.databinding.CartItemBinding
 
-class CartRvAdapter(private val dataSet:ArrayList<Cart>): RecyclerView.Adapter<CartRvAdapter.ViewHolder>() {
+class CartRvAdapter(private val dataSet:ArrayList<SimpleCartDto>): RecyclerView.Adapter<CartRvAdapter.ViewHolder>() {
     private lateinit var itemClickListener: OnItemClickListener
 
     inner class ViewHolder(val binding: CartItemBinding): RecyclerView.ViewHolder(binding.root) {
@@ -29,7 +30,7 @@ class CartRvAdapter(private val dataSet:ArrayList<Cart>): RecyclerView.Adapter<C
 
         with(holder) {
             nameText.text = item.marketName
-            priceText.text = item.expense.toString()
+            priceText.text = item.cost.toString()
 
             checkButton.setOnClickListener{
                 itemClickListener.onCheckButtonClick(position)

@@ -5,9 +5,9 @@ import java.time.LocalDateTime
 
 
 data class Review(
-    private val id: Int = 0,
-    private val userId: Int,
-    private val marketId: Int,
+    val id: Long = 0,
+    val userId: Long,
+    val marketId: Long,
 
     val userNickname: String,
     val marketName: String,

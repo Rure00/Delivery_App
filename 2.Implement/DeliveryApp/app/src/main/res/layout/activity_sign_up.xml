@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SignUpActivity"
+    android:padding="10dp">
+
+    <FrameLayout
+        android:id="@+id/loadingContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/divisionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:text="구분"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="6dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/divisionRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/divisionText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/divisionText"
+
+
+        android:layout_marginStart="5dp"
+        android:gravity="center"
+        android:weightSum="2"
+
+        >
+
+        <RadioButton
+            android:id="@+id/marketButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="마트"
+            android:textSize="18sp"
+
+            android:layout_weight="1"
+            android:background="@drawable/selector_radio_button"
+            android:button="@null"
+
+            android:gravity="center"
+
+            android:layout_marginHorizontal="10dp"
+            android:padding="5dp"
+
+            />
+
+        <RadioButton
+            android:id="@+id/customerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="손님"
+            android:textSize="18sp"
+
+            android:layout_weight="1"
+            android:background="@drawable/selector_radio_button"
+            android:button="@null"
+
+            android:gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:padding="5dp"
+
+
+            />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divisionText"
+
+        android:text="이름"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/nameText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nameText"
+
+        android:layout_marginHorizontal="5dp"
+        />
+
+    <TextView
+        android:id="@+id/genderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nameText"
+
+        android:text="성별"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="6dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/genderGroup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+
+        app:layout_constraintStart_toEndOf="@+id/genderText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/genderText"
+        app:layout_constraintBottom_toBottomOf="@id/genderText"
+
+
+        android:layout_marginStart="5dp"
+        android:gravity="center"
+        android:weightSum="2"
+
+        >
+
+        <RadioButton
+            android:id="@+id/maleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="남성"
+            android:textSize="18sp"
+
+            android:layout_weight="1"
+            android:background="@drawable/selector_radio_button"
+            android:button="@null"
+
+            android:gravity="center"
+
+            android:layout_marginHorizontal="10dp"
+            android:padding="5dp"
+
+            />
+
+        <RadioButton
+            android:id="@+id/femaleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="여성"
+            android:textSize="18sp"
+
+            android:layout_weight="1"
+            android:background="@drawable/selector_radio_button"
+            android:button="@null"
+
+            android:gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:padding="5dp"
+            />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/nicknameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/genderText"
+
+        android:text="닉네임"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+
+    <EditText
+        android:id="@+id/nickname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/nicknameText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nicknameText"
+
+        android:layout_marginHorizontal="5dp"
+        />
+
+    <TextView
+        android:id="@+id/idText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/divisionText"
+        app:layout_constraintTop_toBottomOf="@id/nicknameText"
+
+        android:text="ID"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/idText"
+
+        android:layout_marginHorizontal="5dp"
+        />
+    <TextView
+        android:id="@+id/pwdText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/divisionText"
+        app:layout_constraintTop_toBottomOf="@id/idText"
+
+        android:text="PW"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/pwd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pwdText"
+
+        android:inputType="textPassword"
+
+        android:layout_marginHorizontal="5dp"
+        />
+    <TextView
+        android:id="@+id/confirmText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/divisionText"
+        app:layout_constraintTop_toBottomOf="@id/pwdText"
+
+        android:text="확인"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/confirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/confirmText"
+
+        android:inputType="textPassword"
+
+        android:layout_marginHorizontal="5dp"
+        />
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/confirmText"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:text="확인"
+        android:textSize="18dp"
+
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:id="@+id/phoneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/confirmButton"
+
+        android:text="전화번호"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/phoneNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/phoneText"
+        app:layout_constraintEnd_toStartOf="@id/requestCertification"
+        app:layout_constraintTop_toTopOf="@id/phoneText"
+
+        android:layout_marginHorizontal="5dp"
+
+        android:inputType="phone"
+        />
+
+    <Button
+        android:id="@+id/requestCertification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/phoneNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/phoneText"
+
+        android:text="인증하기"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/numberConfirmText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/phoneText"
+        app:layout_constraintTop_toBottomOf="@id/phoneText"
+
+        android:text="인증번호"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/numberConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/numberConfirmText"
+        app:layout_constraintEnd_toStartOf="@id/numberConfirmButton"
+        app:layout_constraintTop_toTopOf="@id/numberConfirmButton"
+
+        android:layout_marginHorizontal="5dp"
+
+        android:inputType="number"
+        android:maxLength="5"
+        />
+    <Button
+        android:id="@+id/numberConfirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/numberConfirmText"
+
+        android:text="확인"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/addressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numberConfirmButton"
+
+        android:text="주소"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="4dp"
+        />
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressText"
+        />
+    <EditText
+        android:id="@+id/addressDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/address"
+
+        android:hint="세부사항"
+        />
+
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:text="회원가입"
+        android:textSize="18sp"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

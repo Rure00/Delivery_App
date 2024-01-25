@@ -8,7 +8,7 @@ import android.widget.Toast
 import com.project.deliveryapp.databinding.ActivityStartBinding
 import com.project.deliveryapp.fragment.loading.LoadingFragmentManager
 import com.project.deliveryapp.retrofit.ServerCommunicator
-import com.project.deliveryapp.retrofit.dto.LoginDto
+import com.project.deliveryapp.retrofit.dto.request.user.LoginDto
 import com.project.deliveryapp.settings.PermissionManager
 import com.project.deliveryapp.settings.SingletonObject
 import kotlinx.coroutines.CoroutineScope

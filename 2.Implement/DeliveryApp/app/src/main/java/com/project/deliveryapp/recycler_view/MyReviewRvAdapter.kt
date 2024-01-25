@@ -18,7 +18,6 @@ class MyReviewRvAdapter(private val dataSet:ArrayList<Review>): RecyclerView.Ada
         val scoreText: TextView = binding.scoreText
         val reviewText: TextView = binding.reviewText
         val removeButton: Button = binding.removeBtn
-        val modifyBtn: Button = binding.modifyBtn
         val reviewDate: TextView = binding.reviewDate
     }
 
@@ -39,9 +38,6 @@ class MyReviewRvAdapter(private val dataSet:ArrayList<Review>): RecyclerView.Ada
 
             removeButton.setOnClickListener {
                 itemClickListener?.onRemoveClick(position)
-            }
-            modifyBtn.setOnClickListener {
-                itemClickListener?.onModifyClick(position)
             }
         }
     }

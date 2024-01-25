@@ -1,8 +1,11 @@
 package com.project.deliveryapp.settings
 
 import android.content.Context
-import android.util.Log
-import com.project.deliveryapp.data.UserData
+import android.content.Intent
+import androidx.core.content.ContextCompat.startActivity
+import com.project.deliveryapp.activity.PaymentActivity
+import com.project.deliveryapp.activity.StartActivity
+import com.project.deliveryapp.data.User
 import com.project.deliveryapp.room.RoomDataBase
 import com.project.deliveryapp.room.data.MarketDataForRoom
 import com.project.deliveryapp.room.data.UserDataForRoom
@@ -13,16 +16,18 @@ import kotlin.IllegalStateException
 
 object SingletonObject {
 
-    private var userData: UserData? = null
+    private var user: User? = null
 
-    fun getUserId()= userData!!.id
-    fun getUserNickname() = userData!!.nickname
+    fun getUserId()= user!!.id
+    fun getUserNickname() = user!!.nickname
 
-    fun setUserData(userData: UserData) {
-        if(this.userData != null) {
+
+
+    fun setUserData(user: User) {
+        if(this.user != null) {
             throw IllegalStateException("UserData is set twice...")
         }
-        this.userData = userData
+        this.user = user
     }
     suspend fun getSavedUserData(context: Context): UserDataForRoom? {
         val dao = RoomDataBase.getInstance(context).roomDao
@@ -31,7 +36,7 @@ object SingletonObject {
     }
     suspend fun saveUserDataInRoom(context: Context): Boolean {
         val dao = RoomDataBase.getInstance(context).roomDao
-        val ud = this.userData!!
+        val ud = this.user!!
         val userDataForRoom = UserDataForRoom(
             ud.logInId,
             ud.loginPwd

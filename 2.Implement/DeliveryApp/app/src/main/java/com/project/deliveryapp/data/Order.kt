@@ -6,7 +6,9 @@ import java.time.LocalDateTime
 data class Order (
     val id: Long,
     val marketName: String,
-    val cost: Long,
-    var state: State,
+    val cost: Int,
+    val state: State,
     val date: LocalDateTime
-)
+) {
+
+}
