@@ -8,7 +8,7 @@ import com.delivery.app.Delivery.data.dto.response.review.GetMarketReviewsRespon
 import com.delivery.app.Delivery.data.dto.response.review.GetMyReviewsResponseDto;
 
 public interface ReviewService {
-    Boolean saveReview(SaveReviewDto saveReviewDto);
+    Long saveReview(SaveReviewDto saveReviewDto);
 
     GetMyReviewsResponseDto getMyReviews(UserIdDto userIdDto);
 

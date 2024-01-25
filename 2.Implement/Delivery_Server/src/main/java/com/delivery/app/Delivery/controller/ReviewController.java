@@ -7,6 +7,7 @@ import com.delivery.app.Delivery.data.dto.request.review.SaveReviewDto;
 import com.delivery.app.Delivery.data.dto.response.ResponseResult;
 import com.delivery.app.Delivery.data.dto.response.review.GetMarketReviewsResponseDto;
 import com.delivery.app.Delivery.data.dto.response.review.GetMyReviewsResponseDto;
+import com.delivery.app.Delivery.data.dto.response.review.SaveReviewResponseDto;
 import com.delivery.app.Delivery.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,13 +29,15 @@ public class ReviewController {
 
     @PostMapping("/save")
     public ResponseEntity<ResponseResult> saveReview(@RequestBody SaveReviewDto saveReviewDto) {
-        Boolean isSuccess = service.saveReview(saveReviewDto);
+
         ResponseResult result = new ResponseResult();
 
-        if(isSuccess) {
+        try {
+            Long id = service.saveReview(saveReviewDto);
             result.setFlag(true);
+            result.setResponseDto(new SaveReviewResponseDto(id));
             return ResponseEntity.status(HttpStatus.OK).body(result);
-        } else {
+        } catch (Exception e) {
             result.setFlag(false);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(result);
         }
