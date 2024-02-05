@@ -22,6 +22,9 @@ public class Market {
     @Column(nullable = false)
     private String name;
 
+    @Column()
+    private Float score;
+
     @Column(name="login_Id",nullable = false)
     private String loginId;
 
@@ -59,12 +62,15 @@ public class Market {
         this.latitude = latitude;
         this.longitude = longitude;
         this.description = description;
+
+        score = 3.0f;
     }
 
     public MarketResponseDto toMarketResponseDto() {
         return new MarketResponseDto(
                 getId(),
                 getName(),
+                score,
                 getPhoneNumber(),
                 getAddress(),
                 getLatitude(),

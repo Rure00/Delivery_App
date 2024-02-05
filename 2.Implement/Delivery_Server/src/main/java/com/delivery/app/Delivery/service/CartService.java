@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 public interface CartService {
-    void saveCart(SaveCartDto saveCartDto);
+    Long saveCart(SaveCartDto saveCartDto);
 
     GetCartsResponseDto getUserCarts(UserIdDto userIdDto);
 

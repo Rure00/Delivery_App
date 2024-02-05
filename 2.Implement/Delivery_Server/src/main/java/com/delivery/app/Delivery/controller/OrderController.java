@@ -30,10 +30,10 @@ public class OrderController {
 
         if(!orders.isEmpty()) {
             result.setResponseDto(orders);
-            result.setSuccess(true);
+            result.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } else {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
     }
@@ -45,10 +45,10 @@ public class OrderController {
 
         if(!detail.isEmpty()) {
             result.setResponseDto(detail);
-            result.setSuccess(true);
+            result.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } else {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
     }

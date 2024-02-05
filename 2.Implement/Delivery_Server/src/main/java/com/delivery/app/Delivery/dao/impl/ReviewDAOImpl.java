@@ -24,7 +24,7 @@ public class ReviewDAOImpl implements ReviewDAO {
     }
 
     @Override
-    public Boolean saveReview(SaveReviewDto saveReviewDto) {
+    public Long saveReview(SaveReviewDto saveReviewDto) {
 
         Long userId = saveReviewDto.getUserId();
         Long marketId = saveReviewDto.getMarketId();
@@ -34,15 +34,15 @@ public class ReviewDAOImpl implements ReviewDAO {
 
         Review newReview = new Review(
                 userId, marketId, marketName, comment, score
-        );;
+        );
 
 
         try {
-            reviewRepository.save(newReview);
-            return true;
+            Review review = reviewRepository.save(newReview);
+            return review.getId();
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 

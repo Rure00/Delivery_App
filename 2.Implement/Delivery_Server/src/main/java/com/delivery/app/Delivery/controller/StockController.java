@@ -28,10 +28,10 @@ public class StockController {
         ResponseResult result = new ResponseResult();
 
         if(isSuccess) {
-            result.setSuccess(true);
+            result.setFlag(true);
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
         } else {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.IM_USED).body(result);
         }
     }
@@ -43,10 +43,10 @@ public class StockController {
 
         if(!detail.isEmpty()) {
             result.setResponseDto(detail);
-            result.setSuccess(true);
+            result.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } else {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
     }

@@ -11,11 +11,14 @@ public class GetOrdersResponseDto implements BaseResponseDto {
     private ArrayList<Long> idList;
     private ArrayList<String> marketNameList;
     private ArrayList<Integer> costList;
+    private ArrayList<String> stateList;
     private ArrayList<LocalDateTime> dateList;
+
 
     public GetOrdersResponseDto() {
         idList = new ArrayList<>();
         marketNameList = new ArrayList<>();
+        stateList = new ArrayList<>();
         costList = new ArrayList<>();
         dateList = new ArrayList<>();
     }
@@ -28,5 +31,7 @@ public class GetOrdersResponseDto implements BaseResponseDto {
         marketNameList.add(marketName);
         costList.add(cost);
         dateList.add(date);
+
+        stateList.add("OnReception");
     }
 }

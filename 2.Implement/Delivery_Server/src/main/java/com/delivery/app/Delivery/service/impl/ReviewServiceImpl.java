@@ -23,7 +23,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public Boolean saveReview(SaveReviewDto saveReviewDto) {
+    public Long saveReview(SaveReviewDto saveReviewDto) {
         return reviewDAO.saveReview(saveReviewDto);
     }
 

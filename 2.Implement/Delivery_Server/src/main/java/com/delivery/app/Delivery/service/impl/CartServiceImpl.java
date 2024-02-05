@@ -24,8 +24,8 @@ public class CartServiceImpl implements CartService {
     public CartServiceImpl(CartDAO cartDAO) { this.cartDAO = cartDAO; }
 
     @Override
-    public void saveCart(SaveCartDto saveCartDto) {
-        cartDAO.save(saveCartDto);
+    public Long saveCart(SaveCartDto saveCartDto) {
+        return cartDAO.save(saveCartDto);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.delivery.app.Delivery.controller;
 
+import com.delivery.app.Delivery.FeedbackMessages;
 import com.delivery.app.Delivery.data.dto.request.user.LoginDto;
 import com.delivery.app.Delivery.data.dto.request.user.SignUpDto;
+import com.delivery.app.Delivery.data.dto.response.ErrorResponseDto;
 import com.delivery.app.Delivery.data.dto.response.ResponseResult;
 import com.delivery.app.Delivery.data.dto.response.user.SignUpResponseDto;
 import com.delivery.app.Delivery.data.dto.response.user.UserResponseDto;
@@ -22,18 +24,21 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<ResponseResult> tryLogin(@RequestBody LoginDto loginDto) {
-
+        ResponseResult responseResult = new ResponseResult();
         UserResponseDto userResponseDto = service.tryLogin(loginDto);
 
-        ResponseResult responseResult = new ResponseResult();
-        responseResult.setResponseDto(userResponseDto);
-
         if(userResponseDto!=null) {
-            responseResult.setSuccess(true);
+            responseResult.setResponseDto(userResponseDto);
+            responseResult.setFlag(true);
+            System.out.println("Success: Login");
             return ResponseEntity.status(HttpStatus.OK).body(responseResult);
         }
         else {
-            responseResult.setSuccess(false);
+            ErrorResponseDto errorDto = new ErrorResponseDto(FeedbackMessages.NO_MATCHED_LOGIN);
+            responseResult.setResponseDto(errorDto);
+
+            responseResult.setFlag(false);
+            System.out.println("Error: No Id matched");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseResult);
         }
     }
@@ -47,7 +52,7 @@ public class UserController {
 
         if(signUpDto.hasNull()) {
             signUpResponseDto.setDescription("잘못된 요청");
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
 
@@ -56,17 +61,17 @@ public class UserController {
         switch (code) {
             case SUCCESS -> {
                 signUpResponseDto.setDescription("회원 가입 성공");
-                result.setSuccess(true);
+                result.setFlag(true);
                 return ResponseEntity.status(HttpStatus.CREATED).body(result);
             }
             case DUPLICATED_ID -> {
                 signUpResponseDto.setDescription("ID 중복");
-                result.setSuccess(false);
+                result.setFlag(false);
                 return ResponseEntity.status(HttpStatus.IM_USED).body(result);
             }
             default -> {
                 signUpResponseDto.setDescription("회원 가입 실패");
-                result.setSuccess(false);
+                result.setFlag(false);
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(result);
             }
         }

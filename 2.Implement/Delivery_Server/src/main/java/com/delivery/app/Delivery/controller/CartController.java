@@ -6,6 +6,7 @@ import com.delivery.app.Delivery.data.dto.request.cart.SaveCartDto;
 import com.delivery.app.Delivery.data.dto.response.ResponseResult;
 import com.delivery.app.Delivery.data.dto.response.cart.CartDetailResponseDto;
 import com.delivery.app.Delivery.data.dto.response.cart.GetCartsResponseDto;
+import com.delivery.app.Delivery.data.dto.response.cart.SaveCartResponseDto;
 import com.delivery.app.Delivery.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,10 +29,11 @@ public class CartController {
 
         ResponseResult result = new ResponseResult();
         try {
-            service.saveCart(saveCartDto);
-            result.setSuccess(true);
+            Long id = service.saveCart(saveCartDto);
+            result.setFlag(true);
+            result.setResponseDto(new SaveCartResponseDto(id));
         } catch (Exception e) {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
 
@@ -45,9 +47,9 @@ public class CartController {
 
         try {
             result.setResponseDto(getCartsResponseDto);
-            result.setSuccess(true);
+            result.setFlag(true);
         } catch (Exception e) {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
 
@@ -63,10 +65,10 @@ public class CartController {
         result.setResponseDto(cartDetailResponseDto);
 
         if(cartDetailResponseDto != null) {
-            result.setSuccess(true);
+            result.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } else {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
 
@@ -78,9 +80,9 @@ public class CartController {
 
         try {
             service.removeCart(cartIdDto);
-            result.setSuccess(true);
+            result.setFlag(true);
         } catch (Exception e) {
-            result.setSuccess(false);
+            result.setFlag(false);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
 

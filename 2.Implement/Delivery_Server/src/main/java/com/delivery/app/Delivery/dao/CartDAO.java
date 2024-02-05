@@ -12,7 +12,7 @@ import com.delivery.app.Delivery.data.entity.Order;
 import java.util.List;
 
 public interface CartDAO {
-    void save(SaveCartDto saveCartDto);
+    Long save(SaveCartDto saveCartDto);
 
     GetCartsResponseDto getUserCarts(UserIdDto userIdDto);
 
