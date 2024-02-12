@@ -79,6 +79,20 @@ public class Market {
         );
     }
 
+    public void addNewItem(Stock stock) {
+        boolean isDuplicated = false;
+        for(Stock item: stocks) {
+            if (item.getId() == stock.getId()) {
+                isDuplicated = true;
+                break;
+            }
+        }
+
+        if(!isDuplicated) {
+            stocks.add(stock);
+        }
+    }
+
 
 
 }

@@ -1,8 +1,11 @@
 package com.delivery.app.Delivery.data.dto.request.market;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-public class MarketInfoDto {
+@AllArgsConstructor
+public class AddItemDto {
     Long marketId;
+    Long stockId;
 }

@@ -10,5 +10,5 @@ public interface MarketRepositoryCustom {
 
     ArrayList<Market>  getNearMarkets(Double latitude, Double longitude, Integer radius);
 
-    ArrayList<Stock> getMarketStocks(Long marketId, String marketName);
+    ArrayList<Stock> getMarketStocks(Long marketId);
 }
