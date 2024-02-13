@@ -2,6 +2,7 @@ package com.project.deliveryapp.view_model
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.naver.maps.geometry.LatLng
@@ -40,7 +41,6 @@ import com.project.deliveryapp.retrofit.dto.response.review.GetMyReviewsResponse
 import com.project.deliveryapp.retrofit.dto.response.review.GetReviewsResponseDto
 import com.project.deliveryapp.retrofit.dto.response.user.LoginResponseDto
 import com.project.deliveryapp.room.RoomDataBase
-import com.project.deliveryapp.room.data.MarketDataForRoom
 import com.project.deliveryapp.settings.SingletonObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -54,15 +54,18 @@ class MainViewModel: ViewModel() {
     var curCartId: Long = 0
     var curOrderId: Long = 0
 
-    suspend fun getRecentMarketInfo(context: Context): List<MarketDataForRoom>? {
+    suspend fun getRecentMarketInfo(context: Context): List<MarketData> {
         val dao = RoomDataBase.getInstance(context).roomDao
+
         return withContext(Dispatchers.IO) {
-            dao.getRecentMarket()
+            val marketList = ArrayList<MarketData>()
+            dao.getRecentMarket()?.forEach {
+                marketList.add(getMarketData(context, it.id)!!)
+            }
+
+            marketList
         }
     }
-
-
-
 
 
 
@@ -75,9 +78,8 @@ class MainViewModel: ViewModel() {
         val response = runCatching{ communicator.getMarketDetail(MarketIdDto(marketId)) }
             .onFailure {
                 withContext(Dispatchers.Main) {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "나중에 다시 이용해주세요.", Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(context, "나중에 다시 이용해주세요.", Toast.LENGTH_SHORT).show()
+                    Log.d("Test", "GetMarketData is Null...")
                 }
                 return null
             }.getOrNull()!!
@@ -92,7 +94,9 @@ class MainViewModel: ViewModel() {
         } else {
             val error = response.response as ErrorResponseDto
             withContext(Dispatchers.Main) {
-                Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+                }
             }
             null
         }
@@ -104,16 +108,20 @@ class MainViewModel: ViewModel() {
             .onFailure {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "나중에 다시 이용해주세요.", Toast.LENGTH_SHORT).show()
+                    Log.e("MainViewModel", "getReviews Error.")
                 }
                 return result
             }.getOrNull()!!
 
+
+
         if(response.result) {
             val obj = response.response as GetReviewsResponseDto
-            for(i in 0..obj.idList.size) {
+            for(i in 0 until obj.idList.size) {
                 val ele = MarketReviewDto(
                     obj.idList[i],
                     obj.commentList[i],
+                    obj.nicknameList[i],
                     obj.scoreList[i],
                     obj.dateList[i],
                 )
@@ -122,7 +130,9 @@ class MainViewModel: ViewModel() {
             }
         } else {
             val error = response.response as ErrorResponseDto
-            Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return result
@@ -132,7 +142,7 @@ class MainViewModel: ViewModel() {
         val requestDto = GetNearMarketsDto(
             curLocation.latitude, curLocation.longitude, distance
         )
-        val response = runCatching{ communicator.getNearMarkets(requestDto) }
+        val response =  runCatching{ communicator.getNearMarkets(requestDto) }
             .onFailure {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "나중에 다시 이용해주세요.", Toast.LENGTH_SHORT).show()
@@ -142,7 +152,7 @@ class MainViewModel: ViewModel() {
 
         if(response.result) {
             val obj = response.response as NearMarketResponseDto
-            for(i in 0..obj.id.size) {
+            for(i in 0 until  obj.id.size) {
                 val ele = NearMarketDto(
                     obj.id[i],
                     obj.name[i],
@@ -154,7 +164,9 @@ class MainViewModel: ViewModel() {
             }
         } else {
             val error = response.response as ErrorResponseDto
-            Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return result
@@ -176,7 +188,9 @@ class MainViewModel: ViewModel() {
             result = obj.stockList
         } else {
             val error = response.response as ErrorResponseDto
-            Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return result
@@ -197,7 +211,9 @@ class MainViewModel: ViewModel() {
         return  if(response.result) (response.response as SaveCartResponseDto).id
                 else {
                     val error = response.response as ErrorResponseDto
-                    Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+                    }
                     return null
                 }
     }
@@ -221,7 +237,9 @@ class MainViewModel: ViewModel() {
         return  if(response.result) true
                 else {
                     val error = response.response as ErrorResponseDto
-                    Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+                    }
                     false
                 }
     }
@@ -230,14 +248,14 @@ class MainViewModel: ViewModel() {
         val response = runCatching{ communicator.getMyCarts(UserIdDto(SingletonObject.getUserId())) }
             .onFailure {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "나중에 다시 이용해주세요.", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "비어있음.", Toast.LENGTH_SHORT).show()
                 }
                 return result
             }.getOrNull()!!
 
         if(response.result) {
             val obj = response.response as GetCartsResponseDto
-            for(i in 0..obj.idList.size) {
+            for(i in 0 until obj.idList.size) {
                 val ele = SimpleCartDto(
                     obj.idList[i],
                     obj.marketNameList[i],
@@ -248,7 +266,9 @@ class MainViewModel: ViewModel() {
             }
         } else {
             val error = response.response as ErrorResponseDto
-            Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return  result
@@ -271,7 +291,9 @@ class MainViewModel: ViewModel() {
             )
         } else {
             val error = response.response as ErrorResponseDto
-            Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return  result
@@ -288,7 +310,9 @@ class MainViewModel: ViewModel() {
         return  if(response.result) true
         else {
             val error = response.response as ErrorResponseDto
-            Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            }
             false
         }
     }
@@ -304,7 +328,7 @@ class MainViewModel: ViewModel() {
 
         if(response.result){
             val obj = response.response as GetOrderResponseDto
-            for(i in 0..obj.idList.size) {
+            for(i in 0 until obj.idList.size) {
                 val state = when(obj.stateList[i]) {
                     "OnReception" -> State.OnReception
                     "OnDelivery" -> State.OnDelivery
@@ -319,7 +343,9 @@ class MainViewModel: ViewModel() {
             }
         } else {
             val error = response.response as ErrorResponseDto
-            Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return result
@@ -338,7 +364,7 @@ class MainViewModel: ViewModel() {
         if(response.result){
             val obj = response.response as GetMyReviewsResponseDto
             val nickname = SingletonObject.getUserNickname()
-            for(i in 0..obj.idList.size) {
+            for(i in 0 until obj.idList.size) {
                 val ele = Review(
                     obj.idList[i], userId, obj.marketIdList[i], nickname, obj.marketNameList[i],
                     obj.commentList[i], obj.scoreList[i], obj.dateList[i]
@@ -348,7 +374,10 @@ class MainViewModel: ViewModel() {
             }
         } else {
             val error = response.response as ErrorResponseDto
-            Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return result
@@ -365,8 +394,11 @@ class MainViewModel: ViewModel() {
         return if(response.result) true
                 else {
                     val error = response.response as ErrorResponseDto
-                    Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
-                    false
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, error.comment, Toast.LENGTH_SHORT).show()
+                    }
+                        false
                 }
-    }
+
+        }
 }

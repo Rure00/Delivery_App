@@ -7,9 +7,11 @@ import com.project.deliveryapp.activity.PaymentActivity
 import com.project.deliveryapp.activity.StartActivity
 import com.project.deliveryapp.data.User
 import com.project.deliveryapp.room.RoomDataBase
-import com.project.deliveryapp.room.data.MarketDataForRoom
-import com.project.deliveryapp.room.data.UserDataForRoom
+import com.project.deliveryapp.room.data.LoginData
+import com.project.deliveryapp.room.data.MarketIdForRoom
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.IllegalStateException
 
@@ -29,7 +31,16 @@ object SingletonObject {
         }
         this.user = user
     }
-    suspend fun getSavedUserData(context: Context): UserDataForRoom? {
+    fun clearUserData(context: Context) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val dao = RoomDataBase.getInstance(context).roomDao
+            val data = dao.getUserData()!!
+            dao.deleteUserData(data)
+            user = null
+        }
+
+    }
+    suspend fun getSavedUserData(context: Context): LoginData? {
         val dao = RoomDataBase.getInstance(context).roomDao
 
         return dao.getUserData()
@@ -37,22 +48,22 @@ object SingletonObject {
     suspend fun saveUserDataInRoom(context: Context): Boolean {
         val dao = RoomDataBase.getInstance(context).roomDao
         val ud = this.user!!
-        val userDataForRoom = UserDataForRoom(
+        val loginData = LoginData(
             ud.logInId,
             ud.loginPwd
         )
-        dao.insertUserData(userDataForRoom)
+        dao.insertUserData(loginData)
 
         return true
     }
-    suspend fun saveRecentMarket(context: Context, recentMarket: MarketDataForRoom): Boolean {
+    suspend fun saveRecentMarket(context: Context, recentMarket: MarketIdForRoom): Boolean {
         val dao = RoomDataBase.getInstance(context).roomDao
 
         dao.insertRecentMarket(recentMarket)
 
         return true
     }
-    suspend fun deleteRecentMarket(context: Context, recentMarket: MarketDataForRoom): Boolean {
+    suspend fun deleteRecentMarket(context: Context, recentMarket: MarketIdForRoom): Boolean {
         val dao = RoomDataBase.getInstance(context).roomDao
 
         dao.deleteRecentMarket(recentMarket)

@@ -6,13 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.deliveryapp.R
+import com.project.deliveryapp.data.MarketData
 import com.project.deliveryapp.databinding.FragmentRecentMarketBinding
 import com.project.deliveryapp.dialog.loading.LoadingDialog
 import com.project.deliveryapp.recycler_view.RecentMarketRvAdapter
-import com.project.deliveryapp.room.data.MarketDataForRoom
 import com.project.deliveryapp.view_model.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +25,7 @@ class RecentMarketFragment : Fragment() {
     private lateinit var context: Context
     private lateinit var viewModel: MainViewModel
 
-    private var recentMarketData: List<MarketDataForRoom>? = null
+    private var recentMarketData: List<MarketData>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +46,15 @@ class RecentMarketFragment : Fragment() {
         LoadingDialog.show(context)
         CoroutineScope(Dispatchers.IO).launch {
             recentMarketData = viewModel.getRecentMarketInfo(context)
+
             recentMarketData?.let{
+                if(it.isEmpty()) {
+                    return@let
+                }
+
+                binding.noRecentText.isVisible = false
+                binding.recyclerViewLayout.isVisible = true
+
                 val adapter = RecentMarketRvAdapter(it)
                 adapter.notifyItemRangeInserted(0, it.size)
 
@@ -66,6 +75,8 @@ class RecentMarketFragment : Fragment() {
 
             LoadingDialog.dismiss()
         }
+
+
     }
 
     override fun onDestroyView() {

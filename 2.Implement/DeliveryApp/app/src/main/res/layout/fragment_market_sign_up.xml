@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.sign_up.MarketSignUpFragment">
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:text="이름"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/nameText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nameText"
+
+        android:layout_marginHorizontal="5dp"
+        />
+
+    <TextView
+        android:id="@+id/idText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/nameText"
+        app:layout_constraintTop_toBottomOf="@id/nameText"
+
+        android:text="ID"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/idText"
+
+        android:layout_marginHorizontal="5dp"
+        />
+    <TextView
+        android:id="@+id/pwdText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/nameText"
+        app:layout_constraintTop_toBottomOf="@id/idText"
+
+        android:text="PW"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/pwd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pwdText"
+
+        android:inputType="textPassword"
+
+        android:layout_marginHorizontal="5dp"
+        />
+    <TextView
+        android:id="@+id/confirmText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/nameText"
+        app:layout_constraintTop_toBottomOf="@id/pwdText"
+
+        android:text="확인"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/confirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/confirmText"
+
+        android:inputType="textPassword"
+
+        android:layout_marginHorizontal="5dp"
+        />
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/confirmText"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:text="확인"
+        android:textSize="18dp"
+
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:id="@+id/phoneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/confirmButton"
+
+        android:text="전화번호"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/phoneNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/phoneText"
+        app:layout_constraintEnd_toStartOf="@id/requestCertification"
+        app:layout_constraintTop_toTopOf="@id/phoneText"
+
+        android:layout_marginHorizontal="5dp"
+
+        android:inputType="phone"
+        />
+
+    <Button
+        android:id="@+id/requestCertification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/phoneNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/phoneText"
+
+        android:text="인증하기"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/numberConfirmText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/phoneText"
+        app:layout_constraintTop_toBottomOf="@id/phoneText"
+
+        android:text="인증번호"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/numberConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/numberConfirmText"
+        app:layout_constraintEnd_toStartOf="@id/numberConfirmButton"
+        app:layout_constraintTop_toTopOf="@id/numberConfirmButton"
+
+        android:layout_marginHorizontal="5dp"
+
+        android:inputType="number"
+        android:maxLength="5"
+        />
+    <Button
+        android:id="@+id/numberConfirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/numberConfirmText"
+
+        android:text="확인"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/addressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numberConfirmButton"
+
+        android:text="주소"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="4dp"
+        />
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressText"
+        />
+    <EditText
+        android:id="@+id/addressDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/address"
+
+        android:hint="세부사항"
+        />
+
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressDetail"
+
+        android:text="소개"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:background="@color/sky"
+        android:padding="6dp"
+
+        android:layout_marginTop="4dp"
+        />
+    <EditText
+        android:id="@+id/descriptionText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        android:padding="7dp"
+
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="5dp"
+
+        android:lines="4"
+
+        android:text="매장 소개"
+        android:textSize="18sp"
+
+        android:gravity="top|start"
+
+        android:background="@drawable/round_rectangle"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

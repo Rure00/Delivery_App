@@ -19,7 +19,11 @@ class MarketDetailResponseDto(json: JSONObject): ResponseDto {
         id = obj.getLong("id")
         name = obj.getString("name")
         phoneNumber = obj.getString("phoneNumber")
-        score = obj.getDouble("score").toFloat()
+        score = try {
+            obj.getDouble("score").toFloat()
+        } catch (e: Exception) {
+            0f
+        }
         address = obj.getString("address")
         latitude = obj.getDouble("latitude")
         longitude = obj.getDouble("longitude")

@@ -11,7 +11,6 @@ import com.project.deliveryapp.data.User
 import com.project.deliveryapp.data.enum.Gender
 import com.project.deliveryapp.databinding.ActivitySignInBinding
 import com.project.deliveryapp.dialog.loading.LoadingDialog
-import com.project.deliveryapp.fragment.loading.LoadingFragmentManager
 import com.project.deliveryapp.retrofit.ServerCommunicator
 import com.project.deliveryapp.retrofit.dto.request.user.LoginDto
 import com.project.deliveryapp.retrofit.dto.response.ErrorResponseDto
@@ -98,6 +97,7 @@ class SignInActivity : AppCompatActivity() {
         signUpBtn.setOnClickListener {
             val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
     }

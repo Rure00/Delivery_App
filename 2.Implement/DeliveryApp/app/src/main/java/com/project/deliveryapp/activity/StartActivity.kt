@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.project.deliveryapp.databinding.ActivityStartBinding
-import com.project.deliveryapp.fragment.loading.LoadingFragmentManager
+import com.project.deliveryapp.dialog.loading.LoadingDialog
 import com.project.deliveryapp.retrofit.ServerCommunicator
 import com.project.deliveryapp.retrofit.dto.request.user.LoginDto
+import com.project.deliveryapp.retrofit.dto.response.user.LoginResponseDto
 import com.project.deliveryapp.settings.PermissionManager
 import com.project.deliveryapp.settings.SingletonObject
+import com.project.deliveryapp.settings.WindowObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -19,7 +21,6 @@ import kotlinx.coroutines.launch
 class StartActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStartBinding
-    private val loadingFragmentManager = LoadingFragmentManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,13 +28,15 @@ class StartActivity : AppCompatActivity() {
         binding = ActivityStartBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        LoadingDialog.show(this@StartActivity)
+
+        WindowObject.setPixels(this)
 
         requestPermissions(
             PermissionManager.gpsPermission,
             PermissionManager.GPS_REQUEST_CODE
         )
 
-        loadingFragmentManager.circleLoading(supportFragmentManager, binding.frameLayout.id)
     }
 
 
@@ -66,7 +69,8 @@ class StartActivity : AppCompatActivity() {
                             roomData.loginPwd
                         )
 
-                        communicator.tryLogin(loginDto)
+                        val response = communicator.tryLogin(loginDto).response as LoginResponseDto
+                        SingletonObject.setUserData(response.toUser())
                     }
 
 
@@ -74,11 +78,12 @@ class StartActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 } else {
-                    loadingFragmentManager.cancelLoading(supportFragmentManager, binding.frameLayout.id)
                     val intent = Intent(this@StartActivity.applicationContext, SignInActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
+
+                LoadingDialog.dismiss()
             }
         }
     }

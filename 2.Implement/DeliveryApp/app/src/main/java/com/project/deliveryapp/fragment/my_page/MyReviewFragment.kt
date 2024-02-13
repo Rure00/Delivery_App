@@ -38,12 +38,12 @@ class MyReviewFragment : Fragment() {
         context = requireContext()
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
-        mainActivity.onBackPressedDispatcher.addCallback() {
+        mainActivity.onBackPressedDispatcher.addCallback {
             mainActivity.popFragments()
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         _binding = FragmentMyReviewBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -53,7 +53,7 @@ class MyReviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         CoroutineScope(Dispatchers.IO).launch {
-            myReviewList = viewModel.getMyReviews()
+            myReviewList = viewModel.getMyReviews(context)
 
             if(myReviewList.isNotEmpty()) {
                 adapter = MyReviewRvAdapter(myReviewList)
@@ -99,12 +99,15 @@ class MyReviewFragment : Fragment() {
 
         dialog.setButtonClickListener(object : SimpleDialog.OnButtonClickListener{
             override fun onConfirmButtonClicked() {
-                viewModel.removeReview(review)
-                myReviewList.removeAt(position)
 
-                adapter.notifyItemRemoved(position)
+                CoroutineScope(Dispatchers.IO).launch {
+                    viewModel.removeReview(context, review)
+                    myReviewList.removeAt(position)
+                    adapter.notifyItemRemoved(position)
 
-                dialog.dismiss()
+                    dialog.dismiss()
+                }
+
             }
 
             override fun onCancelButtonClicked() {

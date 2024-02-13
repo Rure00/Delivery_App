@@ -4,15 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.home.FindMarketFragment"
-    android:padding="30dp">
+    tools:context=".fragment.home.FindMarketFragment">
 
     <FrameLayout
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="360dp"
+        android:layout_height="match_parent"
 
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:translationZ="-10dp"
+        android:background="@color/sky"
         />
 
 
@@ -21,102 +23,104 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@id/mapView"
+        app:layout_constraintTop_toTopOf="parent"
         android:gravity="center"
 
         android:text="서울특별시 중구 을지로 65"
         android:textSize="18sp"
         android:textColor="@color/black"
 
-        android:layout_marginTop="5dp"
-        android:padding="3dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:padding="5dp"
 
-
+        android:background="@drawable/round_rectangle_white"
         />
+
+    <RadioGroup
+        android:id="@+id/divisionRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        app:layout_constraintStart_toStartOf="@id/curAddressText"
+        app:layout_constraintTop_toBottomOf="@id/curAddressText"
+
+        android:layout_marginTop="10dp"
+
+        android:gravity="start"
+
+        android:checkedButton="@id/allBtn"
+        >
+
+        <RadioButton
+            android:id="@+id/allBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="전체"
+            android:textSize="18sp"
+
+            android:layout_weight="1"
+            android:background="@drawable/selector_radio_button"
+            android:button="@null"
+
+            android:gravity="center"
+
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="8dp"
+            />
+        <RadioButton
+            android:id="@+id/recentOrderBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="최근 주문순"
+            android:textSize="18sp"
+
+            android:layout_weight="1"
+            android:background="@drawable/selector_radio_button"
+            android:button="@null"
+
+            android:gravity="center"
+
+            android:layout_marginStart="10dp"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="8dp"
+            />
+        <RadioButton
+            android:id="@+id/frequencyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="빈도순"
+            android:textSize="18sp"
+
+            android:layout_weight="1"
+            android:background="@drawable/selector_radio_button"
+            android:button="@null"
+
+            android:gravity="center"
+
+            android:layout_marginStart="10dp"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="8dp"
+            />
+
+    </RadioGroup>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
 
-        app:layout_constraintTop_toBottomOf="@id/curAddressText"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
 
         android:layout_marginTop="10dp"
         >
 
     </androidx.fragment.app.FragmentContainerView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-
-        android:id="@+id/noRecentMarketPanel"
-
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/curAddressText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="invisible"
-        >
-
-        <TextView
-            android:id="@+id/recentText"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-
-            android:gravity="center"
-
-            android:text="최근 이용"
-            android:textSize="18sp"
-            android:textColor="@color/tulip_noir"
-
-            android:background="@color/sky"
-
-            android:layout_marginTop="5dp"
-            android:padding="5dp"
-            />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recentText"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            android:layout_marginTop="10dp"
-
-            android:background="@color/sky"
-            android:padding="10dp"
-
-            android:gravity="center"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="최근 이용 기록이 없습니다."
-                android:textSize="18sp"
-                />
-
-
-        </LinearLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 
 
 

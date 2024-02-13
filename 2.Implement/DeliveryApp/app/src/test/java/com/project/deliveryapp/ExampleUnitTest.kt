@@ -6,6 +6,9 @@ import com.project.deliveryapp.retrofit.RetrofitClient
 import com.project.deliveryapp.retrofit.RetrofitService
 import com.project.deliveryapp.retrofit.dto.request.user.LoginDto
 import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class ExampleUnitTest {
@@ -25,22 +28,13 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun testForUserDataLoad() {
-        val ud: User = User(
-            0,
-            "Sung", "Rure",
-            "asnjkd", "6344",
-            "0102213414", Gender.Male, "sadang"
-        )
+    fun formatterTest() {
+        val str = "2024-02-05T12:16:52.94985"
+        val str2 = str.replace('T', ' ')
 
-        val service: RetrofitService = RetrofitClient.getInstance().create(RetrofitService::class.java)
-
-
-        val loginDto = LoginDto(
-            "asnjkd", "6344"
-        )
-
-        service.tryLogin(loginDto)
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSS")
+        LocalDate.parse(str2, formatter)
+        LocalDateTime.parse(str2, formatter)
 
     }
 

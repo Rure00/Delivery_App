@@ -6,14 +6,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.project.deliveryapp.R
+import com.project.deliveryapp.data.CartDetail
 import com.project.deliveryapp.databinding.ActivityMainBinding
 import com.project.deliveryapp.databinding.ActivityPaymentBinding
 import com.project.deliveryapp.dialog.loading.LoadingDialog
 import com.project.deliveryapp.retrofit.ServerCommunicator
+import com.project.deliveryapp.retrofit.dto.request.CartIdDto
 import com.project.deliveryapp.retrofit.dto.request.cart.SaveCartDto
 import com.project.deliveryapp.retrofit.dto.request.order.GiveOrderDto
 import com.project.deliveryapp.retrofit.dto.response.ErrorResponseDto
 import com.project.deliveryapp.retrofit.dto.response.cart.SaveCartResponseDto
+import com.project.deliveryapp.room.RoomDataBase
 import com.project.deliveryapp.settings.SingletonObject
 import com.project.deliveryapp.view_model.MainViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -24,6 +27,8 @@ import kotlinx.coroutines.withContext
 class PaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPaymentBinding
     private lateinit var communicator: ServerCommunicator
+
+    private lateinit var cart: CartDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +56,7 @@ class PaymentActivity : AppCompatActivity() {
                         }
                     }.getOrNull()!!
 
-                if(response.result)  onSuccess()
+                if(response.result)  onSuccess(cartId)
                 else onFailure()
 
                 LoadingDialog.dismiss()
@@ -59,7 +64,9 @@ class PaymentActivity : AppCompatActivity() {
         }
     }
 
-    private fun onSuccess() {
+    private suspend fun onSuccess(cartId: Long) {
+        //TODO: 최근 이용 마켓에 추가
+
         finish()
     }
     private fun onFailure() {

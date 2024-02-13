@@ -4,8 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class UserDataForRoom(
+data class MarketIdForRoom(
     @PrimaryKey
-    val loginId: String,
-    val loginPwd: String
-)
+    val id: Long
+) {
+
+}

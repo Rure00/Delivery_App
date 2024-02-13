@@ -1,5 +1,6 @@
 package com.project.deliveryapp.retrofit
 
+import android.content.Context
 import android.util.Log
 import com.project.deliveryapp.retrofit.dto.ResponseDto
 import com.project.deliveryapp.retrofit.dto.ResponseResult
@@ -25,6 +26,7 @@ import com.project.deliveryapp.retrofit.dto.response.cart.SaveCartResponseDto
 import com.project.deliveryapp.retrofit.dto.response.market.GetItemsResponseDto
 import com.project.deliveryapp.retrofit.dto.response.market.MarketDetailResponseDto
 import com.project.deliveryapp.retrofit.dto.response.market.MarketSignUpResponseDto
+import com.project.deliveryapp.retrofit.dto.response.market.NearMarketResponseDto
 import com.project.deliveryapp.retrofit.dto.response.order.GetOrderDetailResponseDto
 import com.project.deliveryapp.retrofit.dto.response.order.GetOrderResponseDto
 import com.project.deliveryapp.retrofit.dto.response.review.GetMyReviewsResponseDto
@@ -33,6 +35,8 @@ import com.project.deliveryapp.retrofit.dto.response.review.SaveReviewResponseDt
 import com.project.deliveryapp.retrofit.dto.response.stock.GetStockResponseDto
 import com.project.deliveryapp.retrofit.dto.response.user.LoginResponseDto
 import com.project.deliveryapp.retrofit.dto.response.user.SignUpResponseDto
+import com.project.deliveryapp.room.RoomDataBase
+import com.project.deliveryapp.settings.SingletonObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -137,11 +141,14 @@ class ServerCommunicator: ServerCommunicatorInterface {
             in 200..299 -> {
                 response.body()!!.let {
                     val obj = JSONObject(it)
-                    val flag = obj.getBoolean("flag")
                     val responseDto = MarketDetailResponseDto(obj)
 
-                    responseResult = ResponseResult(flag, responseDto)
+                    responseResult = ResponseResult(true, responseDto)
                 }
+            }
+            in 400..499 -> {
+                val responseDto = ErrorResponseDto(FeedbackMessages.NOT_FOUND)
+                responseResult = ResponseResult(false, responseDto)
             }
             else -> {
                 throw Exception()
@@ -160,17 +167,15 @@ class ServerCommunicator: ServerCommunicatorInterface {
             in 200..299 -> {
                 response.body()!!.let {
                     val obj = JSONObject(it)
-                    val flag = obj.getBoolean("flag")
-                    val responseDto = MarketDetailResponseDto(obj)
 
-                    responseResult = ResponseResult(flag, responseDto)
+                    val responseDto = NearMarketResponseDto(obj)
+                    responseResult = ResponseResult(true, responseDto)
                 }
             }
             in 400..499 -> {
                 val responseDto = ErrorResponseDto(FeedbackMessages.NOT_FOUND)
                 responseResult = ResponseResult(false, responseDto)
             }
-
             else -> {
                 throw Exception()
             }
@@ -245,6 +250,10 @@ class ServerCommunicator: ServerCommunicatorInterface {
                         responseResult = ResponseResult(flag, responseDto)
                     }
                 }
+                in 400..499 -> {
+                    val responseDto = ErrorResponseDto(FeedbackMessages.NOT_FOUND)
+                    responseResult = ResponseResult(false, responseDto)
+                }
                 else -> {
                     throw Exception()
                 }
@@ -268,6 +277,10 @@ class ServerCommunicator: ServerCommunicatorInterface {
                         responseResult = ResponseResult(flag, responseDto)
                     }
                 }
+                in 400..499 -> {
+                    val responseDto = ErrorResponseDto(FeedbackMessages.NOT_FOUND)
+                    responseResult = ResponseResult(false, responseDto)
+                }
                 else -> {
                     throw Exception()
                 }
@@ -290,6 +303,10 @@ class ServerCommunicator: ServerCommunicatorInterface {
 
                         responseResult = ResponseResult(flag, responseDto)
                     }
+                }
+                in 400..499 -> {
+                    val responseDto = ErrorResponseDto(FeedbackMessages.NOT_FOUND)
+                    responseResult = ResponseResult(false, responseDto)
                 }
                 else -> {
                     throw Exception()
@@ -337,6 +354,10 @@ class ServerCommunicator: ServerCommunicatorInterface {
                         responseResult = ResponseResult(flag, responseDto)
                     }
                 }
+                in 400..499 -> {
+                    val responseDto = ErrorResponseDto(FeedbackMessages.NOT_FOUND)
+                    responseResult = ResponseResult(false, responseDto)
+                }
                 else -> {
                     throw Exception()
                 }
@@ -348,17 +369,21 @@ class ServerCommunicator: ServerCommunicatorInterface {
     override suspend fun getMarketReviews(marketIdDto: MarketIdDto): ResponseResult
         = withContext(Dispatchers.IO) {
             val response = service.getMarketReviews(marketIdDto)
+            Log.d("JSON Response", "getMarketReviews: ${response.body()}")
             var responseResult: ResponseResult
 
             when (response.code()) {
                 in 200..299 -> {
                     response.body()!!.let {
                         val obj = JSONObject(it)
-                        val flag = obj.getBoolean("flag")
                         val responseDto = GetReviewsResponseDto(obj)
 
-                        responseResult = ResponseResult(flag, responseDto)
+                        responseResult = ResponseResult(true, responseDto)
                     }
+                }
+                in 400..499 -> {
+                    val responseDto = ErrorResponseDto(FeedbackMessages.NOT_FOUND)
+                    responseResult = ResponseResult(false, responseDto)
                 }
                 else -> {
                     throw Exception()
@@ -406,6 +431,10 @@ class ServerCommunicator: ServerCommunicatorInterface {
                         responseResult = ResponseResult(flag, responseDto)
                     }
                 }
+                in 400..499 -> {
+                    val responseDto = ErrorResponseDto(FeedbackMessages.WRONG_PARAMETER)
+                    responseResult = ResponseResult(false, responseDto)
+                }
                 else -> {
                     throw Exception()
                 }
@@ -428,6 +457,10 @@ class ServerCommunicator: ServerCommunicatorInterface {
 
                         responseResult = ResponseResult(flag, responseDto)
                     }
+                }
+                in 400..499 -> {
+                    val responseDto = ErrorResponseDto(FeedbackMessages.NOT_FOUND)
+                    responseResult = ResponseResult(false, responseDto)
                 }
                 else -> {
                     throw Exception()
@@ -452,6 +485,10 @@ class ServerCommunicator: ServerCommunicatorInterface {
                         responseResult = ResponseResult(flag, responseDto)
                     }
                 }
+                in 400..499 -> {
+                    val responseDto = ErrorResponseDto(FeedbackMessages.NOT_FOUND)
+                    responseResult = ResponseResult(false, responseDto)
+                }
                 else -> {
                     throw Exception()
                 }
@@ -475,6 +512,10 @@ class ServerCommunicator: ServerCommunicatorInterface {
                         responseResult = ResponseResult(flag, responseDto)
                     }
                 }
+                in 400..499 -> {
+                    val responseDto = ErrorResponseDto(FeedbackMessages.NOT_FOUND)
+                    responseResult = ResponseResult(false, responseDto)
+                }
                 else -> {
                     throw Exception()
                 }
@@ -487,8 +528,6 @@ class ServerCommunicator: ServerCommunicatorInterface {
         = withContext(Dispatchers.IO) {
             val response = service.giveOrder(giveOrderDto)
             var responseResult: ResponseResult
-
-            //TODO: add recent market to room
 
             when (response.code()) {
                 in 200..299 -> {

@@ -48,6 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="50dp"
 
+        android:privateImeOptions="defaultInputmode=english"
         android:hint="ID"
         android:digits="0123456789_qwertzuiopasdfghjklyxcvbnm"
         android:gravity="center"
@@ -64,6 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="20dp"
 
+        android:privateImeOptions="defaultInputmode=english"
         android:hint="PW"
         android:digits="0123456789_qwertzuiopasdfghjklyxcvbnm"
         android:inputType="textPassword"

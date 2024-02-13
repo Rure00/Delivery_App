@@ -28,12 +28,7 @@ class ReviewRvAdapter(private val dataSet:List<MarketReviewDto>): RecyclerView.A
 
 
         init {
-            reportBtn.setOnClickListener {
-                //TODO:
-            }
-            modifyBtn.setOnClickListener {
-                //TODO:
-            }
+
         }
 
     }
@@ -46,13 +41,20 @@ class ReviewRvAdapter(private val dataSet:List<MarketReviewDto>): RecyclerView.A
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = dataSet[position]
-        //holder.userName.text = item.userNickname
+        holder.userName.text = item.nickname
         holder.reviewText.text = item.comment
         holder.scoreText.text = "${item.score} / 5"
 
 
         holder.binding.root.setOnClickListener {
-            itemClickListener?.onClick(position)
+            itemClickListener?.onItemClick(position)
+        }
+
+        holder.reportBtn.setOnClickListener {
+            itemClickListener?.onReportClick(position)
+        }
+        holder.modifyBtn.setOnClickListener {
+            itemClickListener?.onDeleteClick(position)
         }
 
     }
@@ -62,7 +64,9 @@ class ReviewRvAdapter(private val dataSet:List<MarketReviewDto>): RecyclerView.A
     }
 
     interface OnItemClickListener {
-        fun onClick(position: Int)
+        fun onItemClick(position: Int)
+        fun onReportClick(position: Int)
+        fun onDeleteClick(position: Int)
     }
 
 }

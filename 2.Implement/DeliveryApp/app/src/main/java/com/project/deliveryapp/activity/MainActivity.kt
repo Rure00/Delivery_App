@@ -1,7 +1,6 @@
 package com.project.deliveryapp.activity
 
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +16,6 @@ import com.project.deliveryapp.dialog.BlockTabDialog
 import com.project.deliveryapp.dialog.SimpleDialog
 import com.project.deliveryapp.fragment.cart.CartFragment
 import com.project.deliveryapp.fragment.my_page.MyPageFragment
-import com.project.deliveryapp.fragment.PaymentFragment
 import com.project.deliveryapp.fragment.home.ShoppingFragment
 import com.project.deliveryapp.fragment.home.FindMarketFragment
 import com.project.deliveryapp.view_model.MainViewModel
@@ -75,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
 
             //ShoppingFragment 에서 tab 클릭시 Dialog 출력 및 처리
-            if((curFragment is ShoppingFragment || curFragment is PaymentFragment) && callBlockDialog) {
+            if((curFragment is ShoppingFragment) && callBlockDialog) {
                 if(mCurrentTab == TabTag.TAB_FIND) {
                     Log.d("Block", "HomeButton is not supported")
                     return@setOnItemSelectedListener false

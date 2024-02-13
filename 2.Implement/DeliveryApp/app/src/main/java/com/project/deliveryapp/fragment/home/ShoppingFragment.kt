@@ -62,8 +62,6 @@ class ShoppingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         CoroutineScope(Dispatchers.IO).launch {
             market = viewModel.getMarketData(context, viewModel.curMarketId)!!
             cart = Cart(market)

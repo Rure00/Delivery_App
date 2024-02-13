@@ -5,27 +5,27 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.project.deliveryapp.room.data.MarketDataForRoom
-import com.project.deliveryapp.room.data.UserDataForRoom
+import com.project.deliveryapp.room.data.LoginData
+import com.project.deliveryapp.room.data.MarketIdForRoom
 
 @Dao
 interface RoomDataBaseDao {
 
     @Insert
-    fun insertUserData(userDataForRoom: UserDataForRoom)
+    fun insertUserData(userDataForRoom: LoginData)
     @Delete
-    fun deleteUserData(userDataForRoom: UserDataForRoom)
+    fun deleteUserData(userDataForRoom: LoginData)
     @Update
-    fun updateUserData(userDataForRoom: UserDataForRoom)
-    @Query("SELECT * FROM UserDataForRoom")
-    fun getUserData(): UserDataForRoom?
+    fun updateUserData(userDataForRoom: LoginData)
+    @Query("SELECT * FROM LoginData")
+    fun getUserData(): LoginData?
 
     @Insert
-    fun insertRecentMarket(recentMarket: MarketDataForRoom)
+    fun insertRecentMarket(recentMarket: MarketIdForRoom)
 
     @Delete
-    fun deleteRecentMarket(recentMarket: MarketDataForRoom)
-    @Query("SELECT * FROM MarketDataForRoom")
-    fun getRecentMarket(): List<MarketDataForRoom>?
+    fun deleteRecentMarket(recentMarket: MarketIdForRoom)
+    @Query("SELECT * FROM MarketIdForRoom")
+    fun getRecentMarket(): List<MarketIdForRoom>?
 
 }

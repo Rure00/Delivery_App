@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 class GetReviewsResponseDto(json: JSONObject): ResponseDto {
     val idList: List<Long>
     val commentList: List<String>
+    val nicknameList: List<String>
     val scoreList: List<Float>
     val dateList: List<LocalDateTime>
 
@@ -16,6 +17,7 @@ class GetReviewsResponseDto(json: JSONObject): ResponseDto {
 
         idList = obj.getJSONArray("id").toList()
         commentList = obj.getJSONArray("comment").toList()
+        nicknameList = obj.getJSONArray("nickname").toList()
         scoreList = obj.getJSONArray("score").toList()
         dateList = obj.getJSONArray("date").toList()
     }

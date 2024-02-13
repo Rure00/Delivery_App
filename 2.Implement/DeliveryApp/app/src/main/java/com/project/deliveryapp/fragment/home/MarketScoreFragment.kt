@@ -2,10 +2,12 @@ package com.project.deliveryapp.fragment.home
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,7 @@ import com.project.deliveryapp.view_model.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MarketScoreFragment : Fragment() {
 
@@ -56,36 +59,36 @@ class MarketScoreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         CoroutineScope(Dispatchers.IO).launch {
-            //TODO: 고치기
-            curMarketData = MarketData(
-                1, "삼성마트", 4.5f, "1420014", "사당동 어딘가", "안녕", LatLng(31.4, 123.4)
-            )//viewModel.getMarketData()!!
-
-
-            val obj = viewModel.getMarketData(context, viewModel.curCartId) ?: return@launch
-
-            curMarketData = obj
-
-            binding.marketNameText.text = curMarketData.name
-            binding.addressText.text = curMarketData.address
-            binding.scoreText.text = getString(R.string.score_expression, curMarketData.score)
-
+            curMarketData = viewModel.getMarketData(context, viewModel.curMarketId) ?: return@launch
             reviews = viewModel.getReviews(context, curMarketData.id)
 
-            if(reviews.isNotEmpty()) {
-                val adapter = ReviewRvAdapter(reviews)
-                adapter.notifyItemRangeInserted(0, reviews.size)
+            withContext(Dispatchers.Main) {
+                binding.marketNameText.text = curMarketData.name
+                binding.addressText.text = curMarketData.address
+                binding.scoreText.text = getString(R.string.score_expression, curMarketData.score)
 
-                val recyclerView = binding.recyclerView
-                recyclerView.adapter = adapter
-                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                if(reviews.isNotEmpty()) {
+                    val adapter = ReviewRvAdapter(reviews)
+                    adapter.notifyItemRangeInserted(0, reviews.size)
 
-                adapter.itemClickListener = object: ReviewRvAdapter.OnItemClickListener {
-                    override fun onClick(position: Int) {
-                        //TODO: When A Review Item is Clicked
+                    val recyclerView = binding.recyclerView
+                    recyclerView.adapter = adapter
+                    recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+                    adapter.itemClickListener = object: ReviewRvAdapter.OnItemClickListener {
+                        override fun onItemClick(position: Int) {
+                            TODO("Not yet implemented")
+
+                        }
+
+                        override fun onReportClick(position: Int) {
+                            Toast.makeText(context, "구현 예정인 기능입니다.", Toast.LENGTH_SHORT).show()
+                        }
+                        override fun onDeleteClick(position: Int) {
+                            Toast.makeText(context, "구현 예정인 기능입니다.", Toast.LENGTH_SHORT).show()
+                        }
 
                     }
-
                 }
             }
         }

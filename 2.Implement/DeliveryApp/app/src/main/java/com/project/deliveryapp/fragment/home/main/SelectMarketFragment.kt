@@ -21,6 +21,7 @@ import com.project.deliveryapp.view_model.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SelectMarketFragment : Fragment() {
     private var _binding: FragmentSelectMarketBinding? = null
@@ -61,24 +62,27 @@ class SelectMarketFragment : Fragment() {
         LoadingDialog.show(context)
 
         CoroutineScope(Dispatchers.IO).launch {
+            Log.d("Test", "CurMarketId is ${viewModel.curMarketId}")
             curMarket = viewModel.getMarketData(context, viewModel.curMarketId)!!
 
-            with(binding) {
-                marketAddress.text = curMarket.address
-                marketDescription.text = curMarket.description
-                marketNameText.text = curMarket.name
-                marketScoreBtn.text = String.format(getString(R.string.score_expression), curMarket.score)
+            withContext(Dispatchers.Main) {
+                with(binding) {
+                    marketAddress.text = curMarket.address
+                    marketDescription.text = curMarket.description
+                    marketNameText.text = curMarket.name
+                    marketScoreBtn.text = String.format(getString(R.string.score_expression), curMarket.score)
 
-                marketScoreBtn.setOnClickListener {
-                    mainActivity.pushFragments(TabTag.TAB_FIND, MarketScoreFragment(), true)
-                }
-                orderButton.setOnClickListener {
-                    mainActivity.pushFragments(TabTag.TAB_FIND, ShoppingFragment(), true)
-                }
-                backBtn.setOnClickListener {
-                    parentFragment.childFragmentManager.beginTransaction().replace(R.id.container,
-                        RecentMarketFragment()
-                    ).commit()
+                    marketScoreBtn.setOnClickListener {
+                        mainActivity.pushFragments(TabTag.TAB_FIND, MarketScoreFragment(), true)
+                    }
+                    orderButton.setOnClickListener {
+                        mainActivity.pushFragments(TabTag.TAB_FIND, ShoppingFragment(), true)
+                    }
+                    backBtn.setOnClickListener {
+                        parentFragmentManager.beginTransaction().replace(R.id.container,
+                            RecentMarketFragment()
+                        ).commit()
+                    }
                 }
             }
 

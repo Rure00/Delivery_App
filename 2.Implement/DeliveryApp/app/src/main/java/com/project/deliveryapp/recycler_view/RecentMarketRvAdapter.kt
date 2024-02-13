@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.deliveryapp.R
+import com.project.deliveryapp.data.MarketData
 import com.project.deliveryapp.databinding.FragmentRecentMarketBinding
 import com.project.deliveryapp.databinding.RecentMarketItemBinding
-import com.project.deliveryapp.room.data.MarketDataForRoom
 
-class RecentMarketRvAdapter(private val dataSet:List<MarketDataForRoom>): RecyclerView.Adapter<RecentMarketRvAdapter.ViewHolder>() {
+class RecentMarketRvAdapter(private val dataSet:List<MarketData>): RecyclerView.Adapter<RecentMarketRvAdapter.ViewHolder>() {
 
     var itemClickListener: OnItemClickListener? = null
 

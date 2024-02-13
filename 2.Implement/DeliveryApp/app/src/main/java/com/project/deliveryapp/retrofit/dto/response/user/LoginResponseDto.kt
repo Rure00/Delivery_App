@@ -1,5 +1,7 @@
 package com.project.deliveryapp.retrofit.dto.response.user
 
+import com.project.deliveryapp.data.User
+import com.project.deliveryapp.data.enum.Gender
 import com.project.deliveryapp.retrofit.dto.ResponseDto
 import org.json.JSONObject
 
@@ -25,4 +27,9 @@ class LoginResponseDto(json: JSONObject): ResponseDto {
         gender = obj.getString("gender")
         address = obj.getString("address")
     }
+
+    fun toUser(): User = User (
+        id, name, nickname, loginId, loginPwd, phoneNumber, if(gender=="Male") Gender.Male else Gender.Female, address
+    )
+
 }

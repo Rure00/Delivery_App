@@ -1,7 +1,9 @@
 package com.project.deliveryapp.fragment.home
 
 import android.content.Context
+import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -22,10 +25,13 @@ import com.naver.maps.map.util.FusedLocationSource
 import com.project.deliveryapp.R
 import com.project.deliveryapp.data.MarketData
 import com.project.deliveryapp.databinding.FragmentFindMarketBinding
+import com.project.deliveryapp.dialog.loading.Loading
+import com.project.deliveryapp.dialog.loading.LoadingDialog
 import com.project.deliveryapp.fragment.home.main.RecentMarketFragment
 import com.project.deliveryapp.fragment.home.main.SelectMarketFragment
 import com.project.deliveryapp.naver.NaverMapManager
 import com.project.deliveryapp.settings.PermissionManager
+import com.project.deliveryapp.settings.WindowObject
 import com.project.deliveryapp.view_model.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +50,10 @@ class FindMarketFragment : Fragment(), OnMapReadyCallback {
     private lateinit var viewModel: MainViewModel
 
     private lateinit var naverMap: NaverMap
-    private lateinit var locationSource: LocationSource
+    private lateinit var locationSource: FusedLocationSource
+
+    private lateinit var curLocation: LatLng
+    private var isUpdated: Boolean = false
 
     private var waitTime = 0L
 
@@ -79,74 +88,72 @@ class FindMarketFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val recentMarketList = viewModel.getRecentMarketInfo(context)
+        val fragmentParams = binding.container.layoutParams
+        //fragmentParams.height = WindowObject.height / 4
 
-            if(recentMarketList.isNullOrEmpty()) {
-                binding.noRecentMarketPanel.isVisible = true
-            } else {
-                val containerId = binding.container.id
-                val transaction = childFragmentManager.beginTransaction()
-                transaction.add(containerId, RecentMarketFragment()).commit()
-            }
-        }
+        childFragmentManager.beginTransaction()
+            .replace(binding.container.id, RecentMarketFragment()).commit()
 
         val mapFragment = NaverMapManager.displayMap(childFragmentManager, binding.mapView.id)
         mapFragment.getMapAsync(this@FindMarketFragment)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    override fun onResume() {
+        super.onResume()
+        isUpdated = false
     }
 
     override fun onMapReady(nMap: NaverMap) {
-        var curLocation: LatLng? = null
         this.naverMap = nMap
         naverMap.locationSource = locationSource
-        naverMap.locationSource!!.activate {
-            it?.let {
-                curLocation = LatLng(it.latitude, it.longitude)
-                val cameraUpdate = CameraUpdate.scrollTo(curLocation!!)
 
-                naverMap.moveCamera(cameraUpdate)
+        naverMap.addOnLocationChangeListener {
+            curLocation = LatLng(it.latitude, it.longitude)
+
+            if(isUpdated) {
+                return@addOnLocationChangeListener
             }
+
+            isUpdated = true
+
+            curLocation = LatLng(it.latitude, it.longitude)
+            val cameraUpdate = CameraUpdate.scrollTo(curLocation)
+            naverMap.moveCamera(cameraUpdate)
+
+            loadRecentMarkets(curLocation)
         }
+
+
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
         naverMap.uiSettings.isLocationButtonEnabled = true
+    }
+
+    private fun loadRecentMarkets(curLocation: LatLng) {
+        LoadingDialog.show(requireActivity());
 
         CoroutineScope(Dispatchers.IO).launch {
-            val nearMarkets = viewModel.getNearMarkets(context, curLocation!!)
+            val nearMarkets = viewModel.getNearMarkets(context, curLocation)
 
-            //TODO: (TEST_CODE) remove this --------------------------------------------------
             withContext(Dispatchers.Main) {
-                val marketTest = Marker(LatLng(37.47655, 126.98163))
-                marketTest.map = naverMap
-                val mData = MarketData(1, "삼성마트", 3.5f, "275773", "none", "address",
-                    LatLng(37.47655, 126.98163))
-                marketTest.onClickListener = OnClickListener {
-                    viewModel.curMarketId =  mData.id
-                    childFragmentManager.beginTransaction()
-                        .replace(R.id.container, SelectMarketFragment()).commit()
+                nearMarkets.forEach { dto ->
+                    val location = LatLng(dto.latitude, dto.longitude)
+                    val marker = Marker(location)
+                    marker.map = naverMap
 
-                    false
-                };
+                    marker.onClickListener = OnClickListener {
+                        viewModel.curMarketId = dto.id
+
+                        childFragmentManager.beginTransaction()
+                            .replace(R.id.container, SelectMarketFragment()).commit()
+
+                        false
+                    };
+                }
             }
 
-            //TODO:-------------------------------------------------------------
 
-            nearMarkets.forEach { dto ->
-                val location = LatLng(dto.latitude, dto.longitude)
-                val marker = Marker(location)
-
-                marker.onClickListener = OnClickListener {
-                    viewModel.curMarketId = dto.id
-                    childFragmentManager.beginTransaction()
-                        .replace(R.id.container, SelectMarketFragment()).commit()
-
-                    false
-                };
-            }
+            LoadingDialog.dismiss()
         }
+
     }
 }

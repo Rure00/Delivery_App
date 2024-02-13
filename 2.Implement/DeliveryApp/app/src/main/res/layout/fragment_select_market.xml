@@ -2,9 +2,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.home.main.SelectMarketFragment">
+    tools:context=".fragment.home.main.SelectMarketFragment"
+    android:padding="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/round_rectangle_sky_background"
+            >
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+
+            android:text="✕"
+            android:textSize="23sp"
+            android:textColor="@color/black"
+
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:background="@drawable/round_rectangle_sky_background"
+            style="?android:attr/borderlessButtonStyle"
+            />
 
         <TextView
             android:id="@+id/marketNameText"
@@ -12,11 +44,13 @@
             android:layout_height="wrap_content"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/backBtn"
 
             android:gravity="center"
             android:text="삼성 마트"
-            android:textSize="18sp"
+            android:textSize="25sp"
+            android:textStyle="bold"
             android:textColor="@color/black"
 
             android:background="@color/sky"
@@ -29,8 +63,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/marketNameText"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+
+            android:layout_marginTop="5dp"
 
             android:minWidth="0dp"
             android:minHeight="0dp"
@@ -44,83 +81,67 @@
             android:paddingHorizontal="10dp"
             />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/marketInfo"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+        <TextView
+            android:id="@+id/marketAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toBottomOf="@+id/marketNameText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/orderButton"
+            app:layout_constraintTop_toBottomOf="@id/marketScoreBtn"
+
+            android:text="서울특별시 xx구 xx동 1031-29"
+            android:textSize="18sp"
+            android:textColor="@color/tulip_noir"
+            android:gravity="center"
+            android:padding="5dp"
+            />
+
+        <TextView
+            android:id="@+id/marketDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/marketAddress"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
+            android:gravity="center"
+            android:text="40년 된 전통 중국집"
+            android:textSize="18sp"
+            android:textColor="@color/tulip_noir"
 
-            android:layout_marginVertical="10dp"
-
-            android:background="@color/sky">
-
-                <TextView
-                    android:id="@+id/marketAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-
-                    android:text="서울특별시 xx구 xx동 1031-29"
-                    android:textSize="18sp"
-                    android:textColor="@color/tulip_noir"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    />
-
-                <TextView
-                    android:id="@+id/marketDescription"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/marketAddress"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-
-                    android:gravity="center"
-                    android:text="40년 된 전통 중국집"
-                    android:textSize="18sp"
-                    android:textColor="@color/tulip_noir"
-
-                    android:layout_marginTop="10dp"
-                        />
+            />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+
+            app:layout_constraintBottom_toTopOf="@id/orderButton"
+            app:layout_constraintStart_toStartOf="parent"
+
+            android:background="@color/light_sky"
+                />
 
         <Button
             android:id="@+id/orderButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            android:text="주문하기"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-
-            android:background="@color/sky"
-            />
-
-        <Button
-            android:id="@+id/backBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
+            app:layout_constraintTop_toBottomOf="@id/marketDescription"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
 
-            android:text="뒤로가기"
+            android:layout_marginTop="10dp"
+
+            android:text="장보러가기"
             android:textSize="18sp"
             android:textColor="@color/black"
 
-            android:background="@color/sky"
+            android:background="@drawable/round_rectangle_sky_background"
+            style="?android:attr/borderlessButtonStyle"
             />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

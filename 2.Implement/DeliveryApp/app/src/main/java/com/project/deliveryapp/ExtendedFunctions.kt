@@ -1,7 +1,9 @@
 package com.project.deliveryapp
 
 import org.json.JSONArray
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoField
@@ -11,7 +13,7 @@ import java.time.temporal.ChronoField
 inline fun <reified T> JSONArray.toList(): List<T> {
     val result = mutableListOf<T>()
 
-    for(index in 0..this.length()) {
+    for(index in 0 until this.length()) {
         val str = this[index].toString()
         val ele = when(T::class) {
             Int::class -> str.toInt() as T
@@ -31,15 +33,9 @@ inline fun <reified T> JSONArray.toList(): List<T> {
 
 //Convert String to LocalDateTime
 fun String.toLocalDateTime(): LocalDateTime {
-    try {
-        val formatter = DateTimeFormatterBuilder()
-            .appendPattern("yyyy-MM-dd HH:mm[:ss]") // #1
-            .appendFraction(ChronoField.MILLI_OF_SECOND, 0, 9, true) // #2
-            .toFormatter()
+    val str = this.replace('T', ' ')
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSS")
 
-        return LocalDateTime.parse(this, formatter)
-    } catch (e: DateTimeParseException) {
-        throw IllegalArgumentException()
-    }
+    return LocalDateTime.parse(str, formatter)
 }
 

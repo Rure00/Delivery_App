@@ -11,11 +11,6 @@
         android:name="com.project.deliveryapp.activity.SignInActivity"
         android:label="activity_sign_in"
         tools:layout="@layout/activity_sign_in" />
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.project.deliveryapp.fragment.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
 
 
 
@@ -67,11 +62,7 @@
         android:id="@+id/cartDetailFragment"
         android:name="com.project.deliveryapp.fragment.cart.CartDetailFragment"
         android:label="fragment_cart_detail"
-        tools:layout="@layout/fragment_cart_detail" >
-        <action
-            android:id="@+id/action_cartDetailFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_cart_detail" />
 
 
 
@@ -104,17 +95,9 @@
         android:name="com.project.deliveryapp.fragment.home.ShoppingFragment"
         android:label="ShoppingFragment" >
         <action
-            android:id="@+id/action_shoppingFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
-        <action
             android:id="@+id/action_shoppingFragment_to_cartFragment"
             app:destination="@id/cartFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/paymentFragment"
-        android:name="com.project.deliveryapp.fragment.PaymentFragment"
-        android:label="fragment_payment"
-        tools:layout="@layout/fragment_payment" />
     <fragment
         android:id="@+id/reviewFragment"
         android:name="com.project.deliveryapp.fragment.home.ReviewFragment"
@@ -125,11 +108,7 @@
         android:id="@+id/myOrderFragment"
         android:name="com.project.deliveryapp.fragment.my_page.MyOrderFragment"
         android:label="fragment_my_order"
-        tools:layout="@layout/fragment_my_order" >
-        <action
-            android:id="@+id/action_myOrderFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_my_order" />
     <fragment
         android:id="@+id/myReviewFragment"
         android:name="com.project.deliveryapp.fragment.my_page.MyReviewFragment"

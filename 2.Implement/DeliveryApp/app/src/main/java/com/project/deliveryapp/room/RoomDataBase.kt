@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.project.deliveryapp.room.data.MarketDataForRoom
-import com.project.deliveryapp.room.data.UserDataForRoom
+import com.project.deliveryapp.room.data.LoginData
+import com.project.deliveryapp.room.data.MarketIdForRoom
 
-@Database(entities = [UserDataForRoom::class, MarketDataForRoom::class], version = 1, exportSchema = false)
+@Database(entities = [LoginData::class, MarketIdForRoom::class], version = 1, exportSchema = false)
 abstract class RoomDataBase: RoomDatabase() {
     abstract val roomDao: RoomDataBaseDao
 

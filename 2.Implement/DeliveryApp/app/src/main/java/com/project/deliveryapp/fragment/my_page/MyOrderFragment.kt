@@ -53,7 +53,7 @@ class MyOrderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         CoroutineScope(Dispatchers.IO).launch {
-            orderList = viewModel.getMyOrder()
+            orderList = viewModel.getMyOrder(context)
 
             if(orderList.isNotEmpty()) {
                 val adapter = OrderRvAdapter(orderList)
@@ -66,7 +66,7 @@ class MyOrderFragment : Fragment() {
 
                 adapter.setOnClickListener(object : OrderRvAdapter.OnItemClickListener {
                     override fun onCheckButtonClick(position: Int) {
-                        viewModel.saveCurOrder(orderList[position])
+                        viewModel.curOrderId = orderList[position].id
                         mainActivity.pushFragments(TabTag.TAB_MY_PAGE, MyOrderDetailFragment(), true)
                     }
                 })

@@ -1,17 +1,22 @@
 package com.project.deliveryapp.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import com.project.deliveryapp.data.enum.Gender
 import com.project.deliveryapp.databinding.ActivitySignUpBinding
 import com.project.deliveryapp.dialog.loading.LoadingDialog
-import com.project.deliveryapp.fragment.loading.LoadingFragmentManager
+import com.project.deliveryapp.fragment.sign_up.MarketSignUpFragment
+import com.project.deliveryapp.fragment.sign_up.UserSignUpFragment
 import com.project.deliveryapp.retrofit.ServerCommunicator
 import com.project.deliveryapp.retrofit.dto.request.user.SignUpDto
 import com.project.deliveryapp.retrofit.dto.response.ErrorResponseDto
 import com.project.deliveryapp.retrofit.dto.response.user.SignUpResponseDto
+import com.project.deliveryapp.view_model.SignUpViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,7 +27,9 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var communicator: ServerCommunicator
 
-    private var randNum = 0
+    private lateinit var viewModel: SignUpViewModel
+    private var listener: SignUpBtnListener? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,100 +38,40 @@ class SignUpActivity : AppCompatActivity() {
 
         communicator = ServerCommunicator()
 
+        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
+
         onBackPressedDispatcher.addCallback {
             finish()
         }
 
-        binding.confirm.setOnClickListener {
-            val pwd = binding.pwd.text.toString()
-            val pwdConfirm = binding.confirm.toString()
+        viewModel.setSignUpBtnListener(this)
 
-            if(binding.confirmButton.text == "취소") {
-                binding.pwd.isFocusable = true
-                binding.confirm.isFocusable = true
-                binding.confirmButton.text = "확인"
-                return@setOnClickListener
-            }
-
-            if(pwd == pwdConfirm) {
-                binding.pwd.isFocusable = false
-                binding.confirm.isFocusable = false
-                binding.confirmButton.text = "취소"
-            } else {
-                Toast.makeText(this, "비밀 번호를 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
-            }
+        binding.customerButton.setOnClickListener {
+            viewModel.signUpTarget = SignUpViewModel.SignUpTarget.USER
+            supportFragmentManager.beginTransaction()
+                .replace(binding.fragmentContainer.id, UserSignUpFragment()).commit()
         }
-
-        binding.requestCertification.setOnClickListener {
-            val communicator = ServerCommunicator()
-            val phoneNumber = binding.phoneNumber.text.toString()
-            val loadingFragmentManager = LoadingFragmentManager()
-            loadingFragmentManager.circleLoading(supportFragmentManager, binding.loadingContainer.id)
-
-            CoroutineScope(Dispatchers.IO).launch {
-                randNum = Random().nextInt(100000 - 10000) + 10000
-                //TODO: communicator.requestCertification(randNum, phoneNumber)
-            }
-        }
-
-        binding.numberConfirmButton.setOnClickListener {
-            if(binding.numberConfirm.text.toString() == randNum.toString()) {
-                binding.requestCertification.isFocusable = false
-                binding.phoneNumber.isFocusable = false
-                binding.numberConfirmButton.isFocusable = false
-                binding.numberConfirm.isFocusable = false
-
-            } else {
-                Toast.makeText(this, "인증번호를 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
-            }
+        binding.marketButton.setOnClickListener {
+            viewModel.signUpTarget = SignUpViewModel.SignUpTarget.MARKET
+            supportFragmentManager.beginTransaction()
+                .replace(binding.fragmentContainer.id, MarketSignUpFragment()).commit()
         }
 
         binding.signUpButton.setOnClickListener {
-            val signUpDto = with(binding) {
-                val obj = SignUpDto(
-                    name.text.toString(),
-                    nickname.text.toString(),
-                    id.text.toString(),
-                    pwd.text.toString(),
-                    phoneNumber.text.toString(),
-                    if(maleButton.isChecked) "Male" else "Female",
-                    address.text.toString(),
-                )
-
-                if(obj.isOkay()) obj
-                else {
-                    Toast.makeText(this@SignUpActivity, "정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-            }
-
-            LoadingDialog.show(this@SignUpActivity)
             CoroutineScope(Dispatchers.IO).launch {
-
-                val response = runCatching{ communicator.trySignUp(signUpDto) }
-                    .onFailure {
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(this@SignUpActivity, "나중에 다시 이용해주세요.", Toast.LENGTH_SHORT).show()
-                            LoadingDialog.dismiss()
-                        }
-                        return@launch
-                    }.getOrNull()!!
-
-                if(response.result) {
-                    val obj = response.response as SignUpResponseDto
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(applicationContext, obj.description, Toast.LENGTH_SHORT).show()
-                    }
-                    finish()
-                } else {
-                    val obj = response.response as ErrorResponseDto
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(this@SignUpActivity, obj.comment, Toast.LENGTH_SHORT).show()
-                    }
+                val flag = listener!!.onClick()
+                if(flag) {
+                    val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
+                    startActivity(intent)
                 }
             }
-
-            LoadingDialog.dismiss()
         }
+    }
+
+    interface SignUpBtnListener {
+        suspend fun onClick(): Boolean
+    }
+    fun setSignUpBtnListener(listener: SignUpBtnListener) {
+        this.listener = listener
     }
 }

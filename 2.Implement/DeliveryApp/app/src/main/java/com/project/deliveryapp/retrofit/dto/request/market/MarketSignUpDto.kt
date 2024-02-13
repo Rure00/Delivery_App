@@ -13,4 +13,12 @@ data class MarketSignUpDto(
     val longitude: Double,
     val description: String,
     val address: String,
-): Parcelable
+): Parcelable {
+    fun isOkay(): Boolean {
+        return     name.isNotBlank()
+                && loginId.isNotBlank()
+                && loginPwd.isNotBlank()
+                && phoneNumber.isNotBlank()
+                && address.isNotBlank()
+    }
+}
