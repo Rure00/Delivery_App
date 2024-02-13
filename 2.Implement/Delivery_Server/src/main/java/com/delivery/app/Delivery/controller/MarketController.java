@@ -1,12 +1,11 @@
 package com.delivery.app.Delivery.controller;
 
+import com.delivery.app.Delivery.data.dto.request.StockIdDto;
+import com.delivery.app.Delivery.data.dto.request.market.AddItemDto;
 import com.delivery.app.Delivery.data.dto.request.market.MarketInfoDto;
 import com.delivery.app.Delivery.data.dto.request.market.MarketSignUpDto;
 import com.delivery.app.Delivery.data.dto.request.market.NearMarketsDto;
-import com.delivery.app.Delivery.data.dto.response.market.MarketItemsResponseDto;
-import com.delivery.app.Delivery.data.dto.response.market.MarketResponseDto;
-import com.delivery.app.Delivery.data.dto.response.market.MarketSignUpResponseDto;
-import com.delivery.app.Delivery.data.dto.response.market.NearMarketsResponseDto;
+import com.delivery.app.Delivery.data.dto.response.market.*;
 import com.delivery.app.Delivery.data.dto.response.ResponseResult;
 import com.delivery.app.Delivery.data.dto.response.user.SignUpResponseDto;
 import com.delivery.app.Delivery.data.my_enum.SignUpCode;
@@ -59,13 +58,14 @@ public class MarketController {
 
     @PostMapping("/get")
     public ResponseEntity<ResponseResult> getMarketInfo(@RequestBody MarketInfoDto marketInfoDto) {
-
-        MarketResponseDto marketResponseDto = service.getMarketInfo(marketInfoDto);
+        System.out.println("Market Id is " + marketInfoDto.getMarketId());
+        MarketResponseDto responseDto = service.getMarketInfo(marketInfoDto);
         ResponseResult responseResult = new ResponseResult();
 
 
-        if(marketResponseDto != null) {
-            responseResult.setResponseDto(marketResponseDto);
+
+        if(responseDto != null) {
+            responseResult.setResponseDto(responseDto);
             responseResult.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(responseResult);
         } else {
@@ -77,15 +77,17 @@ public class MarketController {
     @PostMapping("/near")
     public ResponseEntity<ResponseResult> getNearMarket(@RequestBody NearMarketsDto nearMarketsDto) {
 
-        NearMarketsResponseDto list = service.getNearMarkets(nearMarketsDto);
+        NearMarketsResponseDto responseDto = service.getNearMarkets(nearMarketsDto);
         ResponseResult responseResult = new ResponseResult();
-        responseResult.setResponseDto(list);
+        responseResult.setResponseDto(responseDto);
 
-        if(!list.getNearMarketsList().isEmpty()) {
+        if(!responseDto.getId().isEmpty()) {
             responseResult.setFlag(true);
+            System.out.println("NearMarket is Called...) result has " + responseDto.getAddress().size());
+            System.out.println("Latitude: " + responseDto.getLatitude().get(0) + " Longitude: " + responseDto.getLongitude().get(0));
             return ResponseEntity.status(HttpStatus.OK).body(responseResult);
         } else {
-            responseResult.setFlag(true);
+            responseResult.setFlag(false);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(responseResult);
         }
 
@@ -102,7 +104,24 @@ public class MarketController {
             responseResult.setFlag(true);
             return ResponseEntity.status(HttpStatus.OK).body(responseResult);
         } else {
+            responseResult.setFlag(false);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(responseResult);
+        }
+
+    }
+
+    @PostMapping("/add/item")
+    public ResponseEntity<ResponseResult> addItem(@RequestBody AddItemDto addItemDto) {
+
+        AddItemResponseDto responseDto = service.addItem(addItemDto);
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setResponseDto(responseDto);
+
+        if(responseDto != null) {
             responseResult.setFlag(true);
+            return ResponseEntity.status(HttpStatus.OK).body(responseResult);
+        } else {
+            responseResult.setFlag(false);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(responseResult);
         }
 

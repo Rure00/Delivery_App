@@ -5,13 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDateTime;
 
 @Entity @Table(name="reviews")
 @Getter
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Review {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
@@ -42,11 +46,14 @@ public class Review {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    public Review(Long userId, Long marketId, String marketName, String comment, Float score) {
+    public Review(Long userId, Long marketId, String marketName, String userNickname,String comment, Float score) {
+        this.id = 0L;
         this.userId = userId;
         this.marketId = marketId;
         this.marketName = marketName;
+        this.userNickname = userNickname;
         this.comment = comment;
         this.score = score;
+        //this.createdAt = LocalDateTime.now();
     }
 }

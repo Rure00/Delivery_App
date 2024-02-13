@@ -16,8 +16,10 @@ public class MarketRepositoryCustomImpl extends QuerydslRepositorySupport implem
 
         QMarket market = QMarket.market;
 
+
+
         Market marketData = from(market)
-                .where(market.id.eq(marketId).and(market.name.eq(marketName)))
+                .where(market.id.eq(marketId))
                 .fetchOne();
 
         if(marketData == null)
@@ -30,6 +32,8 @@ public class MarketRepositoryCustomImpl extends QuerydslRepositorySupport implem
     public ArrayList<Market> getNearMarkets(Double latitude, Double longitude, Integer radius) {
 
         QMarket market = QMarket.market;
+
+
 
         List<Market> marketsList = from(market)
                 .where(Expressions.stringTemplate("ST_Distance_Sphere({0}, {1})",
@@ -47,12 +51,12 @@ public class MarketRepositoryCustomImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public ArrayList<Stock> getMarketStocks(Long marketId, String marketName) {
+    public ArrayList<Stock> getMarketStocks(Long marketId) {
 
         QMarket market = QMarket.market;
 
         Market marketData = from(market)
-                .where(market.id.eq(marketId).and(market.name.eq(marketName)))
+                .where(market.id.eq(marketId))
                 .fetchOne();
 
         if(marketData == null)

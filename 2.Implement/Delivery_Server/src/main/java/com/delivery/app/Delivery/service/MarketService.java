@@ -1,8 +1,10 @@
 package com.delivery.app.Delivery.service;
 
+import com.delivery.app.Delivery.data.dto.request.market.AddItemDto;
 import com.delivery.app.Delivery.data.dto.request.market.MarketInfoDto;
 import com.delivery.app.Delivery.data.dto.request.market.MarketSignUpDto;
 import com.delivery.app.Delivery.data.dto.request.market.NearMarketsDto;
+import com.delivery.app.Delivery.data.dto.response.market.AddItemResponseDto;
 import com.delivery.app.Delivery.data.dto.response.market.MarketItemsResponseDto;
 import com.delivery.app.Delivery.data.dto.response.market.MarketResponseDto;
 import com.delivery.app.Delivery.data.dto.response.market.NearMarketsResponseDto;
@@ -14,4 +16,6 @@ public interface MarketService {
     MarketItemsResponseDto getMarketItems(MarketInfoDto marketInfoDto);
 
     SignUpCode trySignUp(MarketSignUpDto marketSignUpDto);
+
+    AddItemResponseDto addItem(AddItemDto addItemDto);
 }

@@ -8,19 +8,24 @@ import com.delivery.app.Delivery.data.dto.request.review.SaveReviewDto;
 import com.delivery.app.Delivery.data.dto.response.review.GetMarketReviewsResponseDto;
 import com.delivery.app.Delivery.data.dto.response.review.GetMyReviewsResponseDto;
 import com.delivery.app.Delivery.data.entity.Review;
+import com.delivery.app.Delivery.data.entity.User;
 import com.delivery.app.Delivery.repository.review.ReviewRepository;
+import com.delivery.app.Delivery.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ReviewDAOImpl implements ReviewDAO {
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ReviewDAOImpl(ReviewRepository reviewRepository) {
+    public ReviewDAOImpl(ReviewRepository reviewRepository, UserRepository userRepository) {
         this.reviewRepository = reviewRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -32,8 +37,14 @@ public class ReviewDAOImpl implements ReviewDAO {
         String comment = saveReviewDto.getComment();
         Float score = saveReviewDto.getScore();
 
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isEmpty()) {
+            System.err.println("Wrong Id Param.");
+            return null;
+        }
+
         Review newReview = new Review(
-                userId, marketId, marketName, comment, score
+                userId, marketId, marketName, userOptional.get().getNickname(),comment, score
         );
 
 
@@ -81,6 +92,7 @@ public class ReviewDAOImpl implements ReviewDAO {
                 result.addElement(
                         review.getId(),
                         review.getComment(),
+                        review.getUserNickname(),
                         review.getScore(),
                         review.getCreatedAt()
                 );

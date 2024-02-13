@@ -1,9 +1,11 @@
 package com.delivery.app.Delivery.service.impl;
 
 import com.delivery.app.Delivery.dao.MarketDAO;
+import com.delivery.app.Delivery.data.dto.request.market.AddItemDto;
 import com.delivery.app.Delivery.data.dto.request.market.MarketInfoDto;
 import com.delivery.app.Delivery.data.dto.request.market.MarketSignUpDto;
 import com.delivery.app.Delivery.data.dto.request.market.NearMarketsDto;
+import com.delivery.app.Delivery.data.dto.response.market.AddItemResponseDto;
 import com.delivery.app.Delivery.data.dto.response.market.MarketItemsResponseDto;
 import com.delivery.app.Delivery.data.dto.response.market.MarketResponseDto;
 import com.delivery.app.Delivery.data.dto.response.market.NearMarketsResponseDto;
@@ -24,10 +26,9 @@ public class MarketServiceImpl implements MarketService {
     @Override
     public MarketResponseDto getMarketInfo(MarketInfoDto marketInfoDto) {
 
-        Long marketId = marketInfoDto.getId();
-        String marketName = marketInfoDto.getName();
+        Long marketId = marketInfoDto.getMarketId();
 
-        return marketDao.getMarketDetail(marketId, marketName);
+        return marketDao.getMarketDetail(marketId);
     }
 
     @Override
@@ -43,14 +44,18 @@ public class MarketServiceImpl implements MarketService {
     @Override
     public MarketItemsResponseDto getMarketItems(MarketInfoDto marketInfoDto) {
 
-        Long marketId = marketInfoDto.getId();
-        String marketName = marketInfoDto.getName();
+        Long marketId = marketInfoDto.getMarketId();
 
-        return marketDao.getMarketItemsList(marketId, marketName);
+        return marketDao.getMarketItemsList(marketId);
     }
 
     @Override
     public SignUpCode trySignUp(MarketSignUpDto marketSignUpDto) {
         return marketDao.signUp(marketSignUpDto);
+    }
+
+    @Override
+    public AddItemResponseDto addItem(AddItemDto addItemDto) {
+        return marketDao.addItem(addItemDto);
     }
 }
