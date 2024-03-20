@@ -12,7 +12,7 @@ data class Cart(
     val expense: Int get() {
         var result: Int = 0
         itemsOnCart.forEach {
-            result = it.count * (it.stock.price)
+            result += it.count * (it.stock.price)
         }
 
         return result

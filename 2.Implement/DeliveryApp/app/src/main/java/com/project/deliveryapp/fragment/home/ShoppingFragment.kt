@@ -24,6 +24,7 @@ import com.project.deliveryapp.view_model.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.DecimalFormat
 
 class ShoppingFragment : Fragment() {
@@ -48,6 +49,7 @@ class ShoppingFragment : Fragment() {
 
 
 
+
         requireActivity().onBackPressedDispatcher.addCallback(this@ShoppingFragment) {
             getBackPressedDialog().show(parentFragmentManager, "getBackPressedDialog")
         }
@@ -68,23 +70,25 @@ class ShoppingFragment : Fragment() {
 
             items = viewModel.getStocks(context, viewModel.curMarketId)
 
+
             if(items.isNotEmpty()) {
-                cart = Cart(market)
-                val adapter = ItemRvAdapter(items)
-                adapter.notifyItemRangeInserted(0, items.size)
+                withContext(Dispatchers.Main) {
+                    cart = Cart(market)
+                    val adapter = ItemRvAdapter(items)
+                    adapter.notifyItemRangeInserted(0, items.size)
 
-                val recyclerView = binding.recyclerView
-                recyclerView.adapter = adapter
-                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    val recyclerView = binding.recyclerView
+                    recyclerView.adapter = adapter
+                    recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-                adapter.itemClickListener = object: ItemRvAdapter.OnItemClickListener {
-                    override fun onClick(position: Int) {
-                        val stock = items[position]
-                        getStockCountDialog(stock).show(parentFragmentManager, "StockCountDialog")
+                    adapter.itemClickListener = object: ItemRvAdapter.OnItemClickListener {
+                        override fun onClick(position: Int) {
+                            val stock = items[position]
+                            getStockCountDialog(stock).show(parentFragmentManager, "StockCountDialog")
+                        }
                     }
                 }
             }
-
         }
 
         binding.toCartBtn.setOnClickListener {
@@ -94,9 +98,9 @@ class ShoppingFragment : Fragment() {
             }
 
             CoroutineScope(Dispatchers.IO).launch {
-                val cartId = viewModel.saveCart(context, cart)!!
+                val cartId = viewModel.saveCart(context, cart)
 
-                viewModel.curCartId = cartId
+                viewModel.curCartId = cartId!!
                 mainActivity.toCartTab(TabTag.TAB_FIND, true)
             }
         }
@@ -112,8 +116,6 @@ class ShoppingFragment : Fragment() {
 
                 mainActivity.startPaymentActivity(cartId)
             }
-
-
         }
     }
 

@@ -42,7 +42,6 @@ class ItemRvAdapter(private val dataSet:ArrayList<Stock>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = dataSet[position]
-        val count = countList!![position]
 
         with(holder) {
             image.setImageBitmap(item.imageBitmap)
@@ -52,7 +51,7 @@ class ItemRvAdapter(private val dataSet:ArrayList<Stock>,
             priceText.text = item.price.toString()
 
             if(visibility) {
-                countText.text = count.toString()
+                countText.text = countList!![position].toString()
             }
 
             binding.root.setOnClickListener{

@@ -137,9 +137,9 @@ class MainActivity : AppCompatActivity() {
     }
     fun toCartTab(tag: TabTag, doClear: Boolean) {
         if(doClear) {
-            val firstFragment = fragmentStack[tag]!!.firstElement()
-            fragmentStack[tag]!!.removeAllElements()
-            fragmentStack[tag]!!.add(firstFragment)
+            while(fragmentStack[tag]!!.size != 1) {
+                fragmentStack[tag]!!.pop()
+            }
         }
         binding.bnMenu.selectedItemId = R.id.navigation_cart
     }

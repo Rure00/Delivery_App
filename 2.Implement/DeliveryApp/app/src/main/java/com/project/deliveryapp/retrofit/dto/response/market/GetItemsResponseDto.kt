@@ -12,7 +12,7 @@ class GetItemsResponseDto(json: JSONObject): ResponseDto {
         val obj = json.getJSONObject("responseDto").getJSONArray("stockList")
         stockList = ArrayList()
 
-        for(index in 0..obj.length()) {
+        for(index in 0 until obj.length()) {
             val stock = obj.getJSONObject(index)
             val newStock = Stock(
                 null,
