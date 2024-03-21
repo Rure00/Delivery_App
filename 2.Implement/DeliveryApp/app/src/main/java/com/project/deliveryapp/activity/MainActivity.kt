@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mCurrentTab : TabTag
     private var fragmentStack = HashMap<TabTag, Stack<Fragment>>()
 
-    private var callBlockDialog: Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +60,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun setNavigationClick() {
         binding.bnMenu.setOnItemSelectedListener { item ->
+            val exTab = mCurrentTab
             mCurrentTab = when(item.itemId) {
                 R.id.navigation_home -> TabTag.TAB_FIND
                 R.id.navigation_cart -> TabTag.TAB_CART
@@ -68,42 +68,28 @@ class MainActivity : AppCompatActivity() {
                 else -> return@setOnItemSelectedListener false
             }
 
-            val curFragment = supportFragmentManager.fragments[0]
+            //val curFragment = supportFragmentManager.fragments[0]
             val nextFragment = fragmentStack[mCurrentTab]!!.lastElement()
 
-
             //ShoppingFragment 에서 tab 클릭시 Dialog 출력 및 처리
-            if((curFragment is ShoppingFragment) && callBlockDialog) {
-                if(mCurrentTab == TabTag.TAB_FIND) {
-                    Log.d("Block", "HomeButton is not supported")
-                    return@setOnItemSelectedListener false
-                }
-
+            if(viewModel.needTabBlock) {
                 val dialog = BlockTabDialog().getDialog()
-
                 dialog.setButtonClickListener(object: SimpleDialog.OnButtonClickListener{
                     override fun onConfirmButtonClicked() {
                         dialog.dismiss()
-                        callBlockDialog = false
-                        fragmentStack[TabTag.TAB_FIND]!!.pop()
-                        when(mCurrentTab) {
-                            TabTag.TAB_CART -> binding.bnMenu.selectedItemId = R.id.navigation_cart
-                            TabTag.TAB_MY_PAGE -> binding.bnMenu.selectedItemId = R.id.navigation_my_page
-                            else -> Exception("Tag is Wrong.").stackTrace
-                        }
+                        fragmentStack[exTab]!!.pop()
+
+                        pushFragments(mCurrentTab, nextFragment!!, false)
                     }
                     override fun onCancelButtonClicked() {
                         dialog.dismiss()
-                        mCurrentTab = TabTag.TAB_FIND
+                        mCurrentTab = exTab
                     }
-
                 })
-
                 dialog.show(supportFragmentManager, "TabPressedDialog")
                 return@setOnItemSelectedListener false
             }
 
-            callBlockDialog = true
             pushFragments(mCurrentTab, nextFragment!!, false)
 
             Log.d("BackStack number: ", supportFragmentManager.backStackEntryCount.toString())

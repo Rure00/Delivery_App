@@ -47,8 +47,7 @@ class ShoppingFragment : Fragment() {
         context = requireContext()
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
-
-
+        viewModel.needTabBlock = true
 
         requireActivity().onBackPressedDispatcher.addCallback(this@ShoppingFragment) {
             getBackPressedDialog().show(parentFragmentManager, "getBackPressedDialog")
@@ -99,9 +98,12 @@ class ShoppingFragment : Fragment() {
 
             CoroutineScope(Dispatchers.IO).launch {
                 val cartId = viewModel.saveCart(context, cart)
+                viewModel.needTabBlock = false
 
                 viewModel.curCartId = cartId!!
-                mainActivity.toCartTab(TabTag.TAB_FIND, true)
+                withContext(Dispatchers.Main) {
+                    mainActivity.toCartTab(TabTag.TAB_FIND, true)
+                }
             }
         }
         binding.orderBtn.setOnClickListener {
@@ -122,16 +124,6 @@ class ShoppingFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-    fun getTabPressedDialog(): SimpleDialog {
-        val title = "취소할까요?"
-        val body = "해당 내용은 저장되지 않아요. 그래도 괜찮을까요?"
-        val confirmText = "괜찮아요!"
-        val cancelText = "잠시만요!"
-
-        return SimpleDialog(
-            title, body, confirmText, cancelText
-        )
     }
     private fun getBackPressedDialog(): SimpleDialog {
         val title = "취소하고 돌아갈까요?"

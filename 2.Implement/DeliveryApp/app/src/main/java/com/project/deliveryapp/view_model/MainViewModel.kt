@@ -54,6 +54,8 @@ class MainViewModel: ViewModel() {
     var curCartId: Long = 0
     var curOrderId: Long = 0
 
+    var needTabBlock = false
+
     suspend fun getRecentMarketInfo(context: Context): List<MarketData> {
         val dao = RoomDataBase.getInstance(context).roomDao
 
