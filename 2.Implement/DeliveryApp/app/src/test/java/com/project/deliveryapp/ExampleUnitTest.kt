@@ -17,6 +17,8 @@ import com.project.deliveryapp.retrofit.dto.request.MarketIdDto
 import com.project.deliveryapp.retrofit.dto.request.user.LoginDto
 import com.project.deliveryapp.retrofit.dto.response.ErrorResponseDto
 import com.project.deliveryapp.retrofit.dto.response.FeedbackMessages
+import com.project.deliveryapp.retrofit.dto.response.cart.GetCartDetailResponseDto
+import com.project.deliveryapp.retrofit.dto.response.cart.GetCartsResponseDto
 import com.project.deliveryapp.retrofit.dto.response.market.GetItemsResponseDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Delay
@@ -76,6 +78,24 @@ class ExampleUnitTest {
         }
 
         println("end")
+    }
+
+    @Test
+    fun cartJsonText() {
+        val json = "{\"flag\":true,\"responseDto\":{\"idList\":[4,5,6,7,8,9,10],\"marketNameList\":[\"삼성마트\",\"삼성마트\",\"삼성마트\",\"삼성마트\",\"삼성마트\",\"삼성마트\",\"삼성마트\"],\"costList\":[3800,3800,5000,15800,6800,5100,3800],\"empty\":false}}"
+        val jsonObj = JSONObject(json)
+
+        val flag = jsonObj.getBoolean("flag")
+        val responseDto = GetCartsResponseDto(jsonObj)
+    }
+
+    @Test
+    fun cartDetailJsonTest() {
+        val json = "{\"flag\":true,\"responseDto\":{\"id\":4,\"stockList\":[{\"id\":52,\"name\":\"몬스터망고로코\",\"price\":2100,\"releasedDate\":\"2024-03-20T18:51:29.501173\",\"manufacturer\":\"코카콜라\",\"weight\":355},{\"id\":53,\"name\":\"바나나맛우유\",\"price\":1700,\"releasedDate\":\"2024-03-20T18:55:54.629153\",\"manufacturer\":\"빙그레\",\"weight\":240}],\"stockCount\":[1,1],\"empty\":false}}"
+        val jsonObj = JSONObject(json)
+
+        val flag = jsonObj.getBoolean("flag")
+        val responseDto = GetCartDetailResponseDto(jsonObj)
     }
 
 

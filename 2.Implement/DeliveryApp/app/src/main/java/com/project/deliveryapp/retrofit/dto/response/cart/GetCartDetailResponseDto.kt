@@ -26,7 +26,7 @@ class GetCartDetailResponseDto(json: JSONObject): ResponseDto {
         marketName = obj.getString("marketName")
         cost = obj.getInt("cost")
 
-        for(index in 0..stockJson.length()) {
+        for(index in 0 until stockJson.length()) {
             val stock = stockJson.getJSONObject(index)
             val newStock = Stock(
                 null,

@@ -13,9 +13,9 @@ class GetCartsResponseDto(json: JSONObject): ResponseDto {
     init {
         val obj = json.getJSONObject("responseDto")
 
-        idList = obj.getJSONArray("id").toList()
-        marketNameList = obj.getJSONArray("marketName").toList()
-        costList = obj.getJSONArray("cost").toList()
+        idList = obj.getJSONArray("idList").toList()
+        marketNameList = obj.getJSONArray("marketNameList").toList()
+        costList = obj.getJSONArray("costList").toList()
     }
 
 }

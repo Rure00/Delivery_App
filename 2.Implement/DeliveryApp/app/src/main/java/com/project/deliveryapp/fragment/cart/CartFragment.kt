@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,7 @@ import com.project.deliveryapp.view_model.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CartFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
@@ -58,26 +60,32 @@ class CartFragment : Fragment() {
 
             cartList = viewModel.getMyCarts(context)
 
-            if(cartList.isNotEmpty()) {
-                adapter = CartRvAdapter(cartList)
-                adapter.notifyItemRangeInserted(0, cartList.size)
+            withContext(Dispatchers.Main) {
+                if(cartList.isNotEmpty()) {
 
-                val recyclerView = binding.recyclerView
-                recyclerView.adapter = adapter
-                recyclerView.layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    adapter = CartRvAdapter(cartList)
+                    adapter.notifyItemRangeInserted(0, cartList.size)
 
-                adapter.setOnClickListener(object : CartRvAdapter.OnItemClickListener {
-                    override fun onCheckButtonClick(position: Int) {
-                        viewModel.curCartId = cartList[position].id
-                        mainActivity.pushFragments(TabTag.TAB_CART, CartDetailFragment(), true)
+                    val recyclerView = binding.recyclerView
+                    recyclerView.adapter = adapter
+                    recyclerView.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+                    adapter.setOnClickListener(object : CartRvAdapter.OnItemClickListener {
+                        override fun onCheckButtonClick(position: Int) {
+                            viewModel.curCartId = cartList[position].id
+                            mainActivity.pushFragments(TabTag.TAB_CART, CartDetailFragment(), true)
+                        }
+                        override fun onRemoveButtonClick(position: Int) {
+                            showRemoveCartDialog(cartList[position].id, position)
+                        }
+                    })
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "바구니가 없어요!", Toast.LENGTH_SHORT).show()
                     }
-                    override fun onRemoveButtonClick(position: Int) {
-                        showRemoveCartDialog(cartList[position].id, position)
-                    }
-                })
+                }
             }
-
 
 
         }
@@ -106,11 +114,16 @@ class CartFragment : Fragment() {
             override fun onConfirmButtonClicked() {
                 CoroutineScope(Dispatchers.IO).launch {
                     viewModel.removeCart(context, cartId)
-                    cartList.removeAt(position)
 
-                    adapter.notifyItemRemoved(position)
+                    withContext(Dispatchers.Main) {
+                        cartList.removeAt(position)
+                        adapter.notifyItemRemoved(position)
+                        adapter.notifyItemRangeChanged(position,cartList.size);
 
-                    removeCartDialog.dismiss()
+
+                        removeCartDialog.dismiss()
+                    }
+
                 }
             }
             override fun onCancelButtonClicked() {

@@ -271,6 +271,9 @@ class ServerCommunicator: ServerCommunicatorInterface {
                 in 200..299 -> {
                     response.body()!!.let {
                         val obj = JSONObject(it)
+
+                        Log.d("Json", it)
+
                         val flag = obj.getBoolean("flag")
                         val responseDto = GetCartDetailResponseDto(obj)
 
@@ -297,6 +300,7 @@ class ServerCommunicator: ServerCommunicatorInterface {
             when (response.code()) {
                 in 200..299 -> {
                     response.body()!!.let {
+                        Log.d("Json Check", "$it")
                         val obj = JSONObject(it)
                         val flag = obj.getBoolean("flag")
                         val responseDto = GetCartsResponseDto(obj)

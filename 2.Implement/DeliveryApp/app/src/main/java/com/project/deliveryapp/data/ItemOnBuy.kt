@@ -8,7 +8,7 @@ data class ItemOnBuy(
         fun toArray(stocks: ArrayList<Stock>, counts: ArrayList<Int>): ArrayList<ItemOnBuy> {
             val result = ArrayList<ItemOnBuy>()
 
-            for (i in 0..stocks.size) {
+            for (i in 0 until stocks.size) {
                 result.add(
                     ItemOnBuy(stocks[i], counts[i])
                 )
